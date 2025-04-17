@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <title>Update Leave Request Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      width: 400px;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+    select, input, textarea {
+      width: 100%;
+      padding: 5px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .leave-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: white;
+    }
+    .leave-table, .leave-table th, .leave-table td {
+      border: 1px solid black;
+      text-align: left;
+      padding: 5px;
+    }
+    .buttons {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+    button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .cancel-btn {
+      background-color: #ccc;
+    }
+    .submit-btn {
+      background-color: #4CAF50;
+      color: white;
+    }
+    .add-btn {
+      background-color: #007BFF;
+      color: white;
+      margin-top: 10px;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      width: 300px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- Hiển thị thông tin người tạo (nếu có) -->
+  <p id="userInfo"></p>
+
+  <label for="requestType">Kiểu yêu cầu:</label>
+  <!-- Sử dụng requestType từ dữ liệu, giá trị hiển thị có thể là PAID_LEAVE hoặc UNPAID_LEAVE -->
+  <select id="requestType">
+    <option value="UNPAID_LEAVE">Leave Request </option>
+  </select>
+
+  <label for="request">Yêu cầu:</label>
+  <select id="request">
+    <option>Time-off/Đơn xin nghỉ</option>
+  </select>
+
+  <label for="leaveType">Loại nghỉ:</label>
+  <select id="leaveType">
+    <option>Nghỉ phép</option>
+  </select>
+
+  <label>Hưởng lương:</label>
+  <select id="paidLeave">
+    <option value="Có">Có</option>
+    <option value="Không">Không</option>
+  </select>
+
+  <p id="leaveInfo">Ngày nghỉ phép còn lại: -- ngày (12 ngày)</p>
+
+  <label>Ngày nghỉ:</label>
+  <button class="add-btn" onclick="openModal()">+ Thêm mới</button>
+
+  <table class="leave-table" id="leaveTable">
+    <tr>
+      <th>Ngày nghỉ</th>
+      <th>Khoảng thời gian (Tiếng)</th>
+      <th></th>
+    </tr>
+  </table>
+
+  <label for="description">Mô tả (Lý do):</label>
+  <textarea id="description" rows="3"></textarea>
+
+  <label for="approver">Người phê duyệt:</label>
+  <input type="text" id="approver" placeholder="Tự động lấy người phê duyệt">
+
+  <div class="buttons">
+    <button class="cancel-btn" onclick="window.location.href='request1.html'">Hủy</button>
+    <button class="submit-btn" onclick="updateRequest()">Cập nhật</button>
+    <button class="cancel-request-btn" onclick="cancelRequest()">Hủy yêu cầu</button> <!-- New cancel request button -->
+  </div>
+</div>
+
+<!-- Modal chọn ngày -->
+<div class="modal" id="leaveModal">
+  <div class="modal-content">
+    <h3>Chọn khoảng thời gian nghỉ</h3>
+    <label for="startDate">Từ ngày:</label>
+    <input type="date" id="startDate">
+    <label for="endDate">Đến ngày:</label>
+    <input type="date" id="endDate">
+    <button onclick="addLeaveDays()">Lưu</button>
+    <button onclick="closeModal()">Hủy</button>
+  </div>
+</div>
+
+<script>
+  function cancelRequest() {
+    if (confirm("Bạn có chắc chắn muốn hủy yêu cầu này?")) {
+      // Logic for canceling the request can go here
+      // For now, just redirect to index.html
+      window.location.href = "request1.html";
+    }
+  }
+
+  const API_BASE_URL = "http://localhost:8080/api/v1/requests";
+  let requestId = null;
+  // Sử dụng Set để theo dõi các ngày nghỉ đã chọn
+  let existingLeaveDays = new Set();
+
+  document.addEventListener("DOMContentLoaded", async function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    requestId = urlParams.get("id");
+
+    if (requestId) {
+      await getRequestById(requestId);
+    } else {
+      alert("Không tìm thấy ID của yêu cầu!");
+      window.location.href = "index.html";
+    }
+    let username = document.getElementById("userInfo").getAttribute("data-username") || "ntdu";
+    fetchLeaveDays(username);
+  });
+
+  // Hàm lấy request theo id
+  async function getRequestById(id) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/${id}`);
+      if (!response.ok) throw new Error("Lỗi khi lấy dữ liệu yêu cầu!");
+      const data = await response.json();
+      populateForm(data);
+    } catch (error) {
+      console.error("Lỗi tải dữ liệu:", error);
+      alert("Không thể tải dữ liệu yêu cầu!");
+    }
+  }
+
+  // Hàm hiển thị dữ liệu lên form
+  function populateForm(data) {
+    if (!data) return;
+    // Hiển thị tên người tạo nếu có (giả sử thuộc tính creatorName có trong data)
+    document.getElementById("userInfo").textContent = `Người tạo: ${data.creatorName || "Không rõ"}`;
+    // Lưu lại username nếu cần cho các API khác
+    document.getElementById("userInfo").setAttribute("data-username", data.username || "");
+
+    // Set kiểu yêu cầu dựa trên requestType ("PAID_LEAVE" hay "UNPAID_LEAVE")
+    document.getElementById("requestType").value = data.requestType || "UNPAID_LEAVE";
+    // Cập nhật lựa chọn hưởng lương
+    document.getElementById("paidLeave").value = (data.requestType === "PAID_LEAVE") ? "Có" : "Không";
+
+    // Gán mô tả và người phê duyệt
+    document.getElementById("description").value = data.requestReason || "";
+    document.getElementById("approver").value = data.approverUsername || "";
+
+    // Nếu có leaveDates (mảng các ngày nghỉ), hiển thị lên bảng
+    if (data.leaveDates && Array.isArray(data.leaveDates)) {
+      data.leaveDates.forEach(dateStr => {
+        addLeaveRow(dateStr);
+      });
+    } else {
+      // Nếu không có, có thể sử dụng startTime và endTime để tạo ngày nghỉ liên tục
+      if (data.startTime && data.endTime) {
+        let start = new Date(data.startTime);
+        let end = new Date(data.endTime);
+        while (start <= end) {
+          let formattedDate = start.toISOString().split("T")[0];
+          addLeaveRow(formattedDate);
+          start.setDate(start.getDate() + 1);
+        }
+      }
+    }
+  }
+
+  // Hàm thêm 1 dòng mới vào bảng ngày nghỉ và cập nhật Set existingLeaveDays
+  function addLeaveRow(formattedDate) {
+    if (existingLeaveDays.has(formattedDate)) return;
+    const table = document.getElementById("leaveTable");
+    let newRow = table.insertRow();
+    let dateCell = newRow.insertCell(0);
+    let hoursCell = newRow.insertCell(1);
+    let actionCell = newRow.insertCell(2);
+
+    dateCell.textContent = formattedDate;
+    hoursCell.textContent = "8"; // Giả định mỗi ngày nghỉ là 8 tiếng
+    actionCell.innerHTML = `<button onclick="removeRow(this, '${formattedDate}')"><i class="fa-solid fa-trash"></i></button>`;
+    existingLeaveDays.add(formattedDate);
+  }
+
+  // Hàm mở modal chọn ngày nghỉ
+  function openModal() {
+    document.getElementById("leaveModal").style.display = "flex";
+  }
+
+  // Hàm đóng modal
+  function closeModal() {
+    document.getElementById("leaveModal").style.display = "none";
+  }
+  document.getElementById("approver").disabled = true;
+
+  // Hàm thêm ngày nghỉ từ modal
+  function addLeaveDays() {
+    let startDate = document.getElementById("startDate").value;
+    let endDate = document.getElementById("endDate").value;
+    if (!startDate || !endDate) {
+      alert("Vui lòng chọn đầy đủ ngày bắt đầu và kết thúc!");
+      return;
+    }
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);
+    let start = new Date(startDate);
+    let end = new Date(endDate);
+    if (start < today) {
+      alert("Ngày bắt đầu không thể nhỏ hơn ngày hiện tại!");
+      return;
+    }
+    if (start > end) {
+      alert("Ngày bắt đầu không thể sau ngày kết thúc!");
+      return;
+    }
+    while (start <= end) {
+      let formattedDate = start.toISOString().split("T")[0];
+      if (existingLeaveDays.has(formattedDate)) {
+        alert(`Ngày ${formattedDate} đã được chọn trước đó!`);
+      } else {
+        addLeaveRow(formattedDate);
+      }
+      start.setDate(start.getDate() + 1);
+    }
+    closeModal();
+  }
+
+  // Hàm xóa dòng ngày nghỉ
+  function removeRow(button, date) {
+    let row = button.parentNode.parentNode;
+    row.parentNode.removeChild(row);
+    existingLeaveDays.delete(date);
+  }
+
+  // Hàm cập nhật request
+  async function updateRequest() {
+    // Lấy username từ thông tin hiển thị (đã được set attribute sau khi load request)
+    let username = document.getElementById("userInfo").getAttribute("data-username") || "ntdu";
+    let requestReason = document.getElementById("description").value;
+    // Lấy requestType dựa trên lựa chọn hưởng lương
+    let paidLeave = document.getElementById("paidLeave").value;
+    let requestType = (paidLeave === "Có") ? "PAID_LEAVE" : "UNPAID_LEAVE";
+    let approver = document.getElementById("approver").value;
+    // Lấy danh sách ngày nghỉ từ bảng
+    let leaveDates = [];
+    document.querySelectorAll("#leaveTable tr:not(:first-child)").forEach(row => {
+      leaveDates.push(row.cells[0].textContent);
+    });
+    if (leaveDates.length === 0) {
+      alert("Vui lòng chọn ngày nghỉ!");
+      return;
+    }
+    // Giả sử ngày bắt đầu là ngày sớm nhất và ngày kết thúc là muộn nhất trong danh sách
+    let sortedDates = leaveDates.sort();
+    let startDate = sortedDates[0];
+    let endDate = sortedDates[sortedDates.length - 1];
+
+    let startTime = new Date(`${startDate}T08:00:00`);
+    let endTime = new Date(`${endDate}T17:00:00`);
+    startTime.setHours(startTime.getHours() ); // Chuyển đổi từ UTC+7 sang UTC
+    endTime.setHours(endTime.getHours() ); // Chuyển đổi từ UTC+7 sang UTC
+
+    let requestData = {
+      username,
+      requestType,
+      requestReason,
+      requestStatus: "PENDING",
+      startTime: startTime.toISOString(),
+      endTime: endTime.toISOString(),
+      // startTime: (`${startDate}T08:00:00`),
+      // endTime: (`${endDate}T17:00:00`),
+      approverUsername: approver,
+      leaveDates // Lưu mảng ngày nghỉ (nếu backend hỗ trợ)
+    };
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/${requestId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestData)
+      });
+      if (!response.ok) throw new Error("Lỗi khi cập nhật yêu cầu!");
+      alert("Yêu cầu đã được cập nhật thành công!");
+      window.location.href = "request1.html";
+    } catch (error) {
+      console.error("Lỗi cập nhật:", error);
+      alert("Có lỗi xảy ra khi cập nhật yêu cầu!");
+    }
+  }
+
+  // Hàm lấy số ngày nghỉ còn lại của người dùng
+  async function fetchLeaveDays(username) {
+    try {
+      let response = await fetch(`http://localhost:8080/api/v1/requests/days-off?username=${username}`);
+      let totalLeaveDays = await response.json();
+      let remainingDays = 12 - totalLeaveDays;
+      document.getElementById("leaveInfo").textContent = `Ngày nghỉ phép còn lại: ${remainingDays} ngày (12 ngày)`;
+      let paidLeaveSelect = document.getElementById("paidLeave");
+      // Nếu hết ngày nghỉ, bạn có thể cập nhật logic tùy ý (ví dụ: khóa chọn)
+      if (remainingDays <= 0) {
+        paidLeaveSelect.value = "Không";
+        paidLeaveSelect.disabled = true;
+      } else {
+        paidLeaveSelect.disabled = false;
+      }
+    } catch (error) {
+      console.error("Lỗi lấy số ngày nghỉ:", error);
+    }
+  }
+  async function cancelRequest() {
+    if (confirm("Bạn có chắc chắn muốn hủy yêu cầu này?")) {
+      try {
+        const response = await fetch(`${API_BASE_URL}/${requestId}`, {
+          method: "DELETE",
+        });
+        if (!response.ok) {
+          throw new Error("Lỗi khi hủy yêu cầu!");
+        }
+        alert("Yêu cầu đã bị hủy thành công!");
+        window.location.href = "request1.html"; // Redirect to the main page
+      } catch (error) {
+        console.error("Lỗi hủy yêu cầu:", error);
+        alert("Có lỗi xảy ra khi hủy yêu cầu!");
+      }
+    }
+  }
+</script>
+</body>
+</html>

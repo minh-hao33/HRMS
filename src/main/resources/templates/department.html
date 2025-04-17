@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Meeting CMC Global</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/aos.css">
+    <link rel="stylesheet" href="/css/ionicons.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/css/jquery.timepicker.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/icomoon.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/sessionTimeout.js"></script>
+    <style>
+        :root {
+            --primary-color: #a1cbe4;
+            --primary-hover: #4786ba;
+            --danger-color: #d31616;
+            --danger-hover: #17dce3;
+            --success-color: #2ecc71;
+            --success-hover: #27ae60;
+            --warning-color: #f39c12;
+            --warning-hover: #d35400;
+            --dark-color: #1fbec3;
+            --light-color: #ecf0f1;
+            --border-color: #dfe6e9;
+            --text-color: #2d3436;
+            --text-light: #070707;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: var(--text-color);
+            line-height: 2.3;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .ftco-navbar-light {
+            background: #ffff !important;
+            flex-shrink: 0;
+            position: static;
+            width: 100%;
+            padding: 0.5rem 1rem;
+            box-shadow: 0 2px 4px rgba(239, 243, 244, 0.1);
+        }
+
+        .main-content {
+            flex: 1;
+            overflow: auto;
+            padding: 20px 0;
+            min-height: calc(100vh - 60px - 10px); /* 80px là navbar, 200px là footer, chỉnh tùy vào thực tế */
+        }
+
+        footer {
+            margin-top: auto;
+        }
+
+
+        /* Các style còn lại giữ nguyên */
+        .header h1 {
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .filter-container {
+            margin-bottom: 30px;
+        }
+
+        .filter-box {
+            display: flex;
+            gap: 15px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .filter-group label {
+            margin-bottom: 5px;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 3px;
+            transition: var(--transition);
+        }
+
+        .action-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            border-color: var(--danger-color);
+        }
+
+        .btn-danger:hover {
+            background-color: var(--danger-hover);
+            border-color: var(--danger-hover);
+        }
+
+        .alert-error {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--danger-color);
+            border-color: rgba(231, 76, 60, 0.3);
+        }
+
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        /* Navbar container */
+        .navbar-container {
+            display: flex;
+            width: 100%;
+            max-width: 100%;
+            padding: 0 15px;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-size: 1.25rem;
+            white-space: nowrap;
+            margin-right: 1rem;
+            color: #ffffff
+        }
+
+        .navbar-toggler {
+            order: 2;
+            margin-left: auto;
+        }
+        .ftco-navbar-light .navbar-nav > .nav-item.active > a {
+            color: #000;
+        }
+        .ftco-navbar-light .navbar-nav > .nav-item > .nav-link {
+            color: #000;
+
+            #ftco-nav {
+                order: 1;
+                flex-grow: 1;
+            }
+        }
+        .ftco-navbar-light .navbar-brand {
+            color: #0078D4;
+        }
+
+        .navbar-nav {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-item {
+            margin: 0 0.5rem;
+            white-space: nowrap;
+        }
+
+        .nav-link {
+            padding: 0.5rem 0.75rem;
+            color: #FFFFFF;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+        }
+
+        .content-padding {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        @media (min-width: 1200px) {
+            .navbar-container {
+                max-width: 100%;
+                padding: 0 30px;
+            }
+            .content-padding {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .navbar-toggler {
+                order: 3;
+            }
+            #ftco-nav {
+                order: 4;
+                flex-basis: 100%;
+            }
+            .navbar-nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .nav-item {
+                margin: 0.25rem 0;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .filter-group {
+                min-width: 100%;
+            }
+            .container {
+                padding: 20px;
+            }
+            .pagination-container {
+                flex-wrap: wrap;
+            }
+        }
+        .ftco-navbar-light .navbar-nav > .nav-item > .nav-link:hover {
+            color: #ffffff; }
+        .table-container {
+            overflow-x: auto;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            min-width: 800px;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #0078D4;
+            color: white;
+            font-weight: 500;
+            position: sticky;
+            top: 0;
+        }
+
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .status-active {
+            background-color: #28a745;  /* Màu xanh cho 'active' */
+        }
+
+        .status-inactive {
+            background-color: #dc3545;  /* Màu đỏ cho 'inactive' */
+        }
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="navbar-container">
+        <a class="navbar-brand" href="/users/home">Meeting CMC Global</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a href="/users/home" class="nav-link">Home</a></li>
+                <li class="nav-item" id="office"><a href="#" class="nav-link">Office</a></li>
+                <li class="nav-item" id="meeting"><a href="#" class="nav-link">Meeting</a></li>
+                <li class="nav-item cta mr-md-2" id="loginBtn"><a href="/users/login" class="nav-link">Login</a></li>
+                <li class="nav-item dropdown" id="userInfo" style="display: none;">
+                    <a class="nav-link dropdown-toggle" href="#" id="usernameDisplay" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                    <div class="dropdown-menu" aria-labelledby="usernameDisplay">
+                        <a class="dropdown-item" href="#">Profile</a>
+                        <a class="dropdown-item" href="#" onclick="logout()">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="main-content">
+    <div class="content-padding">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="mb-0">Quản lý phòng ban</h1>
+            <div>
+                <button class="btn btn-primary" onclick="showAddModal()">Thêm phòng ban</button>
+                <button class="btn btn-outline-secondary me-2" onclick="window.location.href='/users'">
+                    Quản lý tài khoản
+                </button>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table >
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên phòng ban</th>
+                    <th>Trưởng phòng</th>
+                    <th>Vai trò</th>
+                    <th>Trạng thái</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody id="departmentTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+</main>
+
+<!-- Modal thêm phòng ban -->
+<div class="modal fade" id="addDepartmentModal" tabindex="-1" role="dialog" aria-labelledby="addDepartmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thêm phòng ban</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addDepartmentForm">
+                    <div class="form-group">
+                        <label for="departmentName">Tên phòng ban</label>
+                        <input type="text" class="form-control" id="departmentName" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" onclick="addDepartment()">Thêm</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editDepartmentModal" tabindex="-1" aria-labelledby="editDepartmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editDepartmentModalLabel">Chỉnh sửa phòng ban</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editDepartmentId">
+                <div class="mb-3">
+                    <label for="editDepartmentName" class="form-label">Tên phòng ban</label>
+                    <input type="text" class="form-control" id="editDepartmentName">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button class="btn btn-primary" onclick="updateDepartment()">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-success text-white">
+            <strong class="me-auto">Success</strong>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <span id="toastMessage"></span>
+        </div>
+    </div>
+</div>
+<!-- Modal xác nhận -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmModalLabel">Xác nhận thay đổi trạng thái</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn thay đổi trạng thái của phòng ban này?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="confirmBtn">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const username = localStorage.getItem('Username');
+        const role = localStorage.getItem('Role');
+
+        if (username && role) {
+            // Ẩn nút login
+            document.getElementById('loginBtn').style.display = 'none';
+
+            // Hiện user info
+            document.getElementById('userInfo').style.display = 'block';
+            document.getElementById('usernameDisplay').textContent = username;
+
+            // Xử lý role nếu cần
+            if (role === 'ADMIN') {
+                // Hiện tất cả
+            } else if (role === 'EMPLOYEE') {
+                document.getElementById('office').style.display = 'none';
+                document.getElementById('meeting').style.display = 'none';
+            } else if (role === 'SUPERVISOR') {
+                document.getElementById('office').style.display = 'none';
+            }
+        }
+    });
+
+    function logout() {
+        fetch('/api/v1/users/logout', {
+            method: 'POST',
+            credentials: 'include', // rất quan trọng để gửi cookie/session đi kèm
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Xóa dữ liệu localStorage, cookie, session nếu cần
+                    localStorage.clear();
+
+                    // Xóa cookie bằng cách set expired
+                    document.cookie.split(";").forEach(function(c) {
+                        document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+                    });
+
+                    // Redirect hoặc reload trang
+                    window.location.href = "/users/login";
+                } else {
+                    alert("Đăng xuất không thành công. Vui lòng thử lại.");
+                }
+            })
+            .catch(error => {
+                console.error("Logout error:", error);
+                alert("Lỗi trong quá trình đăng xuất.");
+            });
+    }
+
+</script>
+<script>
+    let currentPage = 0;
+    const itemsPerPage = 10; // hoặc số bạn muốn
+
+    function loadDepartments(page = 0) {
+        const searchValue = document.getElementById('searchInput')?.value.trim() || '';
+        const statusValue = document.getElementById('statusFilter')?.value || '';
+
+        let url = `/api/v1/departments?page=${page}`;
+        if (searchValue) url += `&name=${encodeURIComponent(searchValue)}`;
+        if (statusValue) url += `&status=${statusValue}`;
+
+        fetch(url, {
+            method: 'GET',
+            credentials: 'include',
+        })
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to fetch');
+                return response.json();
+            })
+            .then(data => {
+                const tableBody = document.getElementById("departmentTableBody");
+                tableBody.innerHTML = '';
+
+                data.data.forEach((item, index) => {
+                    const safeName = item.departmentName.replace(/'/g, "\\'");
+                    const row = `
+                    <tr>
+                        <td>${page * itemsPerPage + index + 1}</td>
+                        <td>${item.departmentName}</td>
+                        <td>${item.employeeName}</td>
+                        <td>${item.roleName}</td>
+                        <td>
+                            <span class="status ${item.status === 'active' ? 'status-active' : 'status-inactive'}">${item.status}</span>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-primary me-1" onclick="openEditModal(${item.departmentId}, '${safeName}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-secondary" onclick="toggleStatus(${item.departmentId}, '${item.status}')">
+                                ${item.status === 'active' ? 'Vô hiệu hóa' : 'Kích hoạt'}
+                            </button>
+                        </td>
+                    </tr>
+                `;
+                    tableBody.insertAdjacentHTML('beforeend', row);
+                });
+            })
+            .catch(error => {
+                console.error("Lỗi khi tải dữ liệu phòng ban:", error);
+            });
+    }
+
+
+    loadDepartments(currentPage);
+
+    function showAddModal() {
+        $('#addDepartmentModal').modal('show');
+    }
+    function addDepartment() {
+        const name = document.getElementById("departmentName").value.trim();
+        if (!name) {
+            showToast("Vui lòng nhập tên phòng ban.", false);
+            return;
+        }
+
+        fetch('/api/v1/departments', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify({ departmentName: name })
+        })
+            .then(res => res.json().then(data => ({ ok: res.ok, body: data })))
+            .then(({ ok, body }) => {
+                if (!ok || body.status === 'error') {
+                    const msg = body.retMsg || "Có lỗi xảy ra khi thêm phòng ban.";
+                    showToast(msg, false);
+                    return;
+                }
+
+                $('#addDepartmentModal').modal('hide');
+                document.getElementById("addDepartmentForm").reset();
+                loadDepartments(0);
+                showToast("Thêm phòng ban thành công!");
+            })
+            .catch(err => {
+                console.error(err);
+                showToast("Lỗi kết nối server.", false);
+            });
+    }
+
+    function openEditModal(id, name) {
+        document.getElementById('editDepartmentId').value = id;
+        document.getElementById('editDepartmentName').value = name;
+        $('#editDepartmentModal').modal('show');
+    }
+
+    function updateDepartment() {
+        const id = document.getElementById('editDepartmentId').value;
+        const name = document.getElementById('editDepartmentName').value.trim();
+
+        if (!name) {
+            showToast("Vui lòng nhập tên phòng ban.");
+            return;
+        }
+
+        fetch(`/api/v1/departments/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify({ departmentName: name })
+        })
+            .then(res => {
+                if (!res.ok) throw new Error('Lỗi khi cập nhật phòng ban');
+                return res.json();
+            })
+            .then(data => {
+                $('#editDepartmentModal').modal('hide');
+                loadDepartments(currentPage); // reload trang hiện tại
+                showToast("Cập nhật phòng ban thành công!");
+            })
+            .catch(err => {
+                console.error(err);
+                showToast("Có lỗi khi cập nhật phòng ban.");
+            });
+    }
+    function toggleStatus(departmentId, currentStatus) {
+        const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+
+        // Hiển thị modal xác nhận
+        $('#confirmModal').modal('show');
+
+        // Lắng nghe sự kiện khi người dùng xác nhận thay đổi trạng thái
+        document.getElementById('confirmBtn').onclick = function () {
+            fetch(`/api/v1/departments/${departmentId}/status?status=${newStatus}`, {
+                method: 'PUT',
+                credentials: 'include'
+            })
+                .then(res => res.json().then(data => ({ ok: res.ok, body: data })))
+                .then(({ ok, body }) => {
+                    if (!ok || body.status !== 'Success') {
+                        const msg = body.retMsg || "Lỗi khi cập nhật trạng thái.";
+                        showToast(msg, false);
+                        return;
+                    }
+
+                    showToast("Cập nhật trạng thái thành công!");
+                    loadDepartments(currentPage);
+                    $('#confirmModal').modal('hide');  // Đóng modal sau khi xác nhận thành công
+                })
+                .catch(err => {
+                    console.error(err);
+                    showToast("Lỗi kết nối server.", false);
+                    $('#confirmModal').modal('hide');  // Đóng modal khi có lỗi
+                });
+        };
+    }
+
+
+    function showToast(message, isSuccess = true, delay = 8000) {
+        const toastEl = document.getElementById('successToast');
+        const header = toastEl.querySelector('.toast-header');
+        const title = header.querySelector('strong');
+
+        document.getElementById('toastMessage').textContent = message;
+
+        // Reset màu
+        header.classList.remove('bg-success', 'bg-danger');
+        header.classList.add(isSuccess ? 'bg-success' : 'bg-danger');
+        title.textContent = isSuccess ? 'Success' : 'Error';
+
+        const toast = new bootstrap.Toast(toastEl, { delay: delay });
+        toast.show();
+    }
+
+</script>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery-migrate-3.0.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.easing.1.3.js"></script>
+<script src="/js/jquery.waypoints.min.js"></script>
+<script src="/js/jquery.stellar.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/aos.js"></script>
+<script src="/js/jquery.animateNumber.min.js"></script>
+<script src="/js/scrollax.min.js"></script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>

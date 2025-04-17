@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Meeting CMC Global</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/open-iconic-bootstrap.min.css">
+  <link rel="stylesheet" href="/css/animate.css">
+  <link rel="stylesheet" href="/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="/css/magnific-popup.css">
+  <link rel="stylesheet" href="/css/aos.css">
+  <link rel="stylesheet" href="/css/ionicons.min.css">
+  <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
+  <link rel="stylesheet" href="/css/jquery.timepicker.css">
+  <link rel="stylesheet" href="/css/flaticon.css">
+  <link rel="stylesheet" href="/css/icomoon.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/sessionTimeout.js"></script>
+  <style>
+    :root {
+      --primary-color: #a1cbe4;
+      --primary-hover: #4786ba;
+      --danger-color: #d31616;
+      --danger-hover: #17dce3;
+      --success-color: #2ecc71;
+      --success-hover: #27ae60;
+      --warning-color: #f39c12;
+      --warning-hover: #d35400;
+      --dark-color: #1fbec3;
+      --light-color: #ecf0f1;
+      --border-color: #dfe6e9;
+      --text-color: #2d3436;
+      --text-light: #070707;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f8f9fa;
+      color: var(--text-color);
+      line-height: 2.3;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    .ftco-navbar-light {
+      background: #ffff !important;
+      flex-shrink: 0;
+      position: static;
+      width: 100%;
+      padding: 0.5rem 1rem;
+      box-shadow: 0 2px 4px rgba(239, 243, 244, 0.1);
+    }
+
+    .main-content {
+      flex: 1;
+      overflow: auto;
+      padding: 20px 0;
+      min-height: calc(100vh - 60px - 10px); /* 80px là navbar, 200px là footer, chỉnh tùy vào thực tế */
+    }
+
+    footer {
+      margin-top: auto;
+    }
+
+
+    /* Các style còn lại giữ nguyên */
+    .header h1 {
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--dark-color);
+    }
+
+    .filter-container {
+      margin-bottom: 30px;
+    }
+
+    .filter-box {
+      display: flex;
+      gap: 15px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .filter-group label {
+      margin-bottom: 5px;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .action-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 3px;
+      transition: var(--transition);
+    }
+
+    .action-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+      border-color: var(--primary-hover);
+    }
+
+    .btn-danger {
+      background-color: var(--danger-color);
+      border-color: var(--danger-color);
+    }
+
+    .btn-danger:hover {
+      background-color: var(--danger-hover);
+      border-color: var(--danger-hover);
+    }
+
+    .alert-error {
+      background-color: rgba(231, 76, 60, 0.1);
+      color: var(--danger-color);
+      border-color: rgba(231, 76, 60, 0.3);
+    }
+
+    .pagination-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    /* Navbar container */
+    .navbar-container {
+      display: flex;
+      width: 100%;
+      max-width: 100%;
+      padding: 0 15px;
+      align-items: center;
+    }
+
+    .navbar-brand {
+      font-size: 1.25rem;
+      white-space: nowrap;
+      margin-right: 1rem;
+      color: #ffffff
+    }
+
+    .navbar-toggler {
+      order: 2;
+      margin-left: auto;
+    }
+    .ftco-navbar-light .navbar-nav > .nav-item.active > a {
+      color: #000;
+    }
+    .ftco-navbar-light .navbar-nav > .nav-item > .nav-link {
+      color: #000 !important ;
+
+      #ftco-nav {
+        order: 1;
+        flex-grow: 1;
+      }
+    }
+    .ftco-navbar-light .navbar-brand {
+      color: #0078D4 !important;
+    }
+
+    .navbar-nav {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-item {
+      margin: 0 0.5rem;
+      white-space: nowrap;
+    }
+
+    .nav-link {
+      padding: 0.5rem 0.75rem;
+      color: #FFFFFF;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+    }
+
+    .content-padding {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
+    @media (min-width: 1200px) {
+      .navbar-container {
+        max-width: 100%;
+        padding: 0 30px;
+      }
+      .content-padding {
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .navbar-toggler {
+        order: 3;
+      }
+      #ftco-nav {
+        order: 4;
+        flex-basis: 100%;
+      }
+      .navbar-nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-item {
+        margin: 0.25rem 0;
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .filter-group {
+        min-width: 100%;
+      }
+
+      .pagination-container {
+        flex-wrap: wrap;
+      }
+    }
+    .ftco-navbar-light .navbar-nav > .nav-item > .nav-link:hover {
+      color: #ffffff; }
+    .table-container {
+      overflow-x: auto;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      min-width: 800px;
+    }
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+      background-color: #0078D4;
+      color: white;
+      font-weight: 500;
+      position: sticky;
+      top: 0;
+    }
+
+    tr:hover {
+      background-color: #f8f9fa;
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+  <div class="navbar-container">
+    <a class="navbar-brand" href="/users/home">Meeting CMC Global</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="oi oi-menu"></span> Menu
+    </button>
+
+    <div class="collapse navbar-collapse" id="ftco-nav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active"><a href="/users/home" class="nav-link">Home</a></li>
+        <li class="nav-item" id="office"><a href="#" class="nav-link">Office</a></li>
+        <li class="nav-item" id="meeting"><a href="#" class="nav-link">Meeting</a></li>
+        <li class="nav-item cta mr-md-2" id="loginBtn"><a href="/users/login" class="nav-link">Login</a></li>
+        <li class="nav-item dropdown" id="userInfo" style="display: none;">
+          <a class="nav-link dropdown-toggle" href="#" id="usernameDisplay" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+          <div class="dropdown-menu" aria-labelledby="usernameDisplay">
+            <a class="dropdown-item" href="/users/account">Profile</a>
+            <a class="dropdown-item" href="#" onclick="logout()">Logout</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="main-content">
+  <div class="content-padding">
+    <div id="errorAlert" class="alert alert-error alert-dismissible fade show" style="display: none;">
+      <span id="errorMessage"></span>
+      <button type="button" class="btn-close" onclick="document.getElementById('errorAlert').style.display = 'none'"></button>
+    </div>
+
+    <div class="filter-container mb-4">
+      <div class="filter-box row gx-3">
+        <div class="filter-group col-md-3 col-sm-6 mb-3">
+          <label for="department">Department</label>
+          <select id="department" class="form-select">
+            <option value="">All Departments</option>
+          </select>
+        </div>
+
+        <div class="filter-group col-md-3 col-sm-6 mb-3">
+          <label for="role">Role</label>
+          <select id="role" class="form-select">
+            <option value="">All Roles</option>
+          </select>
+        </div>
+
+        <div class="filter-group col-md-4 col-sm-8 mb-3">
+          <label for="keyword">Search</label>
+          <div class="input-group">
+            <input type="text" id="keyword" class="form-control" placeholder="Enter username...">
+            <button class="btn btn-primary" onclick="searchAccount()">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="filter-group col-md-2 col-sm-4 mb-3 d-flex align-items-end">
+          <button id="addButton" class="btn btn-success w-100" onclick="window.location.href='/users/create'">
+            <i class="fas fa-plus"></i> Add New
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table >
+        <thead>
+        <tr>
+          <th>Username</th>
+          <th>Employee Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Department</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="accountsTableBody"></tbody>
+      </table>
+    </div>
+    <div class="pagination-container">
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+          <li class="page-item" id="prevPage">
+            <a class="page-link" href="#" aria-label="Previous" onclick="changePage(currentPage - 1)">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item" id="nextPage">
+            <a class="page-link" href="#" aria-label="Next" onclick="changePage(currentPage + 1)">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</main>
+
+<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const username = localStorage.getItem('Username');
+    const role = localStorage.getItem('Role');
+
+    if (username && role) {
+      // Ẩn nút login
+      document.getElementById('loginBtn').style.display = 'none';
+
+      // Hiện user info
+      document.getElementById('userInfo').style.display = 'block';
+      document.getElementById('usernameDisplay').textContent = username;
+
+      // Xử lý role nếu cần
+      if (role === 'ADMIN') {
+        // Hiện tất cả
+      } else if (role === 'EMPLOYEE') {
+        document.getElementById('office').style.display = 'none';
+        document.getElementById('meeting').style.display = 'none';
+      } else if (role === 'SUPERVISOR') {
+        document.getElementById('office').style.display = 'none';
+      }
+    }
+  });
+
+  function logout() {
+    fetch('/api/v1/users/logout', {
+      method: 'POST',
+      credentials: 'include', // rất quan trọng để gửi cookie/session đi kèm
+    })
+            .then(response => {
+              if (response.ok) {
+                // Xóa dữ liệu localStorage, cookie, session nếu cần
+                localStorage.clear();
+
+                // Xóa cookie bằng cách set expired
+                document.cookie.split(";").forEach(function(c) {
+                  document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+                });
+
+                // Redirect hoặc reload trang
+                window.location.href = "/users/login";
+              } else {
+                alert("Đăng xuất không thành công. Vui lòng thử lại.");
+              }
+            })
+            .catch(error => {
+              console.error("Logout error:", error);
+              alert("Lỗi trong quá trình đăng xuất.");
+            });
+  }
+  let allUsers = [];
+  let filteredUsers = [];
+  let departmentsList = [];
+  let currentUserRole = '';
+
+  // Pagination variables
+  let currentPage = 1;
+  let pageSize = 8;
+  let totalPages = 1;
+
+  function showError(message) {
+    const errorAlert = document.getElementById('errorAlert');
+    const errorMessage = document.getElementById('errorMessage');
+    errorMessage.textContent = message;
+    errorAlert.style.display = 'block';
+    setTimeout(() => errorAlert.style.display = 'none', 5000);
+  }
+
+  async function fetchData() {
+    try {
+      const response = await fetch('/api/v1/users');
+      if (!response.ok) throw new Error('Error fetching user data');
+
+      const result = await response.json();
+      if (Array.isArray(result.data)) {
+        allUsers = result.data.map(user => {
+          const department = departmentsList.find(d => d.departmentId === user.departmentId);
+          return {
+            ...user,
+            departmentName: department ? department.departmentName : null
+          };
+        });
+        filterData();
+      } else {
+        allUsers = [];
+        showError('Invalid user data');
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      showError('Failed to load user list');
+    }
+  }
+
+  async function fetchDepartments() {
+    try {
+      const response = await fetch('/api/v1/departments');
+      if (!response.ok) throw new Error('Error fetching departments');
+
+      const result = await response.json();
+      departmentsList = Array.isArray(result.data)
+              ? [...new Map(result.data.map(item => [item.departmentName, item])).values()]
+              : [];
+
+      departmentsList.sort((a, b) => a.departmentName.localeCompare(b.departmentName));
+      const departmentSelect = document.getElementById('department');
+      departmentSelect.innerHTML = '<option value="">All Departments</option>';
+      departmentsList.forEach(dept => {
+        const option = document.createElement('option');
+        option.value = dept.departmentName;
+        option.textContent = dept.departmentName;
+        departmentSelect.appendChild(option);
+      });
+
+    } catch (error) {
+      console.error('Error fetching departments:', error);
+      showError('Failed to load departments');
+    }
+  }
+
+  async function fetchRoles() {
+    try {
+      const response = await fetch('/api/v1/roles/all');
+      if (!response.ok) throw new Error('Error fetching roles');
+
+      const result = await response.json();
+      const roles = Array.isArray(result.data) ? result.data : [];
+      const roleSelect = document.getElementById('role');
+      roleSelect.innerHTML = '<option value="">All Roles</option>';
+      roles.forEach(role => {
+        const option = document.createElement('option');
+        option.value = role.roleName;
+        option.textContent = role.roleName;
+        roleSelect.appendChild(option);
+      });
+    } catch (error) {
+      console.error('Error fetching roles:', error);
+      showError('Failed to load roles');
+    }
+  }
+
+  async function fetchCurrentUserRole() {
+    try {
+      const response = await fetch('/api/v1/users/getUserRole');
+      if (!response.ok) throw new Error('Error fetching user role');
+
+      const result = await response.json();
+      const userRole = result.data;
+      currentUserRole = userRole;
+      renderButtonBasedOnRole(userRole);
+    } catch (error) {
+      console.error('Error fetching user role:', error);
+      showError('Failed to load user role');
+    }
+  }
+
+  function renderButtonBasedOnRole(userRole) {
+    const addButton = document.getElementById('addButton');
+    if (!addButton) return;
+    addButton.style.display = userRole === 'ADMIN' ? 'block' : 'none';
+  }
+
+  function populateTable(users) {
+    const tableBody = document.getElementById('accountsTableBody');
+    if (!tableBody) return;
+    // Calculate pagination
+    totalPages = Math.ceil(users.length / pageSize);
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = Math.min(startIndex + pageSize, users.length);
+    const paginatedUsers = users.slice(startIndex, endIndex);
+    console.log(paginatedUsers); // Thêm dòng này để kiểm tra dữ liệu
+    tableBody.innerHTML = paginatedUsers.map(user => {
+      const deleteBtn = currentUserRole === 'ADMIN'
+              ? `<button class="action-btn btn btn-sm btn-danger" onclick="deleteAccount('${user.username}')"><i class="fas fa-trash-alt"></i></button>`
+              : '';
+      return `
+            <tr>
+                <td>${user.username || '-'}</td>
+                <td>${user.employeeName || '-'}</td>
+                <td>${user.email || '-'}</td>
+                <td>${user.roleName || '-'}</td>
+                <td>${user.departmentName || (user.departmentId ? 'Updating...' : 'None')}</td>
+                <td>${user.status || '-'}</td>
+                <td>
+                    <button class="action-btn btn btn-sm btn-primary" onclick="editAccount('${user.username}')"><i class="fas fa-edit"></i></button>
+                    ${deleteBtn}
+                </td>
+            </tr>
+        `;
+    }).join('');
+    if (paginatedUsers.length === 0) {
+      tableBody.innerHTML = `
+            <tr>
+                <td colspan="7" class="text-center py-4 text-muted">No accounts found</td>
+            </tr>
+        `;
+    }
+    // Update pagination controls
+    updatePaginationControls();
+    updatePageInfo(users.length, startIndex, endIndex);
+  }
+
+  function updatePageInfo(totalItems, startIndex, endIndex) {
+    const pageInfoText = document.getElementById('pageInfoText');
+    if (!pageInfoText) return;
+
+    if (totalItems === 0) {
+      pageInfoText.textContent = 'No items';
+    } else {
+      pageInfoText.textContent = `Showing ${startIndex + 1} to ${endIndex} of ${totalItems} items`;
+    }
+  }
+
+  function updatePaginationControls() {
+    const paginationElement = document.querySelector('.pagination');
+    const prevPageElement = document.getElementById('prevPage');
+    const nextPageElement = document.getElementById('nextPage');
+
+    // Clear existing page numbers (except prev/next)
+    const existingPages = document.querySelectorAll('.page-number');
+    existingPages.forEach(el => el.remove());
+
+    // Update prev/next button states
+    prevPageElement.classList.toggle('disabled', currentPage === 1);
+    nextPageElement.classList.toggle('disabled', currentPage === totalPages);
+
+    // Determine which page numbers to show
+    let startPage = Math.max(1, currentPage - 2);
+    let endPage = Math.min(totalPages, currentPage + 2);
+
+    // Adjust if we're at the beginning or end
+    if (currentPage <= 3) {
+      endPage = Math.min(5, totalPages);
+    }
+    if (currentPage >= totalPages - 2) {
+      startPage = Math.max(1, totalPages - 4);
+    }
+
+    // Always show first page
+    if (startPage > 1) {
+      const li = document.createElement('li');
+      li.className = `page-item page-number ${1 === currentPage ? 'active' : ''}`;
+      li.innerHTML = `<a class="page-link" href="#" onclick="changePage(1)">1</a>`;
+      paginationElement.insertBefore(li, nextPageElement);
+
+      if (startPage > 2) {
+        const ellipsis = document.createElement('li');
+        ellipsis.className = 'page-item disabled';
+        ellipsis.innerHTML = `<span class="page-link">...</span>`;
+        paginationElement.insertBefore(ellipsis, nextPageElement);
+      }
+    }
+
+    // Add the page numbers
+    for (let i = startPage; i <= endPage; i++) {
+      const li = document.createElement('li');
+      li.className = `page-item page-number ${i === currentPage ? 'active' : ''}`;
+      li.innerHTML = `<a class="page-link" href="#" onclick="changePage(${i})">${i}</a>`;
+      paginationElement.insertBefore(li, nextPageElement);
+    }
+
+    // Always show last page if needed
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) {
+        const ellipsis = document.createElement('li');
+        ellipsis.className = 'page-item disabled';
+        ellipsis.innerHTML = `<span class="page-link">...</span>`;
+        paginationElement.insertBefore(ellipsis, nextPageElement);
+      }
+
+      const li = document.createElement('li');
+      li.className = `page-item page-number ${totalPages === currentPage ? 'active' : ''}`;
+      li.innerHTML = `<a class="page-link" href="#" onclick="changePage(${totalPages})">${totalPages}</a>`;
+      paginationElement.insertBefore(li, nextPageElement);
+    }
+  }
+
+  function changePage(newPage) {
+    if (newPage < 1 || newPage > totalPages || newPage === currentPage) return;
+    currentPage = newPage;
+    populateTable(filteredUsers);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  async function searchAccount() {
+    const username = document.getElementById('keyword')?.value.trim();
+    if (!username) {
+      filterData();
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/v1/users/getUserByUsername/${username}`);
+      if (!response.ok) throw new Error("User not found");
+
+      const data = await response.json();
+      filteredUsers = [data];
+      currentPage = 1;
+      populateTable(filteredUsers);
+
+    } catch (error) {
+      console.error('Search error:', error);
+      showError('User not found');
+    }
+  }
+
+  function filterData() {
+    const departmentSelect = document.getElementById('department');
+    const roleSelect = document.getElementById('role');
+    const selectedDepartment = departmentSelect.value;
+    const selectedRole = roleSelect.value;
+
+    filteredUsers = allUsers;
+    if (selectedDepartment) {
+      filteredUsers = filteredUsers.filter(user => user.departmentName === selectedDepartment);
+    }
+    if (selectedRole) {
+      filteredUsers = filteredUsers.filter(user => user.roleName === selectedRole);
+    }
+
+    currentPage = 1;
+    populateTable(filteredUsers);
+  }
+
+  function editAccount(username) {
+    if (!username) {
+      showError('No username to edit');
+      return;
+    }
+    window.location.href = `/users/update/${encodeURIComponent(username)}`;
+  }
+
+  async function deleteAccount(username) {
+    if (!confirm(`Are you sure you want to delete account "${username}"?`)) return;
+
+    try {
+      const response = await fetch(`/api/v1/users/${username}`, {
+        method: 'DELETE'
+      });
+
+      if (!response.ok) throw new Error("Unable to delete user");
+
+      const result = await response.json();
+
+      // Show Bootstrap toast notification
+      const toastMessageEl = document.getElementById('toastMessage');
+      if (toastMessageEl) {
+        toastMessageEl.textContent = result.message || 'Deleted successfully';
+      }
+
+      const toastEl = document.getElementById('deleteToast');
+      if (toastEl) {
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+      }
+
+      await fetchData();
+
+    } catch (error) {
+      console.error("Delete error:", error);
+      showError("Failed to delete user");
+    }
+  }
+
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      await fetchCurrentUserRole();
+      await fetchDepartments();
+      await fetchRoles();
+      await fetchData();
+
+      document.getElementById('department')?.addEventListener('change', filterData);
+      document.getElementById('role')?.addEventListener('change', filterData);
+      document.getElementById('keyword')?.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') searchAccount();
+      });
+
+    } catch (error) {
+      console.error('Initialization error:', error);
+      showError('App initialization failed');
+    }
+  });
+</script>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery-migrate-3.0.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.easing.1.3.js"></script>
+<script src="/js/jquery.waypoints.min.js"></script>
+<script src="/js/jquery.stellar.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/aos.js"></script>
+<script src="/js/jquery.animateNumber.min.js"></script>
+<script src="/js/scrollax.min.js"></script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>

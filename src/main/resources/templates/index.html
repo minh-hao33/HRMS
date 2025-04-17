@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Meeting CMC Global</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/aos.css">
+    <link rel="stylesheet" href="/css/ionicons.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/css/jquery.timepicker.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/icomoon.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/sessionTimeout.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dashboard {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 50px;
+            max-width: 1200px;
+            margin: 50px auto 0; /* Margin for space above */
+        }
+
+        .dashboard-item {
+            color: #fff;
+            padding: 30px 20px;
+            flex: 1;
+            min-width: 150px;
+            height: 250px;
+            border-radius: 20px;
+            box-shadow: 0 12px 24px rgba(0, 120, 212, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .dashboard-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 16px 30px rgba(0, 120, 212, 0.4);
+        }
+
+        .dashboard-item::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle at top left, rgba(255,255,255,0.2), transparent);
+            top: -50%;
+            left: -50%;
+            transform: rotate(45deg);
+            pointer-events: none;
+        }
+
+        .dashboard-item .label {
+            font-size: 1.1em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .dashboard-item .icon {
+            font-size: 2.3em;
+            margin-bottom: 10px;
+        }
+
+        .dashboard-item .count {
+            font-size: 3.5em;
+            font-weight: bold;
+        }
+
+        .dashboard-item .total {
+            font-size: 1.95em;
+            opacity: 0.85;
+        }
+
+        .dashboard-item.pending {
+            background: linear-gradient(135deg, #ff8c00, #ffb74d); /* Orange */
+        }
+
+        .dashboard-item.denied {
+            background: linear-gradient(135deg, #d32f2f, #ff6659); /* Red */
+        }
+
+        .dashboard-item.accepted {
+            background: linear-gradient(135deg, #388e3c, #66bb6a); /* Green */
+        }
+
+        .ftco-navbar-light {
+            background: #ffff !important;
+            flex-shrink: 0;
+            position: static;
+            width: 100%;
+            padding: 0.5rem 1rem;
+            box-shadow: 0 2px 4px rgba(239, 243, 244, 0.1);
+        }
+
+        .ftco-navbar-light .navbar-nav > .nav-item > .nav-link {
+            color: #000 !important;
+        }
+
+        .navbar-container {
+            display: flex;
+            width: 100%;
+            max-width: 100%;
+            padding: 0 15px;
+            align-items: center;
+        }
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            margin: 50px auto;
+            max-width: 1200px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        .pie-chart {
+            width: 50%;
+            max-width: 400px;
+            padding: 20px;
+        }
+
+        .chart-legend {
+            width: 50%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .legend-color {
+            width: 25px;
+            height: 25px;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+
+        .legend-text {
+            font-size: 16px;
+            font-weight: 500;
+            width: 150px;
+        }
+
+        .legend-value {
+            margin-left: auto;
+            font-weight: bold;
+            text-align: right;
+            min-width: 100px;
+        }
+
+        .total-requests {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .chart-container {
+                flex-direction: column;
+            }
+            .pie-chart, .chart-legend {
+                width: 100%;
+            }
+        }
+        /* Hover effect on the legend items */
+        .chart-legend .legend-item:hover {
+            background-color: #f1f1f1;
+            cursor: pointer;
+            border-radius: 5px;
+            transform: scale(1.05);
+        }
+
+        /* Active effect when clicked on a legend item */
+        .chart-legend .legend-item:active {
+            transform: scale(1.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        a {
+
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="navbar-container">
+        <a class="navbar-brand" href="/users/home">Request Management System</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a href="/users/home" class="nav-link">Home</a></li>
+                <li class="nav-item" id="request"><a href="/requests" class="nav-link">Request</a></li>
+                <li class="nav-item" id="office"><a href="#" class="nav-link">Office</a></li>
+                <li class="nav-item" id="meeting"><a href="/meeting-room" class="nav-link">Meeting</a></li>
+                <li class="nav-item" id="account"><a href="/users" class="nav-link">Account</a></li>
+                <li class="nav-item cta mr-md-2" id="loginBtn"><a href="/users/login" class="nav-link">Login</a></li>
+                <li class="nav-item dropdown" id="userInfo" style="display: none;">
+                    <a class="nav-link dropdown-toggle" href="#" id="usernameDisplay" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                    <div class="dropdown-menu" aria-labelledby="usernameDisplay">
+                        <a class="dropdown-item" href="/users/account">Profile</a>
+                        <a class="dropdown-item" href="#" onclick="logout()">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section class="dashboard">
+    <a href="/requests" class="dashboard-item pending" id="pendingRequests">
+        <div class="label">Pending</div>
+        <div class="icon"><i class="fas fa-hourglass-half"></i></div>
+        <div class="count">0</div>
+        <div class="total">Total 0</div>
+    </a>
+    <a href="/requests" class="dashboard-item denied" id="deniedRequests">
+        <div class="label">Denied</div>
+        <div class="icon"><i class="fas fa-times-circle"></i></div>
+        <div class="count">0</div>
+        <div class="total">Total 0</div>
+    </a>
+    <a href="/requests" class="dashboard-item accepted" id="acceptedRequests">
+        <div class="label">Accepted</div>
+        <div class="icon"><i class="fas fa-check-circle"></i></div>
+        <div class="count">0</div>
+        <div class="total">Total 0</div>
+    </a>
+</section>
+
+<!-- New chart section -->
+<section class="chart-container">
+    <div class="pie-chart">
+        <canvas id="requestsChart"></canvas>
+    </div>
+    <div class="chart-legend">
+        <!-- Pending -->
+        <a href="/requests" class="legend-item" id="pendingLegend">
+            <div class="legend-color" style="background-color: #ff8c00;"></div>
+            <span class="legend-text">Pending Requests</span>
+            <span class="legend-value" id="pendingPercent">0 (0%)</span>
+        </a>
+
+        <!-- Rejected -->
+        <a href="/requests" class="legend-item" id="rejectedLegend">
+            <div class="legend-color" style="background-color: #d32f2f;"></div>
+            <span class="legend-text">Rejected Requests</span>
+            <span class="legend-value" id="rejectedPercent">0 (0%)</span>
+        </a>
+
+        <!-- Approved -->
+        <a href="/requests" class="legend-item" id="approvedLegend">
+            <div class="legend-color" style="background-color: #388e3c;"></div>
+            <span class="legend-text">Approved Requests</span>
+            <span class="legend-value" id="approvedPercent">0 (0%)</span>
+        </a>
+
+        <div class="total-requests">
+            Total Requests: <span id="totalRequests">0</span>
+        </div>
+    </div>
+</section>
+
+
+<section class="overlay">
+    <div class="modal">
+        <h2 id="modal-title"></h2>
+        <p id="modal-message"></p>
+        <button class="close-btn">Đóng</button>
+    </div>
+</section>
+<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const username = localStorage.getItem('Username');
+        const role = localStorage.getItem('Role');
+
+        if (username && role) {
+            document.getElementById('loginBtn').style.display = 'none';
+            document.getElementById('userInfo').style.display = 'block';
+            document.getElementById('usernameDisplay').textContent = username;
+
+            if (role === 'ADMIN') {
+                document.getElementById('meeting').style.display = 'none';
+            } else if (role === 'EMPLOYEE') {
+                document.getElementById('office').style.display = 'none';
+                document.getElementById('account').style.display = 'none';
+            } else if (role === 'SUPERVISOR') {
+                document.getElementById('office').style.display = 'none';
+                document.getElementById('meeting').style.display = 'none';
+            }
+        }
+    });
+
+    function logout() {
+        fetch('/api/v1/users/logout', {
+            method: 'POST',
+            credentials: 'include',
+        })
+            .then(response => {
+                if (response.ok) {
+                    localStorage.clear();
+                    document.cookie.split(";").forEach(function(c) {
+                        document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+                    });
+                    window.location.href = "/users/login";
+                } else {
+                    alert("Đăng xuất không thành công. Vui lòng thử lại.");
+                }
+            })
+            .catch(error => {
+                console.error("Logout error:", error);
+                alert("Lỗi trong quá trình đăng xuất.");
+            });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch('/api/v1/requests')
+            .then(response => response.json())
+            .then(data => {
+                const requests = data.data || [];
+
+                const Pending = requests.filter(r => r.requestStatus === 'PENDING').length;
+                const Approved = requests.filter(r => r.requestStatus === 'APPROVED').length;
+                const Rejected = requests.filter(r => r.requestStatus === 'REJECTED').length;
+                const total = requests.length;
+
+                // Update dashboard items
+                document.querySelector('#pendingRequests .count').textContent = Pending;
+                document.querySelector('#pendingRequests .total').textContent = `Total ${total}`;
+
+                document.querySelector('#deniedRequests .count').textContent = Rejected;
+                document.querySelector('#deniedRequests .total').textContent = `Total ${total}`;
+
+                document.querySelector('#acceptedRequests .count').textContent = Approved;
+                document.querySelector('#acceptedRequests .total').textContent = `Total  ${total}`;
+
+                // Calculate percentages
+                const pendingPercent = total > 0 ? Math.round((Pending / total) * 100) : 0;
+                const rejectedPercent = total > 0 ? Math.round((Rejected / total) * 100) : 0;
+                const approvedPercent = total > 0 ? Math.round((Approved / total) * 100) : 0;
+
+                // Update legend values with both count and percentage
+                document.getElementById('pendingPercent').textContent = `${Pending} (${pendingPercent}%)`;
+                document.getElementById('rejectedPercent').textContent = `${Rejected} (${rejectedPercent}%)`;
+                document.getElementById('approvedPercent').textContent = `${Approved} (${approvedPercent}%)`;
+                document.getElementById('totalRequests').textContent = total;
+
+                // Create pie chart
+                const ctx = document.getElementById('requestsChart').getContext('2d');
+                const requestsChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Pending', 'Rejected', 'Approved'],
+                        datasets: [{
+                            data: [Pending, Rejected, Approved],
+                            backgroundColor: [
+                                '#ff8c00',
+                                '#d32f2f',
+                                '#388e3c'
+                            ],
+                            borderColor: [
+                                '#ffffff',
+                                '#ffffff',
+                                '#ffffff'
+                            ],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const label = context.label || '';
+                                        const value = context.raw || 0;
+                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        const percentage = Math.round((value / total) * 100);
+                                        return `${label}: ${value} (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    });
+</script>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery-migrate-3.0.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.easing.1.3.js"></script>
+<script src="/js/jquery.waypoints.min.js"></script>
+<script src="/js/jquery.stellar.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/aos.js"></script>
+<script src="/js/jquery.animateNumber.min.js"></script>
+<script src="/js/scrollax.min.js"></script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>

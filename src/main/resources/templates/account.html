@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Meeting CMC Global</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/aos.css">
+    <link rel="stylesheet" href="/css/ionicons.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/css/jquery.timepicker.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/icomoon.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/sessionTimeout.js"></script>
+    <style>
+        :root {
+            --primary-color: #a1cbe4;
+            --primary-hover: #4786ba;
+            --danger-color: #d31616;
+            --success-color: #2ecc71;
+            --success-hover: #27ae60;
+            --warning-color: #f39c12;
+            --warning-hover: #d35400;
+            --dark-color: #358cc8;
+            --light-color: #ecf0f1;
+            --border-color: #dfe6e9;
+            --text-color: #030303;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f7fa;
+            color: var(--text-color);
+            line-height: 2.3;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        footer {
+            margin-top: auto;
+        }
+
+        .ftco-navbar-light {
+            background: #002958 !important;
+            flex-shrink: 0;
+            width: 100%;
+            padding: 0.5rem 1rem;
+            box-shadow: 0 2px 4px rgba(239, 243, 244, 0.1);
+        }
+
+        .navbar-container {
+            display: flex;
+            width: 100%;
+            padding: 0 15px;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            font-size: 1.25rem;
+            white-space: nowrap;
+            margin-right: 1rem;
+            color: #ffffff;
+        }
+
+        .navbar-toggler {
+            order: 2;
+            margin-left: auto;
+        }
+
+        .ftco-navbar-light .navbar-brand,
+        .ftco-navbar-light .navbar-nav > .nav-item > .nav-link,
+        .ftco-navbar-light .navbar-nav > .nav-item.active > a,
+        .ftco-navbar-light .navbar-nav > .nav-item > .nav-link:hover {
+            color: #ffffff;
+        }
+
+        .navbar-nav {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+            width: 100%;
+        }
+
+        .nav-item {
+            margin: 0 0.5rem;
+            white-space: nowrap;
+        }
+
+        .nav-link {
+            padding: 0.5rem 0.75rem;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+        }
+
+        .main-content {
+            flex: 1;
+            overflow: auto;
+            padding: 20px 0;
+            min-height: calc(100vh - 60px - 10px);
+        }
+
+        .content-padding {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
+        }
+        .btn-danger {
+            background-color: var(--danger-color);
+            border-color: var(--danger-color);
+        }
+        .btn-success {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+        }
+        .btn-success:hover {
+            background-color: var(--success-hover);
+            border-color: var(--success-hover);
+        }
+        .btn-warning {
+            background-color: var(--warning-color);
+            border-color: var(--warning-color);
+        }
+        .btn-warning:hover {
+            background-color: var(--warning-hover);
+            border-color: var(--warning-hover);
+        }
+
+        .alert-error {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--danger-color);
+            border-color: rgba(231, 76, 60, 0.3);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            min-width: 800px;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        th {
+            background-color: #1d96ea;
+            color: white;
+            font-weight: 500;
+            position: sticky;
+            top: 0;
+        }
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        @media (min-width: 1200px) {
+            .navbar-container {
+                padding: 0 30px;
+            }
+            .content-padding {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .navbar-toggler {
+                order: 3;
+            }
+            #ftco-nav {
+                order: 4;
+                flex-basis: 100%;
+            }
+            .navbar-nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .nav-item {
+                margin: 0.25rem 0;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            .pagination-container {
+                flex-wrap: wrap;
+            }
+        }
+        .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        #changePasswordForm {
+            margin-top: 20px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .col-md-6 {
+            flex: 1;
+            padding: 15px;
+            min-width: 300px;
+        }
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="navbar-container">
+        <a class="navbar-brand" href="/users/home">Meeting CMC Global</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a href="/users/home" class="nav-link">Home</a></li>
+                <li class="nav-item" id="office"><a href="#" class="nav-link">Office</a></li>
+                <li class="nav-item" id="meeting"><a href="#" class="nav-link">Meeting</a></li>
+                <li class="nav-item cta mr-md-2" id="loginBtn"><a href="/users/login" class="nav-link">Login</a></li>
+                <li class="nav-item dropdown" id="userInfo" style="display: none;">
+                    <a class="nav-link dropdown-toggle" href="#" id="usernameDisplay" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                    <div class="dropdown-menu" aria-labelledby="usernameDisplay">
+                        <a class="dropdown-item" href="#">Profile</a>
+                        <a class="dropdown-item" href="#" onclick="logout()">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div style="height: 40px;"></div>
+<main class="main-content">
+    <div class="container mt-5">
+        <h2 class="mb-4">User Profile</h2>
+        <div class="row">
+            <!-- Thông tin người dùng (nửa trái) -->
+            <div class="col-md-6">
+                <div id="profileCard" class="card shadow-sm p-4">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary mb-3"><i class="fas fa-user-circle me-2"></i>Thông tin người dùng</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Employee Name:</strong> <span id="employeeName"></span></li>
+                            <li class="list-group-item"><strong>Email:</strong> <span id="email"></span></li>
+                            <li class="list-group-item"><strong>Department:</strong> <span id="department"></span></li>
+                            <li class="list-group-item"><strong>Role:</strong> <span id="role"></span></li>
+                            <li class="list-group-item"><strong>Status:</strong> <span id="status"></span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Form thay đổi mật khẩu (nửa phải) -->
+            <div class="col-md-6">
+                <!-- Thêm button để mở form đổi mật khẩu -->
+                <button id="changePasswordBtn" class="btn btn-warning mt-4">Change Password</button>
+
+                <!-- Form thay đổi mật khẩu (ẩn mặc định) -->
+                <div id="changePasswordForm" class="mt-4" style="display: none;">
+                    <form id="passwordForm">
+                        <div class="mb-3">
+                            <label for="oldPassword" class="form-label">Current Password</label>
+                            <input type="password" class="form-control" id="oldPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newPassword" class="form-label">New Password</label>
+                            <input type="password" class="form-control" id="newPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Change Password</button>
+                        <button type="button" class="btn btn-secondary" id="cancelChangePasswordBtn">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-success text-white">
+            <strong class="me-auto">Success</strong>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <span id="toastMessage"></span>
+        </div>
+    </div>
+</div>
+<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const username = localStorage.getItem('Username');
+        const role = localStorage.getItem('Role');
+
+        if (username && role) {
+            // Ẩn nút login
+            document.getElementById('loginBtn').style.display = 'none';
+
+            // Hiện user info
+            document.getElementById('userInfo').style.display = 'block';
+            document.getElementById('usernameDisplay').textContent = username;
+
+            // Xử lý role nếu cần
+            if (role === 'ADMIN') {
+                // Hiện tất cả
+            } else if (role === 'EMPLOYEE') {
+                document.getElementById('office').style.display = 'none';
+                document.getElementById('meeting').style.display = 'none';
+            } else if (role === 'SUPERVISOR') {
+                document.getElementById('office').style.display = 'none';
+            }
+        }
+    });
+
+    function logout() {
+        fetch('/api/v1/users/logout', {
+            method: 'POST',
+            credentials: 'include', // rất quan trọng để gửi cookie/session đi kèm
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Xóa dữ liệu localStorage, cookie, session nếu cần
+                    localStorage.clear();
+
+                    // Xóa cookie bằng cách set expired
+                    document.cookie.split(";").forEach(function(c) {
+                        document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+                    });
+
+                    // Redirect hoặc reload trang
+                    window.location.href = "/users/login";
+                } else {
+                    alert("Đăng xuất không thành công. Vui lòng thử lại.");
+                }
+            })
+            .catch(error => {
+                console.error("Logout error:", error);
+                alert("Lỗi trong quá trình đăng xuất.");
+            });
+    }
+
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", async function () {
+        try {
+            const response = await fetch("/api/v1/users/me", {
+                method: "GET",
+                credentials: "include"
+            });
+
+            if (response.ok) {
+                const { data } = await response.json();
+
+                // Hiển thị vào HTML
+                document.getElementById("employeeName").textContent = data.employeeName || "N/A";
+                document.getElementById("email").textContent = data.email || "N/A";
+                document.getElementById("role").textContent = data.roleName || "N/A";
+                document.getElementById("department").textContent = data.departmentName || "N/A";
+                document.getElementById("status").textContent = data.status || "N/A";
+
+                // Lưu thêm vào localStorage nếu cần
+                localStorage.setItem("EmployeeName", data.employeeName);
+                localStorage.setItem("Email", data.email);
+                localStorage.setItem("DepartmentName", data.departmentName);
+                localStorage.setItem("RoleName", data.roleName);
+                localStorage.setItem("Status", data.status);
+            } else {
+                console.error("Không thể lấy thông tin người dùng.");
+            }
+        } catch (e) {
+            console.error("Lỗi kết nối khi gọi /me:", e);
+        }
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        const changePasswordBtn = document.getElementById('changePasswordBtn');
+        const changePasswordForm = document.getElementById('changePasswordForm');
+        const cancelChangePasswordBtn = document.getElementById('cancelChangePasswordBtn');
+        const passwordForm = document.getElementById('passwordForm');
+
+        // Toggle form visibility
+        changePasswordBtn.addEventListener('click', function () {
+            changePasswordForm.style.display = 'block';
+        });
+
+        cancelChangePasswordBtn.addEventListener('click', function () {
+            changePasswordForm.style.display = 'none';
+        });
+
+        // Validate new password format
+        function isPasswordValid(password) {
+            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{10,}$/;
+            return regex.test(password);
+        }
+
+        // Handle form submission
+        passwordForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const oldPassword = document.getElementById('oldPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (newPassword !== confirmPassword) {
+                showToast('New passwords do not match!', 'error');
+                return;
+            }
+
+            if (!isPasswordValid(newPassword)) {
+                showToast('New password must be at least 10 characters long and include uppercase, lowercase, and a special character.', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/v1/users/change-password', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        oldPassword: oldPassword,
+                        newPassword: newPassword
+                    }),
+                    credentials: 'include',
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showToast('Password changed successfully!', 'success');
+                    changePasswordForm.style.display = 'none';
+                } else {
+                    showToast(data.message || 'Error changing password.', 'error');
+                }
+            } catch (error) {
+                console.error('Error changing password:', error);
+                showToast('There was an error changing the password.', 'error');
+            }
+        });
+    });
+
+    // Toast handler
+    function showToast(message, type = 'success', delay = 8000) {
+        const toastEl = document.getElementById('successToast');
+        const toastMessage = document.getElementById('toastMessage');
+        const header = toastEl.querySelector('.toast-header');
+
+        toastMessage.textContent = message;
+
+        if (type === 'success') {
+            header.classList.remove('bg-danger');
+            header.classList.add('bg-success');
+            header.querySelector('strong').textContent = 'Success';
+        } else {
+            header.classList.remove('bg-success');
+            header.classList.add('bg-danger');
+            header.querySelector('strong').textContent = 'Error';
+        }
+
+        // ⚠️ Tạo toast với delay cấu hình
+        const toast = new bootstrap.Toast(toastEl, {
+            delay: delay
+        });
+        toast.show();
+    }
+
+</script>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery-migrate-3.0.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.easing.1.3.js"></script>
+<script src="/js/jquery.waypoints.min.js"></script>
+<script src="/js/jquery.stellar.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/aos.js"></script>
+<script src="/js/jquery.animateNumber.min.js"></script>
+<script src="/js/scrollax.min.js"></script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>

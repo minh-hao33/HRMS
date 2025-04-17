@@ -1,0 +1,16 @@
+spring:
+    datasource:
+        url: jdbc:mysql://devserver:3306/HRMS
+        username: root
+        password: Cmcuni@2025
+        driver-class-name: com.mysql.cj.jdbc.Driver
+#logging:
+#    level:
+#        root: DEBUG
+mybatis:
+    type-aliases-package: com.example.hrms.biz.booking.model,
+        com.example.hrms.biz.department.model,
+        com.example.hrms.biz.meetingroom.model,
+        com.example.hrms.biz.request.model,
+        com.example.hrms.biz.role.model,
+        com.example.hrms.biz.user.model

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Room Form</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tiny.cloud/1/q8eyc0pclp8vkwynx04vs7o65308fed83bgx6k7udmbjg26m/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#content',
+            plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+            toolbar: 'bold italic underline | alignleft aligncenter alignright alignjustify | link image'
+        });
+
+        let initialFormData = {};
+
+        function storeInitialData() {
+            const formElements = document.querySelectorAll('#bookingForm input, #bookingForm textarea');
+            formElements.forEach(element => {
+                if (element.type === 'checkbox' || element.type === 'radio') {
+                    initialFormData[element.id] = element.checked;
+                } else {
+                    initialFormData[element.id] = element.value;
+                }
+            });
+        }
+
+        function resetFormData() {
+            const formElements = document.querySelectorAll('#bookingForm input, #bookingForm textarea');
+            formElements.forEach(element => {
+                if (element.type === 'checkbox' || element.type === 'radio') {
+                    element.checked = initialFormData[element.id];
+                } else {
+                    element.value = initialFormData[element.id];
+                }
+            });
+        }
+
+        function toggleEdit() {
+            const formElements = document.querySelectorAll('#bookingForm input, #bookingForm textarea');
+            formElements.forEach(element => {
+                if (element.type !== 'radio' && element.type !== 'checkbox') {
+                    element.readOnly = !element.readOnly;
+                }
+                element.disabled = !element.disabled;
+            });
+
+            const editButton = document.getElementById('editButton');
+            if (editButton.textContent === 'Edit') {
+                editButton.textContent = 'Save';
+            } else {
+                editButton.textContent = 'Edit';
+                storeInitialData();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            storeInitialData();
+
+            $('#bookingModal').on('hidden.bs.modal', function (event) {
+                resetFormData();
+                const formElements = document.querySelectorAll('#bookingForm input, #bookingForm textarea');
+                formElements.forEach(element => {
+                    if (element.type !== 'radio' && element.type !== 'checkbox') {
+                        element.readOnly = true;
+                    }
+                    element.disabled = true;
+                });
+                document.getElementById('editButton').textContent = 'Edit';
+            });
+        });
+
+        function toggleRecurrence(type) {
+            document.getElementById('recurrenceOnly').style.display = 'none';
+            document.getElementById('recurrenceDaily').style.display = 'none';
+            document.getElementById('recurrenceWeekly').style.display = 'none';
+
+            if (type === 'only') {
+                document.getElementById('recurrenceOnly').style.display = 'block';
+            } else if (type === 'daily') {
+                document.getElementById('recurrenceDaily').style.display = 'block';
+            } else if (type === 'weekly') {
+                document.getElementById('recurrenceWeekly').style.display = 'block';
+            }
+        }
+        tinymce.init({
+            selector: '#content',
+            plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+            toolbar: 'bold italic underline | alignleft aligncenter alignright alignjustify | link image',
+            external_plugins: {
+                'print': 'https://cdn.tiny.cloud/1/q8eyc0pclp8vkwynx04vs7o65308fed83bgx6k7udmbjg26m/tinymce/5/plugins/print/plugin.min.js',
+                'hr': 'https://cdn.tiny.cloud/1/q8eyc0pclp8vkwynx04vs7o65308fed83bgx6k7udmbjg26m/tinymce/5/plugins/hr/plugin.min.js'
+            }
+        });
+    </script>
+    <style>
+        .modal-dialog {
+            max-width: 1050px;
+        }
+        .room-info {
+            border-left: 1px solid #ddd;
+            padding-left: 20px;
+        }
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .form-inline label {
+            margin-right: 0.5rem;
+        }
+        .form-group label {
+            width: 150px;
+            margin-right: 10px;
+        }
+        .form-group input, .form-group textarea {
+            flex: 1;
+            max-width: 300px;
+        }
+        .weekly-label {
+            display: flex;
+            align-items: center;
+        }
+        .only-label {
+            display: flex;
+            align-items: center;
+        }
+        .daily-label {
+            display: flex;
+            align-items: center;
+        }
+        .range-label {
+            display: flex;
+            align-items: center;
+        }
+        .form-inline .form-control {
+            width: auto;
+            flex: 1;
+        }
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <button class="btn btn-primary" data-toggle="modal" data-target="#bookingModal">Booking</button>
+    <div class="modal fade" id="bookingModal" tabindex="-1" role="dialog" aria-labelledby="bookingModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bookingModalLabel">View Room Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <form id="bookingForm">
+                                <div class="form-group">
+                                    <label for="title">Title:</label>
+                                    <input type="text" class="form-control" id="title" value="DKR1_Training 1 (Draft)" readonly disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label for="attendees">Attendees:</label>
+                                    <input type="text" class="form-control" id="attendees" value="ntdu, pmhao, pnminh, bkkhanh, nhtien" readonly disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label for="content">Content Brief:</label>
+                                    <textarea id="content" rows="3" class="form-control" value="Enter Content" readonly disabled></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Link MS Team:</label>
+                                    <input type="radio" name="linkMS" id="linkYes" class="mr-1" disabled> Yes
+                                    <input type="radio" name="linkMS" id="linkNo" class="ml-3 mr-1" checked disabled> No
+                                </div>
+                                <div class="form-group">
+                                    <label>Recurrence pattern:</label>
+                                    <input type="radio" name="recurrence" id="only" onclick="toggleRecurrence('only')" checked disabled> Only
+                                    <input type="radio" name="recurrence" id="daily" onclick="toggleRecurrence('daily')" disabled> Daily
+                                    <input type="radio" name="recurrence" id="weekly" onclick="toggleRecurrence('weekly')" disabled> Weekly
+                                </div>
+                                <div id="recurrenceOnly" class="form-group">
+                                    <div class="only-label">
+                                        <label for="dateOnly">Date: </label>
+                                        <input type="datetime-local" class="form-control ml-2" id="dateOnly" value="2025-03-01" readonly>
+                                    </div>
+                                </div>
+                                <div id="recurrenceDaily" class="form-group" style="display:none;">
+                                    <div class="daily-label">
+                                        <label for="dateStartDaily">Range: </label>
+                                        <input type="datetime-local" class="form-control ml-2" id="dateStartDaily" readonly disabled>
+                                        <input type="datetime-local" class="form-control ml-2" id="dateEndDaily" readonly disabled>
+                                    </div>
+                                </div>
+                                <div id="recurrenceWeekly" class="form-group" style="display:none;">
+                                    <div class="weekly-label">
+                                        <label>Weekly:</label>
+                                        <div class="form-inline ml-2">
+                                            <input type="checkbox" id="mo" class="ml-2" disabled> Mo
+                                            <input type="checkbox" id="tu" class="ml-2" disabled> Tu
+                                            <input type="checkbox" id="we" class="ml-2" disabled> We
+                                            <input type="checkbox" id="th" class="ml-2" disabled> Th
+                                            <input type="checkbox" id="fr" class="ml-2" disabled> Fr
+                                        </div>
+                                    </div>
+                                    <div class="range-label">
+                                        <label>Range:</label>
+                                        <input type="datetime-local" class="form-control ml-2" id="dateStartWeekly" readonly disabled>
+                                        <input type="datetime-local" class="form-control ml-2" id="dateEndWeekly" readonly disabled>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-4 room-info">
+                            <h5>Room Information</h5>
+                            <p><strong>Time:</strong> 10:00 - 12:00</p>
+                            <p><strong>Building:</strong> 789 Tower</p>
+                            <p><strong>Floor:</strong> Tầng 8 - new</p>
+                            <p><strong>Meeting room:</strong> Brainstorming</p>
+                            <p><strong>Price:</strong> 100,000 VNĐ/h</p>
+                            <p><strong>Seats:</strong> 6</p>
+                            <p><strong>Devices and services:</strong></p>
+                            <p><strong>Images:</strong></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

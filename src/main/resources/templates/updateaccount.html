@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Meeting CMC Global</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/open-iconic-bootstrap.min.css">
+  <link rel="stylesheet" href="/css/animate.css">
+  <link rel="stylesheet" href="/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="/css/magnific-popup.css">
+  <link rel="stylesheet" href="/css/aos.css">
+  <link rel="stylesheet" href="/css/ionicons.min.css">
+  <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
+  <link rel="stylesheet" href="/css/jquery.timepicker.css">
+  <link rel="stylesheet" href="/css/flaticon.css">
+  <link rel="stylesheet" href="/css/icomoon.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/sessionTimeout.js"></script>
+  <style>
+    :root {
+      --primary-color: #abd0ec;
+      --primary-hover: #3e7ca6;
+      --danger-color: #e11c1c;
+      --danger-hover: #17dce3;
+      --success-color: #2ecc71;
+      --success-hover: #27ae60;
+      --warning-color: #f39c12;
+      --warning-hover: #d35400;
+      --dark-color: #23c1d6;
+      --light-color: #ecf0f1;
+      --border-color: #dfe6e9;
+      --text-color: #02a7ee;
+      --text-light: #070707;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f8f9fa;
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      line-height: 3.2;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+
+
+    .main-content {
+      flex: 1;
+      overflow: auto;
+      padding: 30px 0;
+    }
+
+    .navbar-container {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 0 15px;
+    }
+
+    .ftco-navbar-light {
+      background: #ffff !important;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      flex-shrink: 0;
+      width: 100%;
+      padding: 0.5rem 1rem;
+    }
+
+    .navbar-brand {
+      font-size: 1.25rem;
+      color: #0078d4;
+      margin-right: 1rem;
+      white-space: nowrap;
+    }
+
+    .navbar-nav {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-item {
+      margin: 0 0.5rem;
+    }
+
+    .nav-link {
+      color: #000000 !important;
+      padding: 0.5rem 0.75rem;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+    }
+
+    .card {
+      border: none;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-header {
+      background-color:#0078D4 !important;
+      border-radius: 12px 12px 0 0 !important;
+      border-bottom: none;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    .readonly-input {
+      background-color: #f0f0f0;
+      cursor: not-allowed;
+    }
+
+    .account-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+      border-color: var(--primary-hover);
+    }
+
+    .btn-danger {
+      background-color: #e62537;
+      border-color: #4a4040;
+    }
+
+    .btn-danger:hover {
+      background-color: var(--danger-hover);
+      border-color: var(--danger-hover);
+    }
+
+    .btn-warning {
+      background-color: var(--warning-color);
+      border-color: var(--warning-color);
+      color: white;
+    }
+
+    .btn-warning:hover {
+      background-color: var(--warning-hover);
+      border-color: var(--warning-hover);
+    }
+
+    .alert-error {
+      background-color: rgba(60, 231, 225, 0.77);
+      color: #0088cc;
+      border: 1px solid rgb(23, 220, 227);
+      padding: 10px 15px;
+      border-radius: 6px;
+    }
+
+    footer {
+      margin-top: auto;
+    }
+
+    @media (max-width: 768px) {
+      .navbar-nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      @media (min-width: 1200px) {
+        .container {
+          max-width: 900px;
+        }
+      }
+
+      .nav-item {
+        width: 100%;
+        margin: 0.25rem 0;
+      }
+
+      .container {
+        padding: 20px;
+      }
+
+    }
+    .container.py-4 {
+      margin-top: 70px;
+    }
+
+    .ftco-navbar-light .navbar-brand {
+      color: #0078D4 !important;
+    }
+    .container {
+      padding: 200px;
+    }
+  </style>
+
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+  <div class="navbar-container">
+    <a class="navbar-brand" href="/users/home">Meeting CMC Global</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="oi oi-menu"></span> Menu
+    </button>
+
+    <div class="collapse navbar-collapse" id="ftco-nav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active"><a href="/users/home" class="nav-link">Home</a></li>
+        <li class="nav-item" id="office"><a href="#" class="nav-link">Office</a></li>
+        <li class="nav-item" id="meeting"><a href="#" class="nav-link">Meeting</a></li>
+        <li class="nav-item cta mr-md-2" id="loginBtn"><a href="/users/login" class="nav-link">Login</a></li>
+        <li class="nav-item dropdown" id="userInfo" style="display: none;">
+          <a class="nav-link dropdown-toggle" href="#" id="usernameDisplay" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+          <div class="dropdown-menu" aria-labelledby="usernameDisplay">
+            <a class="dropdown-item" href="/users/account">Profile</a>
+            <a class="dropdown-item" href="#" onclick="logout()">Logout</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="main-content">
+  <div class="container py-4">
+    <div id="errorAlert" class="alert alert-error alert-dismissible fade show" style="display: none;">
+      <span id="errorMessage"></span>
+      <button type="button" class="btn-close" onclick="document.getElementById('errorAlert').style.display = 'none'"></button>
+    </div>
+
+    <div class="card shadow">
+      <div class="card-header">
+        <h2 class="mb-0"><i class="fas fa-user-edit me-2"></i>Cập nhật tài khoản</h2>
+      </div>
+
+      <div class="card-body">
+        <form id="updateForm">
+          <div class="mb-3">
+            <label for="username" class="form-label">Username:</label>
+            <input type="text" id="username" class="form-control readonly-input" readonly>
+          </div>
+
+          <div class="mb-3">
+            <label for="employeeName" class="form-label">Tên nhân viên:</label>
+            <input type="text" id="employeeName" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" id="email" class="form-control readonly-input" readonly>
+          </div>
+
+          <div class="mb-3">
+            <label for="department" class="form-label">Đơn vị:</label>
+            <select id="department" class="form-select"></select>
+          </div>
+
+          <div class="mb-3">
+            <label for="role" class="form-label">Quyền:</label>
+            <select id="role" class="form-select"></select>
+          </div>
+
+          <div class="mb-3 form-check">
+            <div class="account-status">
+              <input type="checkbox" id="active" class="form-check-input">
+              <label class="form-check-label" for="active">Tài khoản hoạt động</label>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between mt-4">
+            <button type="button" id="saveBtn" class="btn btn-primary">
+              <i class="fas fa-save me-2"></i>Lưu
+            </button>
+            <button type="button" id="resetBtn" class="btn btn-warning">
+              <i class="fas fa-key me-2"></i>Đặt lại mật khẩu
+            </button>
+            <button type="button" onclick="window.location.href='/users'" class="btn btn-danger">
+              <i class="fas fa-times me-2"></i>Hủy
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal đặt lại mật khẩu -->
+  <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="passwordModalLabel"><i class="fas fa-key me-2"></i>Đặt lại mật khẩu</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Nhập mật khẩu mới cho tài khoản:</p>
+          <input type="password" id="newPassword" class="form-control" placeholder="Mật khẩu mới">
+          <div class="mt-2 text-muted small">
+            <i class="fas fa-info-circle me-1"></i>Mật khẩu phải có ít nhất 10 ký tự, bao gồm chữ hoa, chữ thường và ký tự đặc biệt
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <i class="fas fa-times me-1"></i>Hủy
+          </button>
+          <button type="button" id="confirmResetBtn" class="btn btn-primary">
+            <i class="fas fa-check me-1"></i>Xác nhận
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header bg-success text-white">
+      <strong class="me-auto">Success</strong>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      <span id="toastMessage"></span>
+    </div>
+  </div>
+</div>
+<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const username = localStorage.getItem('Username');
+    const role = localStorage.getItem('Role');
+
+    if (username && role) {
+      // Ẩn nút login
+      document.getElementById('loginBtn').style.display = 'none';
+
+      // Hiện user info
+      document.getElementById('userInfo').style.display = 'block';
+      document.getElementById('usernameDisplay').textContent = username;
+
+      // Xử lý role nếu cần
+      if (role === 'ADMIN') {
+        // Hiện tất cả
+      } else if (role === 'EMPLOYEE') {
+        document.getElementById('office').style.display = 'none';
+        document.getElementById('meeting').style.display = 'none';
+      } else if (role === 'SUPERVISOR') {
+        document.getElementById('office').style.display = 'none';
+      }
+    }
+  });
+
+  function logout() {
+    fetch('/api/v1/users/logout', {
+      method: 'POST',
+      credentials: 'include', // rất quan trọng để gửi cookie/session đi kèm
+    })
+            .then(response => {
+              if (response.ok) {
+                // Xóa dữ liệu localStorage, cookie, session nếu cần
+                localStorage.clear();
+
+                // Xóa cookie bằng cách set expired
+                document.cookie.split(";").forEach(function(c) {
+                  document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+                });
+
+                // Redirect hoặc reload trang
+                window.location.href = "/users/login";
+              } else {
+                alert("Đăng xuất không thành công. Vui lòng thử lại.");
+              }
+            })
+            .catch(error => {
+              console.error("Logout error:", error);
+              alert("Lỗi trong quá trình đăng xuất.");
+            });
+  }
+  const urlParts = window.location.pathname.split('/');
+  const username = urlParts[urlParts.length - 1];
+  let currentUserData = null;
+  let passwordModal = null;
+  let currentUserRole = 'UNKNOWN';
+
+  function showError(message) {
+    const errorAlert = document.getElementById('errorAlert');
+    const errorMessage = document.getElementById('errorMessage');
+    errorMessage.textContent = message;
+    errorAlert.style.display = 'block';
+    setTimeout(() => errorAlert.style.display = 'none', 5000);
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    // Khởi tạo modal với Bootstrap 5
+    passwordModal = new bootstrap.Modal(document.getElementById('passwordModal'));
+
+    // Xử lý sự kiện nút Reset Password
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      document.getElementById('newPassword').value = '';
+      passwordModal.show();
+    });
+
+    // Xử lý sự kiện nút Xác nhận
+    document.getElementById('confirmResetBtn').addEventListener('click', async () => {
+      await resetPassword();
+    });
+
+    try {
+      const roleResponse = await fetch('/api/v1/users/getUserRole');
+      if (roleResponse.ok) {
+        const roleResult = await roleResponse.json();
+        currentUserRole = roleResult.data || 'UNKNOWN';
+      }
+    } catch (e) {
+      console.warn('Không thể lấy vai trò người dùng');
+    }
+
+    console.log("Current user role:", currentUserRole);
+
+    await fetchUserData();
+    await fetchDepartments(currentUserRole);
+    await fetchRoles(currentUserRole);
+
+    document.getElementById('saveBtn').addEventListener('click', updateUser);
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      document.getElementById('newPassword').value = '';
+      passwordModal.show();
+    });
+    document.getElementById('confirmResetBtn').addEventListener('click', resetPassword);
+
+    // Disable fields based on role
+    if (currentUserRole === 'ADMIN') {
+      // Admin không thể sửa username, email, role
+      document.getElementById('username').readOnly = true;
+      document.getElementById('email').readOnly = true;
+      document.getElementById('role').disabled = true;
+
+      document.getElementById('username').title = 'Admins cannot edit username';
+      document.getElementById('email').title = 'Admins cannot edit email';
+      document.getElementById('role').title = 'Admins cannot modify roles';
+
+    } else if (currentUserRole === 'SUPERVISOR') {
+      // Supervisor không thể sửa username, email, department
+      document.getElementById('username').readOnly = true;
+      document.getElementById('email').readOnly = true;
+      document.getElementById('department').disabled = true;
+
+      document.getElementById('username').title = 'Supervisors cannot edit username';
+      document.getElementById('email').title = 'Supervisors cannot edit email';
+      document.getElementById('department').title = 'Supervisors cannot change department';
+    }
+  });
+
+  async function fetchUserData() {
+    try {
+      const response = await fetch(`/api/v1/users/getUserByUsername/${username}`);
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const result = await response.json();
+      if (result) {
+        currentUserData = result;
+        populateUserForm(result);
+      } else {
+        console.error('No user data found');
+        showError('Không tìm thấy thông tin người dùng');
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      showError('Không thể tải thông tin người dùng');
+    }
+  }
+
+  function populateUserForm(user) {
+    document.getElementById('username').value = user.username || '';
+    document.getElementById('employeeName').value = user.employeeName || 'Unknown';
+    document.getElementById('email').value = user.email || '';
+    document.getElementById('active').checked = user.status === 'Active';
+
+    setTimeout(() => {
+      if (user.roleName) document.getElementById('role').value = user.roleName;
+      if (user.departmentId) document.getElementById('department').value = user.departmentId;
+    }, 200);
+  }
+
+  async function fetchDepartments(currentUserRole) {
+    try {
+      const response = await fetch('/api/v1/departments');
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const result = await response.json();
+      let departments = Array.isArray(result.data) ? result.data : result.retMsg || result || [];
+
+      if (typeof departments === 'string') {
+        const matches = departments.match(/Department\(departmentId=(\d+), departmentName=([^,]+)/g);
+        departments = matches.map(dept => {
+          const parts = dept.match(/departmentId=(\d+), departmentName=([^,]+)/);
+          return {
+            departmentId: parts[1],
+            departmentName: parts[2].trim()
+          };
+        });
+      }
+
+      const uniqueDepartments = departments.filter((dept, index, self) =>
+              index === self.findIndex(d => (d.departmentName || d.name).toLowerCase() === (dept.departmentName || dept.name).toLowerCase())
+      );
+
+      uniqueDepartments.sort((a, b) =>
+              (a.departmentName || a.name || '').localeCompare(b.departmentName || b.name || '')
+      );
+
+      const departmentSelect = document.getElementById('department');
+      if (!departmentSelect) return;
+      departmentSelect.innerHTML = '<option value="">Chọn đơn vị</option>';
+      uniqueDepartments.forEach(dept => {
+        const option = document.createElement('option');
+        option.value = dept.departmentId || dept.id;
+        option.textContent = dept.departmentName || dept.name || 'Unknown';
+        departmentSelect.appendChild(option);
+      });
+
+      if (currentUserData?.departmentId) {
+        departmentSelect.value = currentUserData.departmentId;
+      }
+
+    } catch (error) {
+      console.error('Error fetching departments:', error);
+      showError('Không thể tải danh sách đơn vị');
+    }
+  }
+
+  async function fetchRoles(currentUserRole) {
+    try {
+      const response = await fetch('/api/v1/roles/all');
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const result = await response.json();
+      let roles = Array.isArray(result.data) ? result.data : result.retMsg || result || [];
+
+      if (typeof roles === 'string') {
+        const matches = roles.match(/Role\(roleName=([^\)]+)/g);
+        roles = matches.map(role => {
+          const roleName = role.match(/roleName=([^\)]+)/)[1];
+          return { roleName };
+        });
+      }
+
+      const roleSelect = document.getElementById('role');
+      if (!roleSelect) return;
+      roleSelect.innerHTML = '<option value="">Chọn quyền</option>';
+      roles.forEach(role => {
+        if (currentUserRole === 'SUPERVISOR' && role.roleName === 'ADMIN') return;
+        const option = document.createElement('option');
+        option.value = role.roleName || role.name;
+        option.textContent = role.roleName || role.name || 'Unknown';
+        roleSelect.appendChild(option);
+      });
+
+      if (currentUserData?.roleName) {
+        roleSelect.value = currentUserData.roleName;
+      }
+    } catch (error) {
+      console.error('Error fetching roles:', error);
+      showError('Không thể tải danh sách quyền');
+    }
+  }
+
+  async function updateUser() {
+    const userData = {
+      username: document.getElementById('username').value,
+      employeeName: document.getElementById('employeeName').value,
+      email: document.getElementById('email').value,
+      departmentId: document.getElementById('department').value,
+      roleName: document.getElementById('role').value,
+      status: document.getElementById('active').checked ? 'Active' : 'Inactive'
+    };
+    try {
+      const response = await fetch(`/api/v1/users/update/${username}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userData)
+      });
+      const result = await response.json();
+      showError(result.message || 'Cập nhật thành công');
+      setTimeout(() => window.location.href = '/users', 1500);
+    } catch (error) {
+      console.error('Error updating account:', error);
+      showError('Lỗi khi cập nhật tài khoản');
+    }
+  }
+
+  async function resetPassword() {
+    const newPassword = document.getElementById('newPassword').value;
+    if (!isValidPassword(newPassword)) {
+      showError('Mật khẩu phải có ít nhất 10 ký tự, bao gồm chữ hoa, chữ thường và ký tự đặc biệt');
+      return;
+    }
+    try {
+      const response = await fetch(`/api/v1/users/change-password/${username}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: newPassword })
+      });
+      const result = await response.json();
+      if (result.status === 'Success') {
+        showError('Đặt lại mật khẩu thành công');
+        passwordModal.hide();
+      } else {
+        showError(result.message || 'Có lỗi xảy ra');
+      }
+    } catch (error) {
+      console.error('Error resetting password:', error);
+      showError('Lỗi khi đặt lại mật khẩu');
+    }
+  }
+
+
+  function isValidPassword(password) {
+    return password.length >= 10 && /[A-Z]/.test(password) && /[a-z]/.test(password) && /[^a-zA-Z0-9]/.test(password);}
+
+</script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery-migrate-3.0.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.easing.1.3.js"></script>
+<script src="/js/jquery.waypoints.min.js"></script>
+<script src="/js/jquery.stellar.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/aos.js"></script>
+<script src="/js/jquery.animateNumber.min.js"></script>
+<script src="/js/scrollax.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

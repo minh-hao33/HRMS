@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Meeting CMC Global</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/open-iconic-bootstrap.min.css">
+  <link rel="stylesheet" href="/css/animate.css">
+  <link rel="stylesheet" href="/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="/css/magnific-popup.css">
+  <link rel="stylesheet" href="/css/aos.css">
+  <link rel="stylesheet" href="/css/ionicons.min.css">
+  <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
+  <link rel="stylesheet" href="/css/jquery.timepicker.css">
+  <link rel="stylesheet" href="/css/flaticon.css">
+  <link rel="stylesheet" href="/css/icomoon.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/sessionTimeout.js"></script>
+  <style>
+    :root {
+      --primary-color: #9fc8e4;
+      --primary-hover: #3e7daa;
+      --danger-color: #e74c3c;
+      --danger-hover: #c0392b;
+      --success-color: #2ecc71;
+      --success-hover: #27ae60;
+      --warning-color: #f39c12;
+      --warning-hover: #d35400;
+      --dark-color: #1db3b5;
+      --light-color: #ecf0f1;
+      --border-color: #dfe6e9;
+      --text-color: #02a7ee;
+      --text-light: #070707;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f8f9fa;
+
+      line-height: 2.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+    .account-form {
+      width: 100%;
+      max-width: 600px;
+      background: white;
+      box-shadow: var(--shadow);
+      padding: 30px;
+    }
+
+    .form-title {
+      color: #0b0b0b;
+    }
+
+    .form-footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+
+    .ftco-navbar-light {
+      background: #050505 !important;
+      flex-shrink: 0;
+      width: 100%;
+      padding: 0.5rem 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .main-content {
+      flex: 1;
+      overflow: auto;
+      padding: 20px 0;
+      min-height: calc(100vh - 60px - 10px); /* 80px là navbar, 200px là footer, chỉnh tùy vào thực tế */
+    }
+
+    footer {
+      flex-shrink: 0;
+      margin-top: auto;
+    }
+    .header h1 {
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--dark-color);
+    }
+
+
+
+    .filter-group label {
+      margin-bottom: 5px;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+      border-color: var(--primary-hover);
+    }
+
+    .navbar-container {
+      display: flex;
+      width: 100%;
+      padding: 0 15px;
+      align-items: center;
+    }
+
+    .navbar-brand {
+      font-size: 1.25rem;
+      white-space: nowrap;
+      margin-right: 1rem;
+      color: #ffffff;
+    }
+
+    .navbar-toggler {
+      order: 2;
+      margin-left: auto;
+    }
+    .ftco-navbar-light .navbar-brand {
+      color: #0078D4 !important;
+    }
+    .ftco-navbar-light .navbar-nav > .nav-item > .nav-link {
+      color: #000 !important;
+    }
+    .navbar-nav {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-item {
+      margin: 0 0.5rem;
+      white-space: nowrap;
+    }
+
+    .nav-link {
+      padding: 0.5rem 0.75rem;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+    }
+
+    .ftco-navbar-light {
+      background: #ffff !important;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 0.5rem 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      height: 70px; /* giả định chiều cao navbar */
+    }
+
+    @media (min-width: 1200px) {
+      .navbar-container {
+        padding: 0 30px;
+      }
+
+      @media (max-width: 992px) {
+        .navbar-toggler {
+          order: 3;
+        }
+
+        #ftco-nav {
+          order: 4;
+          flex-basis: 100%;
+        }
+
+        .navbar-nav {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .nav-item {
+          margin: 0.25rem 0;
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 768px) {
+
+        body {
+          padding: 10px;
+          align-items: flex-start;
+        }
+
+        .account-form {
+          padding: 20px;
+        }
+      }
+    }
+    .center-wrapper {
+      width: 100%;
+      max-width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: 90px; /* đẩy nội dung xuống dưới navbar */
+      box-sizing: border-box;
+    }
+    .card-header {
+      background-color:#0078D4 !important;
+      border-radius: 12px 12px 0 0 !important;
+      border-bottom: none;
+    }
+  </style>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+  <div class="navbar-container">
+    <a class="navbar-brand" href="/users/home">Meeting CMC Global</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="oi oi-menu"></span> Menu
+    </button>
+
+    <div class="collapse navbar-collapse" id="ftco-nav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active"><a href="/users/home" class="nav-link">Home</a></li>
+        <li class="nav-item" id="office"><a href="#" class="nav-link">Office</a></li>
+        <li class="nav-item" id="meeting"><a href="#" class="nav-link">Meeting</a></li>
+        <li class="nav-item cta mr-md-2" id="loginBtn"><a href="/users/login" class="nav-link">Login</a></li>
+        <li class="nav-item dropdown" id="userInfo" style="display: none;">
+          <a class="nav-link dropdown-toggle" href="#" id="usernameDisplay" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+          <div class="dropdown-menu" aria-labelledby="usernameDisplay">
+            <a class="dropdown-item" href="/users/account">Profile</a>
+            <a class="dropdown-item" href="#" onclick="logout()">Logout</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="main-content">
+  <div class="center-wrapper">
+    <div class="account-form1">
+      <div class="card-header">
+        <h2 class="form-title">Create New Account</h2>
+      </div>
+      <div class="account-form">
+        <div id="errorAlert" class="alert alert-danger d-none"></div>
+
+        <form id="createAccountForm" class="form-grid">
+          <div class="row g-3">
+            <div class="col-md-12">
+              <label class="form-label">Username:</label>
+              <div class="input-group">
+                <input id="username" type="text" class="form-control" placeholder="Enter username" required>
+                <button type="button" onclick="checkUsername()" class="btn btn-primary">
+                  <i class="fas fa-check"></i> Check
+                </button>
+              </div>
+              <div id="usernameMessage" class="form-text"></div>
+            </div>
+
+            <div class="col-md-12">
+              <label class="form-label">Employee Name:</label>
+              <input id="employeeName" type="text" class="form-control" placeholder="Enter employee name" required>
+            </div>
+
+            <div class="col-md-12">
+              <label class="form-label">Email:</label>
+              <input id="email" type="email" class="form-control" placeholder="Email" readonly>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Department:</label>
+              <select id="department" class="form-select" required>
+                <option value="">Select department</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Role:</label>
+              <select id="role" class="form-select" required>
+                <option value="">Select role</option>
+              </select>
+            </div>
+
+            <div class="col-md-12">
+              <label class="form-label">Password:</label>
+              <input id="password" type="password" class="form-control" placeholder="Enter password" minlength="10" required>
+              <div class="form-text">Minimum 10 characters with uppercase, lowercase and special character</div>
+              <div id="passwordMessage" class="form-text"></div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="status" checked>
+                <label class="form-check-label" for="status">Active account</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-footer">
+            <button type="button" onclick="window.location.href='/users'" class="btn btn-secondary">
+              <i class="fas fa-times"></i> Cancel
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save"></i> Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header bg-success text-white">
+      <strong class="me-auto">Success</strong>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      <span id="toastMessage"></span>
+    </div>
+  </div>
+</div>
+<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const username = localStorage.getItem('Username');
+    const role = localStorage.getItem('Role');
+
+    if (username && role) {
+      // Ẩn nút login
+      document.getElementById('loginBtn').style.display = 'none';
+
+      // Hiện user info
+      document.getElementById('userInfo').style.display = 'block';
+      document.getElementById('usernameDisplay').textContent = username;
+
+      // Xử lý role nếu cần
+      if (role === 'ADMIN') {
+        // Hiện tất cả
+      } else if (role === 'EMPLOYEE') {
+        document.getElementById('office').style.display = 'none';
+        document.getElementById('meeting').style.display = 'none';
+      } else if (role === 'SUPERVISOR') {
+        document.getElementById('office').style.display = 'none';
+      }
+    }
+  });
+
+  function logout() {
+    fetch('/api/v1/users/logout', {
+      method: 'POST',
+      credentials: 'include', // rất quan trọng để gửi cookie/session đi kèm
+    })
+            .then(response => {
+              if (response.ok) {
+                // Xóa dữ liệu localStorage, cookie, session nếu cần
+                localStorage.clear();
+
+                // Xóa cookie bằng cách set expired
+                document.cookie.split(";").forEach(function(c) {
+                  document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+                });
+
+                // Redirect hoặc reload trang
+                window.location.href = "/users/login";
+              } else {
+                alert("Đăng xuất không thành công. Vui lòng thử lại.");
+              }
+            })
+            .catch(error => {
+              console.error("Logout error:", error);
+              alert("Lỗi trong quá trình đăng xuất.");
+            });
+  }
+  let isUsernameAvailable = false;
+  let departmentsList = [];
+
+  async function fetchDepartments() {
+    try {
+      const response = await fetch('/api/v1/departments');
+      const result = await response.json();
+
+      departmentsList = Array.isArray(result.data)
+              ? [...new Map(result.data.map(item => [item.departmentName, item])).values()]
+              : [];
+
+      departmentsList.sort((a, b) => a.departmentName.localeCompare(b.departmentName));
+
+      const departmentSelect = document.getElementById('department');
+      departmentSelect.innerHTML = '<option value="">Select department</option>';
+
+      departmentsList.forEach(dept => {
+        const option = document.createElement('option');
+        option.value = dept.departmentName;
+        option.textContent = dept.departmentName;
+        departmentSelect.appendChild(option);
+      });
+
+    } catch (error) {
+      console.error('🚨 Failed to load departments:', error);
+      showError('Unable to load departments. Please try again later.');
+    }
+  }
+
+  async function fetchRoles() {
+    try {
+      const response = await fetch('/api/v1/roles/all');
+      const result = await response.json();
+      const roles = Array.isArray(result.data) ? result.data : [];
+
+      const roleSelect = document.getElementById('role');
+      roleSelect.innerHTML = '<option value="">Select role</option>';
+      roles.forEach(role => {
+        const option = document.createElement('option');
+        option.value = role.roleName;
+        option.textContent = role.roleName;
+        roleSelect.appendChild(option);
+      });
+
+    } catch (error) {
+      console.error('🚨 Failed to load roles:', error);
+      showError('Unable to load roles. Please try again later.');
+    }
+  }
+
+  async function checkUsername() {
+    const username = document.getElementById('username').value.trim();
+    const messageSpan = document.getElementById('usernameMessage');
+    messageSpan.textContent = '';
+
+    if (!username) {
+      messageSpan.textContent = 'Please enter a username';
+      messageSpan.className = 'message text-danger';
+      isUsernameAvailable = false;
+      return;
+    }
+
+    if (!/^[a-z0-9_]+$/i.test(username)) {
+      messageSpan.textContent = 'Username can only contain letters, numbers, and underscores';
+      messageSpan.className = 'message text-danger';
+      isUsernameAvailable = false;
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/v1/users/check?username=${username}`);
+
+      if (!response.ok) {
+        throw new Error('Server error');
+      }
+
+      const result = await response.json();
+
+      if (result.status === 'Success') {
+        messageSpan.textContent = 'Username is available';
+        messageSpan.className = 'message text-success';
+        isUsernameAvailable = true;
+        updateEmail();
+      } else {
+        messageSpan.textContent = result.message || 'Username is not available';
+        messageSpan.className = 'message text-danger';
+        isUsernameAvailable = false;
+      }
+    } catch (error) {
+      messageSpan.textContent = 'Error checking username';
+      messageSpan.className = 'message text-danger';
+      isUsernameAvailable = false;
+      console.error('🚨 Username check error:', error);
+    }
+  }
+
+  function showError(message) {
+    const errorAlert = document.getElementById('errorAlert');
+    errorAlert.textContent = message;
+    errorAlert.style.display = 'block';
+    setTimeout(() => errorAlert.style.display = 'none', 5000);
+  }
+
+  function getDepartmentId(departmentName) {
+    if (!departmentName) return null;
+    const department = departmentsList.find(d => d.departmentName === departmentName);
+    return department ? department.departmentId : null;
+  }
+
+  function updateEmail() {
+    const username = document.getElementById('username').value.trim();
+    const emailField = document.getElementById('email');
+    if (username && /^[a-z0-9_]+$/i.test(username)) {
+      emailField.value = `${username}@cmcglobal.vn`;
+    } else {
+      emailField.value = '';
+    }
+  }
+
+  async function createAccount(event) {
+    event.preventDefault();
+    const errorAlert = document.getElementById('errorAlert');
+    errorAlert.style.display = 'none';
+    if (!isUsernameAvailable) {
+      showError('Please check and confirm username availability before creating account');
+      return;
+    }
+    const password = document.getElementById('password').value;
+    if (!isValidPassword(password)) {
+      showError('Password must be at least 10 characters, contain both uppercase and lowercase letters, and include a special character');
+      return;
+    }
+
+    const accountData = {
+      username: document.getElementById('username').value.trim(),
+      employeeName: document.getElementById('employeeName').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      departmentName: document.getElementById('department').value,
+      departmentId: getDepartmentId(document.getElementById('department').value),
+      roleName: document.getElementById('role').value,
+      password: password,
+      status: document.getElementById('status').checked ? 'Active' : 'Inactive'
+    };
+
+    if (!accountData.departmentName || !accountData.roleName) {
+      showError('Please select department and role');
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/v1/users/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(accountData)
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Account creation failed');
+      }
+
+      if (result.status === 'Success') {
+        const toast = new bootstrap.Toast(document.getElementById('successToast'));
+        document.getElementById('toastMessage').textContent = 'Account created successfully!';
+        toast.show();
+
+        // Redirect after delay
+        setTimeout(() => {
+          window.location.href = '/users?refresh=' + new Date().getTime();
+        }, 1500);
+      } else {
+        showError(result.message || 'Failed to create account');
+      }
+    } catch (error) {
+      console.error(' Account creation error:', error);
+      showError(error.message || 'Failed to create account');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    fetchDepartments();
+    fetchRoles();
+    document.getElementById('username').addEventListener('input', updateEmail);
+    document.getElementById('createAccountForm').addEventListener('submit', createAccount);
+  });
+  function isValidPassword(password) {
+    const messageSpan = document.getElementById('passwordMessage');
+    const isValid = password.length >= 10 &&
+            password !== password.toLowerCase() &&
+            password !== password.toUpperCase() &&
+            /.*[^a-zA-Z0-9].*/.test(password);
+
+    if (isValid) {
+      messageSpan.textContent = 'Password is valid';
+      messageSpan.className = 'message text-success';
+      return true;
+    } else {
+      messageSpan.textContent = 'Password must be at least 10 characters, contain both uppercase and lowercase letters, and include a special character';
+      messageSpan.className = 'message text-danger';
+      return false;
+    }
+  }
+</script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery-migrate-3.0.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.easing.1.3.js"></script>
+<script src="/js/jquery.waypoints.min.js"></script>
+<script src="/js/jquery.stellar.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/aos.js"></script>
+<script src="/js/jquery.animateNumber.min.js"></script>
+<script src="/js/scrollax.min.js"></script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>
