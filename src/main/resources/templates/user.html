@@ -361,7 +361,11 @@
         </div>
       </div>
     </div>
-
+    <div id="departmentManagerBtnContainer" class="mb-3" style="display: none;">
+      <button class="btn btn-info" onclick="window.location.href='/departments'">
+        Department Manager
+      </button>
+    </div>
     <div class="table-container">
       <table >
         <thead>
@@ -556,9 +560,17 @@
 
   function renderButtonBasedOnRole(userRole) {
     const addButton = document.getElementById('addButton');
-    if (!addButton) return;
-    addButton.style.display = userRole === 'ADMIN' ? 'block' : 'none';
+    const departmentManagerBtn = document.getElementById('departmentManagerBtnContainer');
+
+    if (addButton) {
+      addButton.style.display = userRole === 'ADMIN' ? 'block' : 'none';
+    }
+
+    if (departmentManagerBtn) {
+      departmentManagerBtn.style.display = userRole === 'ADMIN' ? 'block' : 'none';
+    }
   }
+
 
   function populateTable(users) {
     const tableBody = document.getElementById('accountsTableBody');

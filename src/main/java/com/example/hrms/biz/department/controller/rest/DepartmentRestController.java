@@ -34,7 +34,6 @@ public class DepartmentRestController {
     }
 
     @Operation(summary = "List departments")
-    @PreAuthorize("hasRole('ADMIN')")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Get success",
                     content = {@Content(mediaType = "application/json",

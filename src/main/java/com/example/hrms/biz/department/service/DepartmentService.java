@@ -4,6 +4,7 @@ import com.example.hrms.biz.department.model.Department;
 import com.example.hrms.biz.department.model.criteria.DepartmentCriteria;
 import com.example.hrms.biz.department.model.dto.DepartmentDTO;
 import com.example.hrms.biz.department.repository.DepartmentMapper;
+import com.example.hrms.security.SecurityUtils;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -73,14 +74,17 @@ public class DepartmentService {
 
     public List<Department> listDepartment(DepartmentCriteria criteria) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = SecurityUtils.getCurrentUsername();
         boolean isAdmin = authentication.getAuthorities().stream()
                 .anyMatch(auth -> auth.getAuthority().equals("ADMIN"));
-
+        boolean isSupervisor = authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("SUPERVISOR"));
         if (isAdmin) {
-            // Lấy tất cả phòng ban, kể cả phòng ban chưa có user
             return departmentMapper.listDepartments(criteria);
+        } else if (isSupervisor) {
+            return departmentMapper.findByUserDepartment(username);
         } else {
-            throw new AccessDeniedException("Access is denied");
+            return departmentMapper.listAllDepartments();
         }
     }
 }

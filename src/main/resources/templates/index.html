@@ -24,28 +24,39 @@
             font-family: 'Roboto', sans-serif;
             background-color: #f8f9fa;
             flex-direction: column;
-            min-height: 100vh;
+            min-height: 100%;
             margin: 0;
             padding: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        /* Main content takes 70% of the screen */
+        .maincontainer {
+            width: 70%;
+            padding: 20px;
         }
 
         .dashboard {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             flex-wrap: wrap;
-            gap: 50px;
-            max-width: 1200px;
-            margin: 50px auto 0; /* Margin for space above */
+            gap: 30px;
+            max-width: 100%;
+            margin: 30px auto 0;
         }
 
         .dashboard-item {
-            color: #fff;
-            padding: 30px 20px;
-            flex: 1;
-            min-width: 150px;
-            height: 250px;
-            border-radius: 20px;
-            box-shadow: 0 12px 24px rgba(0, 120, 212, 0.3);
+            background-color: #ffffff; /* Nền trắng */
+            color: #222; /* Chữ đen */
+            padding: 25px 15px;
+            flex: 0 1 200px; /* Giới hạn max chiều rộng mỗi item */
+            height: 210px; /* Giảm chiều cao một chút */
+            border-radius: 16px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -58,8 +69,8 @@
         }
 
         .dashboard-item:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 16px 30px rgba(0, 120, 212, 0.4);
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 12px 24px rgba(200, 200, 200, 0.35); /* Đổ bóng nhẹ xám trắng */
         }
 
         .dashboard-item::before {
@@ -67,7 +78,7 @@
             position: absolute;
             width: 150%;
             height: 150%;
-            background: radial-gradient(circle at top left, rgba(255,255,255,0.2), transparent);
+            background: radial-gradient(circle at top left, rgba(255,255,255,0.15), transparent);
             top: -50%;
             left: -50%;
             transform: rotate(45deg);
@@ -75,38 +86,21 @@
         }
 
         .dashboard-item .label {
-            font-size: 1.1em;
+            font-size: 1.2em;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 10px;
         }
 
-        .dashboard-item .icon {
-            font-size: 2.3em;
-            margin-bottom: 10px;
-        }
-
         .dashboard-item .count {
-            font-size: 3.5em;
+            font-size: 3em; /* Giữ chữ to */
             font-weight: bold;
         }
 
         .dashboard-item .total {
-            font-size: 1.95em;
-            opacity: 0.85;
-        }
-
-        .dashboard-item.pending {
-            background: linear-gradient(135deg, #ff8c00, #ffb74d); /* Orange */
-        }
-
-        .dashboard-item.denied {
-            background: linear-gradient(135deg, #d32f2f, #ff6659); /* Red */
-        }
-
-        .dashboard-item.accepted {
-            background: linear-gradient(135deg, #388e3c, #66bb6a); /* Green */
+            font-size: 1.6em;
+            opacity: 0.9;
         }
 
         .ftco-navbar-light {
@@ -120,6 +114,33 @@
 
         .ftco-navbar-light .navbar-nav > .nav-item > .nav-link {
             color: #000 !important;
+        }
+        /* Weather section */
+        .weather-section {
+            width: 30%;
+            max-width: 30%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        /*.weather-container {*/
+        /*    display: flex;*/
+        /*    flex-wrap: wrap;*/
+        /*    justify-content: center;*/
+        /*    align-items: flex-start;*/
+        /*}*/
+        /* Weather iframe responsive */
+        .weather-widget {
+            height: 250px;
+            width: 100%;
+            position: relative;
+            flex: 1 1 300px; /* responsive: min 300px, giãn đều */
+            max-width: 400px;
+        }
+
+        .weather-widget iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
         .navbar-container {
@@ -214,6 +235,35 @@
 
             color: #000000;
         }
+        @media (max-width: 768px) {
+            .chart-container {
+                flex-direction: column;
+            }
+            .pie-chart, .chart-legend {
+                width: 100%;
+            }
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                flex-wrap: nowrap;
+            }
+
+            .maincontainer,
+            .weather-section {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .weather-section {
+                padding-top: 0;
+            }
+
+            .weather-widget {
+                height: auto; /* để iframe tự co theo tỉ lệ aspect */
+                aspect-ratio: 16 / 9;
+            }
+        }
     </style>
 </head>
 <body>
@@ -245,25 +295,17 @@
         </div>
     </div>
 </nav>
-
+<div class="container">
+    <!-- Main content (70% of screen) -->
+    <div class="maincontainer">
 <section class="dashboard">
-    <a href="/requests" class="dashboard-item pending" id="pendingRequests">
-        <div class="label">Pending</div>
-        <div class="icon"><i class="fas fa-hourglass-half"></i></div>
+    <a href="/users" class="dashboard-item" id="departmentBox">
+        <div class="label">Departments</div>
         <div class="count">0</div>
-        <div class="total">Total 0</div>
     </a>
-    <a href="/requests" class="dashboard-item denied" id="deniedRequests">
-        <div class="label">Denied</div>
-        <div class="icon"><i class="fas fa-times-circle"></i></div>
+    <a href="/users" class="dashboard-item" id="employeeBox">
+        <div class="label">Employees</div>
         <div class="count">0</div>
-        <div class="total">Total 0</div>
-    </a>
-    <a href="/requests" class="dashboard-item accepted" id="acceptedRequests">
-        <div class="label">Accepted</div>
-        <div class="icon"><i class="fas fa-check-circle"></i></div>
-        <div class="count">0</div>
-        <div class="total">Total 0</div>
     </a>
 </section>
 
@@ -299,7 +341,19 @@
         </div>
     </div>
 </section>
+    </div>
+    <div class="weather-section">
+            <div class="weather-widget">
+                <iframe src="https://thoitiet247.vn/widget/embed/ha-noi?style=3&day=3&td=%23ffffff&ntd=%234f7ffa&mvb=%23e5eeff&mv=%23335fd1&mdk=%23e5eeff&htd=true"
+                        allowtransparency="true"></iframe>
+                <iframe src="https://thoitiet247.vn/widget/embed/da-nang?style=3&day=3&td=%23ffffff&ntd=%234f7ffa&mvb=%23e5eeff&mv=%23335fd1&mdk=%23e5eeff&htd=true"
+                        allowtransparency="true"></iframe>
+                <iframe src="https://thoitiet247.vn/widget/embed/ho-chi-minh?style=3&day=3&td=%23ffffff&ntd=%234f7ffa&mvb=%23e5eeff&mv=%23335fd1&mdk=%23e5eeff&htd=true"
+                        allowtransparency="true"></iframe>
+            </div>
 
+    </div>
+</div>
 
 <section class="overlay">
     <div class="modal">
@@ -354,6 +408,44 @@
     }
 
     document.addEventListener('DOMContentLoaded', function () {
+        const username = localStorage.getItem('Username');
+        const role = localStorage.getItem('Role');
+
+        // Hiển thị tên user
+        if (username && role) {
+            document.getElementById('loginBtn').style.display = 'none';
+            document.getElementById('userInfo').style.display = 'block';
+            document.getElementById('usernameDisplay').textContent = username;
+
+            if (role === 'ADMIN') {
+                // full quyền
+            } else if (role === 'EMPLOYEE') {
+                document.querySelectorAll('.dashboard a').forEach(link => {
+                    link.removeAttribute('href'); // Gỡ bỏ link
+                    link.style.cursor = 'default'; // Tránh hover ra pointer
+                });
+            } else if (role === 'SUPERVISOR') {
+
+            }
+        }
+
+        // Đếm số department
+        fetch('/api/v1/departments')
+            .then(res => res.json())
+            .then(data => {
+                document.querySelector('#departmentBox .count').textContent = data.total || 0;
+            });
+
+        // Đếm số employee
+        fetch('/api/v1/users')
+            .then(res => res.json())
+            .then(data => {
+                document.querySelector('#employeeBox .count').textContent = data.total || 0;
+            });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
         fetch('/api/v1/requests')
             .then(response => response.json())
             .then(data => {
@@ -364,45 +456,27 @@
                 const Rejected = requests.filter(r => r.requestStatus === 'REJECTED').length;
                 const total = requests.length;
 
-                // Update dashboard items
-                document.querySelector('#pendingRequests .count').textContent = Pending;
-                document.querySelector('#pendingRequests .total').textContent = `Total ${total}`;
-
-                document.querySelector('#deniedRequests .count').textContent = Rejected;
-                document.querySelector('#deniedRequests .total').textContent = `Total ${total}`;
-
-                document.querySelector('#acceptedRequests .count').textContent = Approved;
-                document.querySelector('#acceptedRequests .total').textContent = `Total  ${total}`;
-
-                // Calculate percentages
+                // Tính phần trăm
                 const pendingPercent = total > 0 ? Math.round((Pending / total) * 100) : 0;
                 const rejectedPercent = total > 0 ? Math.round((Rejected / total) * 100) : 0;
                 const approvedPercent = total > 0 ? Math.round((Approved / total) * 100) : 0;
 
-                // Update legend values with both count and percentage
+                // Cập nhật số liệu trong legend
                 document.getElementById('pendingPercent').textContent = `${Pending} (${pendingPercent}%)`;
                 document.getElementById('rejectedPercent').textContent = `${Rejected} (${rejectedPercent}%)`;
                 document.getElementById('approvedPercent').textContent = `${Approved} (${approvedPercent}%)`;
                 document.getElementById('totalRequests').textContent = total;
 
-                // Create pie chart
+                // Tạo biểu đồ tròn
                 const ctx = document.getElementById('requestsChart').getContext('2d');
-                const requestsChart = new Chart(ctx, {
+                new Chart(ctx, {
                     type: 'pie',
                     data: {
                         labels: ['Pending', 'Rejected', 'Approved'],
                         datasets: [{
                             data: [Pending, Rejected, Approved],
-                            backgroundColor: [
-                                '#ff8c00',
-                                '#d32f2f',
-                                '#388e3c'
-                            ],
-                            borderColor: [
-                                '#ffffff',
-                                '#ffffff',
-                                '#ffffff'
-                            ],
+                            backgroundColor: ['#ff8c00', '#d32f2f', '#388e3c'],
+                            borderColor: ['#ffffff', '#ffffff', '#ffffff'],
                             borderWidth: 2
                         }]
                     },
@@ -415,11 +489,11 @@
                             },
                             tooltip: {
                                 callbacks: {
-                                    label: function(context) {
+                                    label: function (context) {
                                         const label = context.label || '';
                                         const value = context.raw || 0;
                                         const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                        const percentage = Math.round((value / total) * 100);
+                                        const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
                                         return `${label}: ${value} (${percentage}%)`;
                                     }
                                 }
