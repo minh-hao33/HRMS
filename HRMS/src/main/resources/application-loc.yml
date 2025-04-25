@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/HRMS
+    url: jdbc:mysql://18.138.252.70:3306/HRMS
 #    username: username
 #    password: password
-    username: root
+    username: cmcuni
     password: Cmcuni@2025
     driver-class-name: com.mysql.cj.jdbc.Driver
 #  jpa:
