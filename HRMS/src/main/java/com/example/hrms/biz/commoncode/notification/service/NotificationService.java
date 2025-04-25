@@ -1,25 +1,29 @@
 package com.example.hrms.biz.commoncode.notification.service;
 
+import com.example.hrms.biz.commoncode.email.EmailService;
 import com.example.hrms.biz.commoncode.notification.model.Notification;
 import com.example.hrms.biz.commoncode.notification.model.dto.NotificationDTO;
 import com.example.hrms.biz.commoncode.notification.repository.NotificationMapper;
 import com.example.hrms.biz.commoncode.notification.model.WebSocketNotification;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Slf4j
 @Service
 public class NotificationService {
 
   private final NotificationMapper notificationMapper;
   private final SimpMessagingTemplate messagingTemplate;
+  private final EmailService emailService;
 
-  public NotificationService(NotificationMapper notificationMapper, SimpMessagingTemplate messagingTemplate){
+  public NotificationService(NotificationMapper notificationMapper, SimpMessagingTemplate messagingTemplate, EmailService emailService){
     this.notificationMapper = notificationMapper;
     this.messagingTemplate = messagingTemplate;
+    this.emailService = emailService;
   }
 
   /**
@@ -36,6 +40,7 @@ public class NotificationService {
       notification.setType("info");
     }
 
+    // Lưu thông báo vào cơ sở dữ liệu
     notificationMapper.insert(notification);
 
     // Lấy thông báo đã được insert vào database (có ID)
@@ -43,13 +48,22 @@ public class NotificationService {
 
     // Nếu không tìm thấy, sử dụng thông báo gốc
     if (latestNotification == null) {
-      return notification;
+      latestNotification = new NotificationDTO();
+      latestNotification.setId(notification.getId());
+      latestNotification.setTitle(notification.getTitle());
+      latestNotification.setContent(notification.getContent());
+      latestNotification.setReceiver(notification.getReceiver());
     }
 
-    // Đổi từ Entity sang DTO để thêm thông tin bổ sung
-    NotificationDTO.Resp dto = convertToResp(latestNotification);
+    // Gửi email thông báo
+    try {
+      emailService.sendNotificationEmail(notification);
+    } catch (Exception e) {
+      log.warn("Email notification failed: {}", e.getMessage());
+    }
 
     // Gửi thông báo qua WebSocket đến người nhận cụ thể
+    NotificationDTO.Resp dto = convertToResp(latestNotification);
     messagingTemplate.convertAndSendToUser(
         notification.getReceiver(),
         "/queue/notifications",
