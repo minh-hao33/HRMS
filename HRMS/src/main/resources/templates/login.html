@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>CMC Global Meeting</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/aos.css">
+    <link rel="stylesheet" href="/css/ionicons.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/css/jquery.timepicker.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/icomoon.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/users/home">Request Management System</a>
+    </div>
+</nav>
+
+<div class="hero-wrap" style="background-image: url('/images/bg_1.jpg');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-start" data-scrollax-parent="true">
+            <div class="col-lg-6 col-md-6 ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+                <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Book A Meeting Room<br><span>CMC Global</span></h1>
+                <p class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="icon-calendar mr-2"></span>March 13, 2025 - CMC Global</p>
+            </div>
+            <div class="col-lg-2 col"></div>
+            <div class="col-lg-4 col-md-6 mt-0 mt-md-5">
+                <form id="loginForm" class="request-form ftco-animate" novalidate>
+                    <h2>Login</h2>
+                    <div class="form-group">
+                        <label>
+                            <input type="text" id="username" class="form-control" placeholder="Username" autocomplete="off">
+                        </label>
+                        <div id="usernameError" class="text-danger mt-1" style="font-size: 0.9rem;"></div>
+                    </div>
+                    <div class="form-group" style="position: relative;">
+                        <label>
+                            <input type="password" id="password" class="form-control" placeholder="Password" autocomplete="off">
+                            <i class="fas fa-eye" id="togglePassword"
+                               style="position: absolute; top: 50%; right: 15px; transform: translateY(-50%); cursor: pointer;"></i>
+                        </label>
+                        <div id="passwordError" class="text-danger mt-1" style="font-size: 0.9rem;"></div>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" id="loginBtn" class="btn btn-primary py-3 px-4">Sign In</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const togglePassword = document.getElementById("togglePassword");
+        const passwordField = document.getElementById("password");
+
+        togglePassword.addEventListener("click", function () {
+            passwordField.type = passwordField.type === "password" ? "text" : "password";
+        });
+        document.getElementById("loginForm").addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Ngăn form reload trang
+                document.getElementById("loginBtn").click(); // Giả lập click
+            }
+        });
+
+        document.getElementById("loginBtn").addEventListener("click", async function () {
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const usernameError = document.getElementById("usernameError");
+            const passwordError = document.getElementById("passwordError");
+
+            // Clear errors
+            usernameError.textContent = "";
+            passwordError.textContent = "";
+
+            if (!username || !password) {
+                if (!username) usernameError.textContent = "Vui lòng nhập tên đăng nhập.";
+                if (!password) passwordError.textContent = "Vui lòng nhập mật khẩu.";
+                return;
+            }
+
+            try {
+                const response = await fetch("/api/v1/users/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, password }),
+                    credentials: "include"
+                });
+
+                const contentType = response.headers.get("Content-Type") || "";
+                const isJson = contentType.includes("application/json");
+                const data = isJson ? await response.json() : null;
+
+                if (response.ok) {
+                    localStorage.setItem("Username", data.data.username);
+                    localStorage.setItem("Role", data.data.role);
+                    window.location.href = "/users/home";
+                } else {
+                    const message = data?.retMsg || "Đăng nhập thất bại.";
+                    if (message.toLowerCase().includes("username")) {
+                        usernameError.textContent = "Tên đăng nhập không đúng.";
+                    } else if (message.toLowerCase().includes("password")) {
+                        passwordError.textContent = "Mật khẩu không đúng.";
+                    } else {
+                        passwordError.textContent = message;
+                    }
+                }
+            } catch (error) {
+                console.error("Lỗi:", error);
+                passwordError.textContent = "Không thể kết nối đến server.";
+            }
+        });
+    });
+</script>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery-migrate-3.0.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.easing.1.3.js"></script>
+<script src="/js/jquery.waypoints.min.js"></script>
+<script src="/js/jquery.stellar.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/aos.js"></script>
+<script src="/js/jquery.animateNumber.min.js"></script>
+<script src="/js/scrollax.min.js"></script>
+<script src="/js/main.js"></script>
+
+</body>
+</html>

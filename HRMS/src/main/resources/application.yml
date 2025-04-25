@@ -1,0 +1,16 @@
+spring:
+    profiles:
+        active: "loc"
+    application:
+        name: HRMS
+
+server:
+    port: 8080
+    reactive:
+        session:
+            cookie:
+                http-only: true
+                secure: true
+    servlet:
+        session:
+            timeout: 30m  # Thiết lập session timeout là 30 phút

@@ -1,0 +1,55 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/HRMS
+#    username: username
+#    password: password
+    username: root
+    password: Cmcuni@2025
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#  jpa:
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MySQL8Dialect
+  task:
+    execution:
+      pool:
+        core-size: 5
+        max-size: 10
+        queue-capacity: 25
+      thread-name-prefix: email-async-
+mail:
+  from: emailai.system@gmail.com
+  host: smtp.gmail.com
+  port: 587
+  username: emailai.system@gmail.com
+  password: sros otfu hxsl szpe
+  smtp:
+    auth: true
+    starttls.enable: true
+    debug: true
+    timeout: 5000
+    connection-timeout: 5000
+    write-timeout: 5000
+
+springdoc:
+    show-actuator: true
+    api-docs:
+      path: /v3/api-docs
+    swagger-ui:
+      enabled: true
+      path: /swagger-ui.html
+      url: /v3/api-docs
+
+# Logging configuration
+logging:
+  level:
+    com.example.hrms.biz.commoncode.email: DEBUG
+    org.springframework.mail: DEBUG
+
+mybatis:
+    type-aliases-package: com.example.hrms.biz.booking.model,
+        com.example.hrms.biz.department.model,
+        com.example.hrms.biz.meetingroom.model,
+        com.example.hrms.biz.request.model,
+        com.example.hrms.biz.role.model,
+        com.example.hrms.biz.user.model

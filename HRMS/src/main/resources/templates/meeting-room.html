@@ -1,0 +1,3802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>CMC Global Meeting</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/aos.css">
+    <link rel="stylesheet" href="/css/ionicons.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/css/jquery.timepicker.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/icomoon.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #f5f6fa;
+            --filter-color:rgb(255, 255, 255);
+            --border-color: #e0e0e0;
+            --text-color: #333;
+            --time-slot-height: 15px;
+            --breakpoint-xs: 0;
+            --breakpoint-sm: 576px;
+            --breakpoint-md: 768px;
+            --breakpoint-lg: 992px;
+            --breakpoint-xl: 1200px;
+            --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+        *,
+        *::before,
+        *::after {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box; }
+
+        html {
+            font-family: sans-serif;
+            line-height: 1.15;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+
+        article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+            display: block; }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            text-align: left;
+            background-color: #fff; }
+
+        [tabindex="-1"]:focus {
+            outline: 0 !important; }
+
+        hr {
+            -webkit-box-sizing: content-box;
+            box-sizing: content-box;
+            height: 0;
+            overflow: visible; }
+
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 0;
+            margin-bottom: 0.5rem; }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 1rem; }
+
+        .avatar {
+            width: 30px;
+            height: 30px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+        }
+
+        .user-profile {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .filter-bar {
+            display: flex;
+            padding: 15px 0;
+            background-color: var(--filter-color);
+            flex-wrap: wrap;
+            gap: 10px;
+            width: 100%;
+            padding-left: 60px; /* Align with the room cards */
+            overflow-x: auto; /* Add horizontal scrolling if needed */
+            align-items: center; /* Vertically center all items */
+        }
+
+        .filter-input {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-right: 10px;
+            height: 39px;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            margin-right: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            height: 39px;
+        }
+
+        .btn-filter {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-reset {
+            background-color: white;
+            border: 1px solid var(--border-color);
+        }
+        .combo-box {
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+        }
+
+        .combo-box select {
+            border-radius: 5px;
+            padding: 8px;
+            font-family: 'Arial', sans-serif;
+            background-color: white;
+            color: #333;
+        }
+
+        .combo-box select:hover {
+            border-color: #005A9E; /* Darker shade on hover */
+            cursor: pointer;
+        }
+
+        .room-list {
+            display: flex;
+            padding: 0;
+            overflow-x: hidden; /* Hide overflow and use navigation */
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            scroll-behavior: smooth; /* Smooth scrolling */
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+            width: 100%;
+        }
+
+        .room-list::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+
+        .room-card {
+            border-radius: 4px;
+            width: calc(25% - 16px); /* Fixed width to match grid column */
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 0 0 auto; /* Don't grow or shrink */
+            position: relative;
+        }
+
+        .px-0 {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .room-header-top {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        /* First room card needs margin-left */
+        .room-list .room-card:first-child {
+            margin-left: 60px; /* Match the width of time column */
+        }
+
+        .room-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .room-icon {
+            margin-right: 15px;
+        }
+
+        .room-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+
+        .room-info {
+            font-size: 14px;
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .text-neutral-8 {
+            color: #888;
+        }
+
+        .schedule-container {
+            display: flex;
+            position: relative;
+            overflow-x: auto;
+            margin: 0;
+            border: 1px solid var(--border-color);
+            border-radius: 0;
+            scroll-behavior: smooth; /* Smooth scrolling */
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .time-column {
+            position: sticky;
+            min-width: 60px;
+            border-right: 1px solid var(--border-color);
+            background-color: var(--secondary-color);
+        }
+
+        .time-slot {
+            height: 180px; /* 45px * 4 = 180px per hour */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.85em;
+        }
+
+        .grid-container {
+            display: flex;
+            flex-grow: 1;
+        }
+
+        .room-column {
+            flex: 0 0 25%; /* Fixed width to match room card */
+            width: 25%;
+            border-right: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .event-grid {
+            position: relative;
+            height: 100%;
+        }
+
+        .time-cell {
+            height: 45px;
+            border-bottom: 2px solid #e0e0e0;
+            position: relative;
+        }
+
+        .meeting-event {
+            position: absolute;
+            left: 5px;
+            right: 5px;
+            background-color: rgba(0, 123, 255, 0.8);
+            transition: box-shadow 0.2s ease;
+            color: white;
+            border-radius: 4px;
+            padding: 5px;
+            font-size: 0.85em;
+            cursor: pointer;
+            overflow: hidden;
+            z-index: 5;
+        }
+        .meeting-event:hover {
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        .meeting-title {
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #333;
+            margin-bottom: 2px;
+        }
+
+        .meeting-organizer {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #333;
+            font-size: 11px;
+            opacity: 0.9;
+        }
+
+        .meeting-description {
+            font-size: 11px;
+            margin-top: 3px;
+            max-height: 30px;
+            color: #333;
+            overflow: hidden;
+        }
+
+        .meeting-event:hover .resizer {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+
+        /* Enhanced tooltip styles */
+        .meeting-tooltip {
+            display: none;
+            position: absolute;
+            z-index: 19999;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 3px 14px rgba(0,0,0,0.2);
+            padding: 12px;
+            min-width: 260px;
+            max-width: 350px;
+            font-size: 13px;
+            color: #333;
+            left: 100%;
+            top: 0;
+            margin-left: 5px;
+        }
+
+        .tooltip-title {
+            font-weight: bold;
+            font-size: 15px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+            color: #333;
+        }
+
+        .tooltip-info {
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+
+        .tooltip-info strong {
+            display: inline-block;
+            min-width: 100px;
+            color: #555;
+        }
+
+        .meeting-event:hover .meeting-tooltip {
+            display: block;
+            left: 100%;
+            top: 0;
+        }
+
+        .av-arrow {
+            position: absolute;
+            top: 28%; /* Position at the room list level */
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .av-left {
+            left: 40px;
+        }
+
+        .av-right {
+            right: 0px;
+        }
+
+        .selected-room {
+            background-color: #e6f2ff;
+            border: 2px solid var(--primary-color);
+        }
+
+        .time-cell {
+            height: 45px;
+            border-bottom: 1px dashed #dee2e6;
+            position: relative;
+        }
+
+        /* Add event hover */
+        .time-cell:hover {
+            background-color: rgba(0, 123, 255, 0.1);
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .time-cell.past-time {
+            background-color: rgba(0,0,0,0.03);
+        }
+
+        section {
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            background: #e3f2fd;
+            z-index: 1001;
+        }
+
+        button {
+            font-weight: 400;
+            color: #fff;
+            padding: 14px 22px;
+            border: none;
+            background: #4070f4;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        button:hover {
+            background-color: #265df2;
+        }
+
+        .modal-box {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .overlay {
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        section.active .overlay {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 380px;
+            width: 100%;
+            padding: 30px 20px;
+            border-radius: 24px;
+            background-color: #fff;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            transform: translate(-50%, -50%) scale(1.2);
+            border: none; /* Remove border */
+        }
+
+        section.active .modal-box {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .modal-box i {
+            font-size: 70px;
+            color: #4070f4;
+        }
+
+        .modal-box h2 {
+            margin-top: 20px;
+            font-size: 25px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .modal-box h3 {
+            font-size: 16px;
+            font-weight: 400;
+            color: #333;
+            text-align: center;
+        }
+
+        .modal-box .buttons {
+            margin-top: 25px;
+        }
+
+        .modal-box button {
+            font-size: 14px;
+            padding: 6px 12px;
+            margin: 0 10px;
+        }
+
+        .ant-btn {
+            background-image: none;
+            background: #fff;
+            border: 1px solid #d9d9d9;
+            border-radius: 2px;
+            box-shadow: 0 2px 0 rgba(0,0,0,.015);
+            color: rgba(0,0,0,.85);
+            cursor: pointer;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 400;
+            height: 32px;
+            line-height: 1.5715;
+            padding: 4px 15px;
+            position: relative;
+            text-align: center;
+            touch-action: manipulation;
+            transition: all .3s cubic-bezier(.645,.045,.355,1);
+            user-select: none;
+            white-space: nowrap
+        }
+        .ant-btn>.anticon {
+            line-height: 1
+        }
+
+        .ant-btn,.ant-btn:active,.ant-btn:focus {
+            outline: 0
+        }
+
+        .ant-btn:not([disabled]):hover {
+            text-decoration: none
+        }
+
+        .ant-btn:not([disabled]):active {
+            box-shadow: none;
+            outline: 0
+        }
+
+        .ant-btn[disabled] {
+            cursor: not-allowed
+        }
+
+        .ant-btn[disabled]>* {
+            pointer-events: none
+        }
+
+        .ant-btn-lg {
+            border-radius: 2px;
+            font-size: 16px;
+            height: 40px;
+            padding: 6.4px 15px
+        }
+
+        .ant-btn-sm {
+            border-radius: 2px;
+            font-size: 14px;
+            height: 24px;
+            padding: 0 7px
+        }
+
+        .ant-btn>a:only-child {
+            color: currentcolor
+        }
+
+        .ant-btn>a:only-child:after {
+            background: transparent;
+            bottom: 0;
+            content: "";
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0
+        }
+
+        .ant-btn:focus,.ant-btn:hover {
+            background: #fff;
+            border-color: #2372d9;
+            color: #2372d9
+        }
+
+        .ant-btn:focus>a:only-child,.ant-btn:hover>a:only-child {
+            color: currentcolor
+        }
+
+        .ant-btn:focus>a:only-child:after,.ant-btn:hover>a:only-child:after {
+            background: transparent;
+            bottom: 0;
+            content: "";
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0
+        }
+
+        .ant-btn:active {
+            background: #fff;
+            border-color: #003da6;
+            color: #003da6
+        }
+
+        .ant-btn:active>a:only-child {
+            color: currentcolor
+        }
+
+        .ant-btn:active>a:only-child:after {
+            background: transparent;
+            bottom: 0;
+            content: "";
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0
+        }
+
+        .ant-btn[disabled],.ant-btn[disabled]:active,.ant-btn[disabled]:focus,.ant-btn[disabled]:hover {
+            background: #f5f5f5;
+            border-color: #d9d9d9;
+            box-shadow: none;
+            color: rgba(0,0,0,.25);
+            text-shadow: none
+        }
+
+        .ant-btn[disabled]:active>a:only-child,.ant-btn[disabled]:focus>a:only-child,.ant-btn[disabled]:hover>a:only-child,.ant-btn[disabled]>a:only-child {
+            color: currentcolor
+        }
+
+        .ant-btn[disabled]:active>a:only-child:after,.ant-btn[disabled]:focus>a:only-child:after,.ant-btn[disabled]:hover>a:only-child:after,.ant-btn[disabled]>a:only-child:after {
+            background: transparent;
+            bottom: 0;
+            content: "";
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0
+        }
+
+        .ant-btn:active,.ant-btn:focus,.ant-btn:hover {
+            background: #fff;
+            text-decoration: none
+        }
+
+        .ant-btn>span {
+            display: inline-block
+        }
+
+        .ant-btn:focus,.ant-btn:hover {
+            background: #fff;
+            border-color: #2372d9;
+            color: #2372d9
+        }
+
+        .ant-btn-primary {
+            background: #0052cc;
+            border-color: #0052cc;
+            box-shadow: 0 2px 0 rgba(0,0,0,.045);
+            color: #fff;
+            text-shadow: 0 -1px 0 rgba(0,0,0,.12)
+        }
+
+        .ant-btn-default {
+            background: #0052cc;
+            border-color: #0052cc;
+            box-shadow: 0 2px 0 rgba(0,0,0,.045);
+            color: #fff;
+            text-shadow: 0 -1px 0 rgba(0,0,0,.12)
+        }
+
+        .ant-btn-primary>a:only-child {
+            color: currentcolor
+        }
+
+        .ant-btn-primary>a:only-child:after {
+            background: transparent;
+            bottom: 0;
+            content: "";
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0
+        }
+
+        .ant-btn-primary:focus,.ant-btn-primary:hover {
+            background: #2372d9;
+            border-color: #2372d9;
+            color: #fff
+        }
+
+        .ant-btn-primary:focus>a:only-child,.ant-btn-primary:hover>a:only-child {
+            color: currentcolor
+        }
+
+        .ant-btn-primary:focus>a:only-child:after,.ant-btn-primary:hover>a:only-child:after {
+            background: transparent;
+            bottom: 0;
+            content: "";
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0
+        }
+
+        .ant-btn-primary:active {
+            background: #003da6;
+            border-color: #003da6;
+            color: #fff
+        }
+
+        .ant-btn-primary:active>a:only-child {
+            color: currentcolor
+        }
+
+        .ant-btn-primary:active>a:only-child:after {
+            background: transparent;
+            bottom: 0;
+            content: "";
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0
+        }
+
+        .ant-btn-primary[disabled],.ant-btn-primary[disabled]:active,.ant-btn-primary[disabled]:focus,.ant-btn-primary[disabled]:hover {
+            background: #f5f5f5;
+            border-color: #d9d9d9;
+            box-shadow: none;
+            color: rgba(0,0,0,.25);
+            text-shadow: none
+        }
+
+        .ant-btn-primary[disabled]:active>a:only-child,.ant-btn-primary[disabled]:focus>a:only-child,.ant-btn-primary[disabled]:hover>a:only-child,.ant-btn-primary[disabled]>a:only-child {
+            color: currentcolor
+        }
+
+        .ant-btn-primary[disabled]:active>a:only-child:after,.ant-btn-primary[disabled]:focus>a:only-child:after,.ant-btn-primary[disabled]:hover>a:only-child:after,.ant-btn-primary[disabled]>a:only-child:after {
+            background: transparent;
+            bottom: 0;
+            content: "";
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0
+        }
+        .ant-form-item .ant-input-number+.ant-form-text {
+            margin-left: 8px
+        }
+
+        .ant-form-inline {
+            display: flex;
+            flex-wrap: wrap
+        }
+
+        .ant-form-inline .ant-form-item {
+            flex: none;
+            flex-wrap: nowrap;
+            margin-bottom: 0;
+            margin-right: 16px
+        }
+
+        .ant-form-inline .ant-form-item-with-help {
+            margin-bottom: 24px
+        }
+
+        .ant-form-inline .ant-form-item>.ant-form-item-control,.ant-form-inline .ant-form-item>.ant-form-item-label {
+            display: inline-block;
+            vertical-align: top
+        }
+
+        .ant-form-inline .ant-form-item>.ant-form-item-label {
+            flex: none
+        }
+
+        .ant-form-inline .ant-form-item .ant-form-item-has-feedback,.ant-form-inline .ant-form-item .ant-form-text {
+            display: inline-block
+        }
+
+        .ant-form-horizontal .ant-form-item-label {
+            flex-grow: 0
+        }
+
+        .ant-form-horizontal .ant-form-item-control {
+            flex: 1 1 0;
+            min-width: 0
+        }
+
+        .ant-form-horizontal .ant-form-item-label[class$="-24"]+.ant-form-item-control,.ant-form-horizontal .ant-form-item-label[class*="-24 "]+.ant-form-item-control {
+            min-width: unset
+        }
+
+        .ant-form-vertical .ant-form-item-row {
+            flex-direction: column
+        }
+
+        .ant-form-vertical .ant-form-item-label>label {
+            height: auto
+        }
+
+        .ant-form-vertical .ant-form-item .ant-form-item-control {
+            width: 100%
+        }
+
+        .ant-col-24.ant-form-item-label,.ant-col-xl-24.ant-form-item-label,.ant-form-vertical .ant-form-item-label {
+            line-height: 1.5715;
+            padding: 0 0 8px;
+            text-align: left;
+            white-space: normal
+        }
+
+        .ant-col-24.ant-form-item-label>label,.ant-col-xl-24.ant-form-item-label>label,.ant-form-vertical .ant-form-item-label>label {
+            margin: 0
+        }
+
+        .ant-col-24.ant-form-item-label>label:after,.ant-col-xl-24.ant-form-item-label>label:after,.ant-form-vertical .ant-form-item-label>label:after {
+            display: none
+        }
+
+        .ant-form-rtl.ant-col-24.ant-form-item-label,.ant-form-rtl.ant-col-xl-24.ant-form-item-label,.ant-form-rtl.ant-form-vertical .ant-form-item-label {
+            text-align: right
+        }
+
+        footer {
+            padding: 15px 0;
+            text-align: center;
+            background-color: var(--secondary-color);
+            margin-top: 20px;
+        }
+
+        .container {
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .modal-dialog {
+            max-width: 1150px;
+        }
+        .room-info {
+            border-left: 1px solid #ddd;
+            padding-left: 20px;
+        }
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .form-inline label {
+            margin-right: 0.5rem;
+        }
+        .form-group label {
+            width: 150px;
+            margin-right: 10px;
+        }
+        .form-group input, .form-group textarea {
+            flex: 1;
+            max-width: 300px;
+        }
+        .weekly-label {
+            display: flex;
+            align-items: center;
+        }
+        .only-label {
+            display: flex;
+            align-items: center;
+        }
+        .daily-label {
+            display: flex;
+            align-items: center;
+        }
+        .range-label {
+            display: flex;
+            align-items: center;
+        }
+        .form-inline .form-control {
+            width: auto;
+            flex: 1;
+        }
+        .btn.disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        /* Styles for notification bell */
+        .notification-bell {
+            position: relative;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 10px;
+            color: #333;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 2px;
+            right: 0;
+            background-color: #f44336;
+            color: white;
+            border-radius: 50%;
+            min-width: 18px;
+            height: 18px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+        }
+
+        .notification-dropdown {
+            width: 320px;
+            padding: 0;
+            max-height: 400px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            right: auto !important; /* Override Bootstrap's right positioning */
+            left: -250px !important; /* Shift further to the left, changed from -80px to -150px */
+        }
+
+        /* Responsive styles for smaller screens */
+        @media (max-width: 576px) {
+            .notification-dropdown {
+                width: 280px; /* Slightly smaller width on mobile */
+                left: -200px !important; /* Position even further left on mobile */
+            }
+        }
+
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+            background-color: #f8f9fa;
+        }
+
+        .notification-title {
+            font-weight: 600;
+        }
+
+        .btn-mark-all {
+            background: transparent;
+            border: none;
+            color: var(--primary-color);
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .notification-body {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .notification-item {
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .notification-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .notification-item.unread {
+            background-color: #ebf5ff;
+        }
+
+        .notification-item .time {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .notification-item .message {
+            font-size: 13px;
+            margin: 5px 0;
+        }
+
+        .notification-footer {
+            padding: 10px 15px;
+            border-top: 1px solid #eee;
+            text-align: center;
+        }
+
+        .notification-footer a {
+            color: var(--primary-color);
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        .notification-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="ftco-navbar">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/users/home">Request Management System</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item active"><a href="/users/home" class="nav-link">Home</a></li>
+                <li class="nav-item" id="request"><a href="/requests" class="nav-link">Request</a></li>
+                <li class="nav-item" id="office"><a href="#" class="nav-link">Office</a></li>
+                <li class="nav-item" id="meeting"><a href="/meeting-room" class="nav-link">Meeting</a></li>
+                <li class="nav-item" id="account"><a href="/users" class="nav-link">Account</a></li>
+                <li class="nav-item" id="dpment"><a href="/departments" class="nav-link">Department</a></li>
+                <li class="nav-item" id="loginBtn"><a href="/users/login" class="nav-link">Login</a></li>
+
+                <!-- Notification Bell -->
+                <li class="nav-item">
+                    <div class="dropdown me-3">
+                        <div class="notification-bell" id="notificationDropdown" data-bs-toggle="dropdown"
+                             aria-expanded="false" title="Thông báo">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge" id="notificationCount">0</span>
+                        </div>
+                        <div class="dropdown-menu dropdown-menu-end notification-dropdown"
+                             aria-labelledby="notificationDropdown">
+                            <div class="notification-header">
+                                <span class="notification-title">Thông báo</span>
+                                <button class="btn btn-mark-all" id="markAllRead">
+                                    <i class="fas fa-check-double me-1"></i> Đánh dấu đã đọc
+                                </button>
+                            </div>
+                            <div class="notification-body" id="notificationList">
+                                <!-- Danh sách thông báo sẽ được thêm vào đây bằng JavaScript -->
+                            </div>
+                            <div class="notification-footer">
+                                <a href="#" id="viewAllNotifications">Xem tất cả thông báo</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item dropdown" id="userInfo" style="display: none;">
+                    <a class="nav-link dropdown-toggle" href="#" id="usernameDisplay" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                    <div class="dropdown-menu" aria-labelledby="usernameDisplay">
+                        <a class="dropdown-item" href="/users/account">Profile</a>
+                        <a class="dropdown-item" href="#" onclick="logout()">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Filter Bar -->
+<div class="container-fluid px-0" style="margin: 10px">
+    <div class="filter-bar">
+        <!-- Date Input -->
+        <div class="ant-form-item form-item label-reverse">
+            <div class="ant-row ant-form-item-row">
+                <div class="ant-col ant-form-item-label">
+                    <label for="date-input" class="ant-form-item-required" title=""><span>Date:</span></label>
+                </div>
+                <div class="ant-col ant-form-item-control">
+                    <div class="ant-form-item-control-input">
+                        <div class="ant-form-item-control-input-content">
+                            <input type="date" id="date-input" class="filter-input date-input" value="2025-03-26">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Time -->
+        <div class="ant-form-item form-item label-reverse">
+            <div class="ant-row ant-form-item-row">
+                <div class="ant-col ant-form-item-label">
+                    <label for="startTime" class="ant-form-item-required" title=""><span>Start Time:</span></label>
+                </div>
+                <div class="ant-col ant-form-item-control">
+                    <div class="ant-form-item-control-input">
+                        <div class="ant-form-item-control-input-content">
+                            <input type="time" id="startTime" class="filter-input time-input" name="startTime" placeholder="Start time">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- End Time -->
+        <div class="ant-form-item form-item label-reverse">
+            <div class="ant-row ant-form-item-row">
+                <div class="ant-col ant-form-item-label">
+                    <label for="endTime" class="ant-form-item-required" title=""><span>End Time:</span></label>
+                </div>
+                <div class="ant-col ant-form-item-control">
+                    <div class="ant-form-item-control-input">
+                        <div class="ant-form-item-control-input-content">
+                            <input type="time" id="endTime" class="filter-input time-input" name="endTime" placeholder="End time">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="combo-box">
+            <div class="ant-row ant-form-item-row">
+                <div class="ant-col ant-form-item-label">
+                    <label for="endTime" class="ant-form-item-required" title=""><span>Duration:</span></label>
+                </div>
+                <select id="duration" class="filter-input duration-input">
+                    <option>Select</option>
+                    <option>15'</option>
+                    <option>30'</option>
+                    <option>1h</option>
+                    <option>2h</option>
+                </select>
+            </div>
+        </div>
+        <div class="combo-box">
+            <div class="ant-row ant-form-item-row">
+                <div class="ant-col ant-form-item-label">
+                    <label for="endTime" class="ant-form-item-required" title=""><span>Capacity:</span></label>
+                </div>
+                <select class="filter-input seats-input">
+                    <option>Select</option>
+                </select>
+            </div>
+        </div>
+        <div class="combo-box">
+            <div class="ant-row ant-form-item-row">
+                <div class="ant-col ant-form-item-label">
+                    <label for="endTime" class="ant-form-item-required" title=""><span>Location:</span></label>
+                </div>
+                <select class="filter-input location-input">
+                    <option>Select</option>
+                </select>
+            </div>
+        </div>
+        <div class="combo-box">
+            <div class="ant-row ant-form-item-row">
+                <div class="ant-col ant-form-item-label" style="margin: 7px">
+                    <label for="endTime" class="ant-form-item-required" title=""><span></span></label>
+                </div>
+                <input type="text" class="filter-input search-input" placeholder="Search by room name">
+                <button class="btn btn-filter ant-btn ant-btn-default"><span>Filter</span></button>
+                <button class="btn btn-reset ant-btn ant-btn-primary"><span>Reset</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Room List -->
+<div class="container-fluid px-0">
+    <div class="room-list" id="roomList">
+    </div>
+</div>
+
+<!-- Schedule Grid -->
+<div class="container-fluid px-0">
+    <div class="schedule-container">
+        <!-- Time Column -->
+        <div class="time-column" id="timeColumn">
+            <!-- Will be populated by JavaScript -->
+        </div>
+
+        <!-- Grid -->
+        <div class="grid-container" id="gridContainer">
+            <!-- Will be populated by JavaScript -->
+        </div>
+    </div>
+</div>
+
+<!-- Navigation Arrows - Moved outside schedule container for better positioning -->
+<div class="av-arrow av-left">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+    </svg>
+</div>
+<div class="av-arrow av-right">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+    </svg>
+</div>
+<section>
+    <span class="overlay"></span>
+    <div class="modal-box">
+        <i class="fa-regular fa-circle-check"></i>
+        <h2 id="modal-title"></h2>
+        <h3 id="modal-message"></h3>
+        <div class="buttons">
+            <button class="close-btn">Close</button>
+        </div>
+    </div>
+</section>
+<!--View Booking Modal-->
+<div class="container mt-5">
+    <div class="modal fade" id="bookingModal" tabindex="-1" role="dialog" aria-labelledby="bookingModalLabel" aria-hidden="false" style="z-index: 10019;top: 5%;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bookingModalLabel">View Meeting</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <form id="bookingForm">
+                                <div class="form-group">
+                                    <label for="title">Title:</label>
+                                    <input type="text" class="form-control" id="title">
+                                </div>
+                                <div class="form-group">
+                                    <label for="attendees">Attendees:</label>
+                                    <input type="text" class="form-control" id="attendees">
+                                </div>
+                                <div class="form-group">
+                                    <label for="username">Username:</label>
+                                    <input type="text" class="form-control" id="username">
+                                </div>
+                                <!-- Hidden field for room ID -->
+                                <input type="hidden" id="roomId" value="1">
+                                <div class="form-group">
+                                    <label for="content">Content Brief:</label>
+                                    <textarea id="content" rows="3" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Link MS Team:</label>
+                                    <input type="radio" name="linkMS" id="linkYes" class="mr-1"> Yes
+                                    <input type="radio" name="linkMS" id="linkNo" class="ml-3 mr-1" checked> No
+                                </div>
+                                <div class="form-group">
+                                    <label>Recurrence pattern:</label>
+                                    <input type="radio" name="recurrence" id="only" onclick="toggleRecurrence('only')"> Only
+                                    <input type="radio" name="recurrence" id="daily" onclick="toggleRecurrence('daily')"> Daily
+                                    <input type="radio" name="recurrence" id="weekly" onclick="toggleRecurrence('weekly')"> Weekly
+                                </div>
+                                <div id="recurrenceOnly" class="form-group">
+                                    <div class="only-label">
+                                        <label for="dateOnly">Date: </label>
+                                        <input type="datetime-local" class="form-control ml-2" id="dateOnly">
+                                        <input type="time" class="form-control ml-2" id="timeOnly">
+                                    </div>
+                                </div>
+                                <div id="recurrenceDaily" class="form-group" style="display:none;">
+                                    <div class="daily-label">
+                                        <label for="dateStartDaily">Range: </label>
+                                        <input type="datetime-local" class="form-control ml-2" id="dateStartDaily">
+                                        <input type="datetime-local" class="form-control ml-2" id="dateEndDaily">
+                                    </div>
+                                </div>
+                                <div id="recurrenceWeekly" class="form-group" style="display:none;">
+                                    <div class="weekly-label">
+                                        <label>Weekly:</label>
+                                        <div class="form-inline ml-2">
+                                            <input type="checkbox" id="mo" class="ml-2"> Mo
+                                            <input type="checkbox" id="tu" class="ml-2"> Tu
+                                            <input type="checkbox" id="we" class="ml-2"> We
+                                            <input type="checkbox" id="th" class="ml-2"> Th
+                                            <input type="checkbox" id="fr" class="ml-2"> Fr
+                                        </div>
+                                    </div>
+                                    <div class="range-label">
+                                        <label>Range:</label>
+                                        <input type="datetime-local" class="form-control ml-2" id="dateStartWeekly">
+                                        <input type="datetime-local" class="form-control ml-2" id="dateEndWeekly">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-4 room-info">
+                            <h5>Room Information</h5>
+                            <p><strong>Time:</strong></p>
+                            <p><strong>Building:</strong> 789 Tower</p>
+                            <p><strong>Floor:</strong> Tầng 8 - new</p>
+                            <p><strong>Meeting room:</strong> Brainstorming</p>
+                            <p><strong>Price:</strong> 100,000 VNĐ/h</p>
+                            <p><strong>Seats:</strong> 6</p>
+                            <p><strong>Devices and services:</strong></p>
+                            <p><strong>Images:</strong></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="editButton" onclick="toggleEdit()">Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Create Booking Modal-->
+<div class="container mt-5">
+    <div class="modal fade" id="createBookingModal" tabindex="-1" role="dialog" aria-labelledby="createBookingModalLabel" aria-hidden="false" style="z-index: 10019;top: 15%;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createBookingModalLabel">Create Meeting</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <form id="createBookingForm">
+                                <div class="form-group">
+                                    <label for="createTitle">Title:</label>
+                                    <input type="text" class="form-control" id="createTitle" placeholder="Enter title">
+                                </div>
+                                <div class="form-group">
+                                    <label for="createAttendees">Attendees:</label>
+                                    <input type="text" class="form-control" id="createAttendees" placeholder="Enter attendees">
+                                </div>
+                                <div class="form-group">
+                                    <label for="createUsername">Username:</label>
+                                    <input type="text" class="form-control" id="createUsername" placeholder="Enter username">
+                                </div>
+                                <!-- Hidden field for room ID -->
+                                <input type="hidden" id="roomIdInput" value="1">
+                                <div class="form-group">
+                                    <label for="createContent">Content Brief:</label>
+                                    <textarea id="createContent" rows="3" class="form-control" placeholder="Enter content"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Link MS Team:</label>
+                                    <input type="radio" name="createLinkMS" id="createLinkYes" class="mr-1"> Yes
+                                    <input type="radio" name="createLinkMS" id="createLinkNo" class="ml-3 mr-1" checked> No
+                                </div>
+                                <div class="form-group">
+                                    <label>Recurrence pattern:</label>
+                                    <input type="radio" name="createRecurrence" id="createOnly" onclick="toggleCreateRecurrence('only')"> Only
+                                    <input type="radio" name="createRecurrence" id="createDaily" onclick="toggleCreateRecurrence('daily')"> Daily
+                                    <input type="radio" name="createRecurrence" id="createWeekly" onclick="toggleCreateRecurrence('weekly')"> Weekly
+                                </div>
+                                <div id="createRecurrenceOnly" class="form-group" style="display:none;">
+                                    <div class="only-label">
+                                        <label for="createDateOnly">Date: </label>
+                                        <input type="datetime-local" class="form-control ml-2" id="createDateOnly">
+                                        <input type="time" class="form-control ml-2" id="createTimeOnly">
+                                    </div>
+                                </div>
+                                <div id="createRecurrenceDaily" class="form-group" style="display:none;">
+                                    <div class="daily-label">
+                                        <label for="createDateStartDaily">Range: </label>
+                                        <input type="datetime-local" class="form-control ml-2" id="createDateStartDaily">
+                                        <input type="datetime-local" class="form-control ml-2" id="createDateEndDaily">
+                                    </div>
+                                </div>
+                                <div id="createRecurrenceWeekly" class="form-group" style="display:none;">
+                                    <div class="weekly-label">
+                                        <label>Weekly:</label>
+                                        <div class="form-inline ml-2">
+                                            <input type="checkbox" id="createMo" class="ml-2"> Mo
+                                            <input type="checkbox" id="createTu" class="ml-2"> Tu
+                                            <input type="checkbox" id="createWe" class="ml-2"> We
+                                            <input type="checkbox" id="createTh" class="ml-2"> Th
+                                            <input type="checkbox" id="createFr" class="ml-2"> Fr
+                                        </div>
+                                    </div>
+                                    <div class="range-label">
+                                        <label>Range:</label>
+                                        <input type="datetime-local" class="form-control ml-2" id="createDateStartWeekly">
+                                        <input type="datetime-local" class="form-control ml-2" id="createDateEndWeekly">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-4 room-info">
+                            <h5>Room Information</h5>
+                            <p><strong>Time:</strong></p>
+                            <p><strong>Building:</strong> 789 Tower</p>
+                            <p><strong>Floor:</strong> Tầng 8 - new</p>
+                            <p><strong>Meeting room:</strong> Brainstorming</p>
+                            <p><strong>Price:</strong> 100,000 VNĐ/h</p>
+                            <p><strong>Seats:</strong> 6</p>
+                            <p><strong>Devices and services:</strong></p>
+                            <p><strong>Images:</strong></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="createBooking()">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Scripts -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.tiny.cloud/1/q8eyc0pclp8vkwynx04vs7o65308fed83bgx6k7udmbjg26m/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="/js/jquery-migrate-3.0.1.min.js"></script>
+<script src="/js/jquery.easing.1.3.js"></script>
+<script src="/js/jquery.waypoints.min.js"></script>
+<script src="/js/jquery.stellar.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/aos.js"></script>
+<script src="/js/jquery.animateNumber.min.js"></script>
+<script src="/js/scrollax.min.js"></script>
+<script src="/js/main.js"></script>
+
+<script>
+    // Biến URL cơ sở để sử dụng trong toàn bộ ứng dụng
+    const BASE_URL = "http://localhost:8080";
+
+    // Thêm mã xử lý thông báo
+    let notifications = [
+        {
+            id: 1,
+            message: "Cuộc họp 'Kế hoạch dự án Q2' sẽ diễn ra trong 30 phút",
+            time: new Date(Date.now() - 25 * 60000).toISOString(),
+            read: false
+        },
+        {
+            id: 2,
+            message: "Yêu cầu đặt phòng họp của bạn đã được phê duyệt",
+            time: new Date(Date.now() - 120 * 60000).toISOString(),
+            read: false
+        },
+        {
+            id: 3,
+            message: "Lịch họp 'Báo cáo tháng' đã được cập nhật thời gian",
+            time: new Date(Date.now() - 240 * 60000).toISOString(),
+            read: true
+        }
+    ];
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const username = localStorage.getItem('Username');
+        const role = localStorage.getItem('Role');
+
+        if (username && role) {
+            document.getElementById('loginBtn').style.display = 'none';
+            document.getElementById('userInfo').style.display = 'block';
+            document.getElementById('usernameDisplay').textContent = username;
+
+            if (role === 'ADMIN') {
+                document.getElementById('meeting').style.display = 'none';
+            } else if (role === 'EMPLOYEE') {
+                document.getElementById('office').style.display = 'none';
+                document.getElementById('account').style.display = 'none';
+                document.getElementById('dpment').style.display = 'none';
+            } else if (role === 'SUPERVISOR') {
+                document.getElementById('office').style.display = 'none';
+                document.getElementById('meeting').style.display = 'none';
+                document.getElementById('dpment').style.display = 'none';
+            }
+        }
+
+        // Khởi tạo thông báo
+        updateNotificationBadge();
+        fillNotificationList();
+
+        // Thiết lập các sự kiện cho thông báo
+        document.getElementById('markAllRead').addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            markAllAsRead();
+        });
+
+        // Thêm xử lý click cho các thông báo
+        document.querySelectorAll('.notification-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const id = parseInt(this.getAttribute('data-id'));
+                markAsRead(id);
+            });
+        });
+    });
+
+    function updateNotificationBadge() {
+        const unreadCount = notifications.filter(notification => !notification.read).length;
+        const notificationCount = document.getElementById('notificationCount');
+        notificationCount.textContent = unreadCount;
+        notificationCount.style.display = unreadCount > 0 ? 'flex' : 'none';
+    }
+
+    function fillNotificationList() {
+        const notificationList = document.getElementById('notificationList');
+        notificationList.innerHTML = '';
+
+        if (notifications.length === 0) {
+            notificationList.innerHTML = '<div class="p-3 text-center text-muted">Không có thông báo nào</div>';
+            return;
+        }
+
+        notifications.forEach(notification => {
+            const notificationItem = document.createElement('div');
+            notificationItem.className = `notification-item ${notification.read ? '' : 'unread'}`;
+            notificationItem.setAttribute('data-id', notification.id);
+
+            const timeString = formatTimeAgo(new Date(notification.time));
+
+            notificationItem.innerHTML = `
+                    <div class="time">${timeString}</div>
+                    <div class="message">${notification.message}</div>
+                `;
+
+            notificationItem.addEventListener('click', function() {
+                markAsRead(notification.id);
+            });
+
+            notificationList.appendChild(notificationItem);
+        });
+    }
+
+    function formatTimeAgo(date) {
+        const now = new Date();
+        const diffInSeconds = Math.floor((now - date) / 1000);
+
+        if (diffInSeconds < 60) {
+            return 'Vừa xong';
+        }
+
+        const diffInMinutes = Math.floor(diffInSeconds / 60);
+        if (diffInMinutes < 60) {
+            return `${diffInMinutes} phút trước`;
+        }
+
+        const diffInHours = Math.floor(diffInMinutes / 60);
+        if (diffInHours < 24) {
+            return `${diffInHours} giờ trước`;
+        }
+
+        const diffInDays = Math.floor(diffInHours / 24);
+        if (diffInDays < 30) {
+            return `${diffInDays} ngày trước`;
+        }
+
+        const diffInMonths = Math.floor(diffInDays / 30);
+        return `${diffInMonths} tháng trước`;
+    }
+
+    function markAsRead(id) {
+        const index = notifications.findIndex(n => n.id === id);
+        if (index !== -1 && !notifications[index].read) {
+            notifications[index].read = true;
+            updateNotificationBadge();
+            fillNotificationList();
+        }
+    }
+
+    function markAllAsRead() {
+        notifications.forEach(notification => {
+            notification.read = true;
+        });
+        updateNotificationBadge();
+        fillNotificationList();
+    }
+
+    function logout() {
+        fetch(BASE_URL + '/api/v1/users/logout', {
+            method: 'POST',
+            credentials: 'include',
+        })
+        .then(response => {
+            if (response.ok) {
+                localStorage.clear();
+                document.cookie.split(";").forEach(function(c) {
+                    document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+                });
+                window.location.href = "/users/login";
+            } else {
+                alert("Đăng xuất không thành công. Vui lòng thử lại.");
+            }
+        })
+        .catch(error => {
+            console.error("Logout error:", error);
+            alert("Lỗi trong quá trình đăng xuất.");
+        });
+    }
+    // Thêm các hàm tiện ích xử lý múi giờ
+    const DateTimeUtils = {
+        // Chuyển đổi từ UTC sang múi giờ địa phương
+        utcToLocal: function(utcDateString) {
+            if (!utcDateString) return null;
+
+            // Đảm bảo chuỗi có thông tin múi giờ
+            if (!utcDateString.endsWith('Z') && !utcDateString.includes('+')) {
+                utcDateString += 'Z'; // Thêm 'Z' để chỉ định UTC
+            }
+
+            const date = new Date(utcDateString);
+            return date;
+        },
+
+        // Chuyển đổi từ múi giờ địa phương sang UTC
+        localToUtc: function(localDate) {
+            if (!localDate) return null;
+
+            // Nếu là chuỗi, chuyển thành đối tượng Date
+            if (typeof localDate === 'string') {
+                localDate = new Date(localDate);
+            }
+
+            return new Date(
+                localDate.getTime() - (localDate.getTimezoneOffset() * 60000)
+            ).toISOString();
+        },
+
+        // Format date cho hiển thị
+        formatDate: function(date, format = 'YYYY-MM-DD') {
+            if (!date) return '';
+
+            if (typeof date === 'string') {
+                date = new Date(date);
+            }
+
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+
+            if (format === 'YYYY-MM-DD') {
+                return `${year}-${month}-${day}`;
+            } else if (format === 'HH:MM') {
+                return `${hours}:${minutes}`;
+            } else if (format === 'YYYY-MM-DD HH:MM') {
+                return `${year}-${month}-${day} ${hours}:${minutes}`;
+            } else if (format === 'ISO') {
+                return date.toISOString();
+            } else if (format === 'datetime-local') {
+                return `${year}-${month}-${day}T${hours}:${minutes}`;
+            }
+
+            return date.toString();
+        },
+
+        // Parse time string HH:MM thành object
+        parseTimeString: function(timeStr) {
+            if (!timeStr || !timeStr.includes(':')) return null;
+
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            return {
+                hour: hours,
+                minute: minutes
+            };
+        },
+    }
+
+    $(document).ready(function() {
+        // API URL - Sửa đường dẫn API để khớp với backend
+        const API_URL = BASE_URL + '/api/v1/meeting-room';
+
+        // URL dự phòng nếu API chính gặp lỗi
+        const FALLBACK_API_URL = BASE_URL + '/api/v1/meeting-room';
+
+        // Thêm hàm để khởi tạo cache ban đầu
+        function initializeRoomCache() {
+            if (!window.cachedRooms || window.cachedRooms.length === 0) {
+                // Lưu cache phòng từ lần tải đầu tiên
+                window.cachedRooms = createDefaultRooms();
+            }
+        }
+
+        // Cải thiện hàm tạo phòng ảo để hiển thị nhiều phòng hơn
+        function createDefaultRooms() {
+            const defaultRooms = [];
+            const roomNames = ['Conference Room', 'Meeting Room', 'Brainstorming Room', 'Board Room', 'Training Room', 'Executive Room', 'Project Room', 'Team Room'];
+            const locations = ['Floor 1', 'Floor 2', 'West Wing', 'East Wing', 'North Wing', 'South Wing', 'Floor 3', 'Floor 4'];
+            const capacities = [6, 8, 12, 20, 4, 10, 15, 30];
+
+            for (let i = 0; i < roomNames.length; i++) {
+                defaultRooms.push({
+                    roomId: i + 1,
+                    roomName: roomNames[i],
+                    location: locations[i],
+                    capacity: capacities[i],
+                    room: `room-${i+1}`
+                });
+            }
+
+            console.log("Created default rooms:", defaultRooms);
+            return defaultRooms;
+        }
+
+        // Khởi tạo cache phòng họp
+        initializeRoomCache();
+
+        // Format current date for default filtering (YYYY-MM-DD)
+        const formattedDate = new Date().toISOString().split('T')[0];
+
+        // Update date input with current date
+        if ($('.date-input').length) {
+            $('.date-input').val(formattedDate);
+        }
+
+        // Store meeting data
+        let meetingData = [];
+
+        // Initial data fetch with today's date and mocked data
+        // Thử gọi API, nếu không thành công sẽ sử dụng dữ liệu mẫu
+        fetchMeetingRooms({ date: formattedDate });
+
+        // Fetch meeting rooms from API
+        function fetchMeetingRooms(filters = {}) {
+            // Show loading indicator if needed
+            // $('.loading-indicator').show();
+
+            // Build query parameters for API call
+            let queryParams = new URLSearchParams();
+
+            // Thêm các tham số phân trang
+            queryParams.append('pageSize', 100); // Giá trị mặc định hoặc từ state
+            queryParams.append('pageNo', 1);
+
+            // Xử lý các filter theo mapping của backend
+            if (filters.roomId) queryParams.append('roomId', filters.roomId);
+            if (filters.duration) queryParams.append('duration', filters.duration);
+            if (filters.capacity) queryParams.append('capacity', filters.capacity);
+            if (filters.location) queryParams.append('location', filters.location);
+            if (filters.roomName) queryParams.append('roomName', filters.roomName);
+
+            // Xử lý date, startTime và endTime
+            if (filters.date) {
+                // Nếu chỉ có ngày mà không có startTime, thêm giờ bắt đầu (00:00)
+                if (!filters.startTime) {
+                    const startOfDay = `${filters.date}T00:00:00`;
+                    queryParams.append('startTime', startOfDay);
+                }
+
+                // Nếu chỉ có ngày mà không có endTime, thêm giờ kết thúc (23:59)
+                if (!filters.endTime) {
+                    const endOfDay = `${filters.date}T23:59:59`;
+                    queryParams.append('endTime', endOfDay);
+                }
+            }
+
+            // Nếu có startTime, endTime riêng thì sẽ ưu tiên dùng
+            if (filters.startTime) queryParams.append('startTime', filters.startTime);
+            if (filters.endTime) queryParams.append('endTime', filters.endTime);
+
+            // Build URL with query parameters
+            const url = `${API_URL}?${queryParams.toString()}`;
+
+            // Fetch data from API
+            $.ajax({
+                url: url,
+                method: 'GET',
+                success: function(response) {
+                    processApiResponse(response);
+                },
+                error: function(error) {
+                    console.error('Error fetching from primary API:', error);
+
+                    // Thử API dự phòng
+                    $.ajax({
+                        url: `${FALLBACK_API_URL}?${queryParams.toString()}`,
+                        method: 'GET',
+                        success: function(response) {
+                            console.log('Using fallback API successfully');
+                            processApiResponse(response);
+                        },
+                        error: function(fallbackError) {
+                            console.error('Error fetching from fallback API:', fallbackError);
+                            showNotification('Loading sample meeting room data. API error: ' + (error.status || 'unknown'));
+
+                            // Hiển thị dữ liệu mẫu khi cả hai API đều không hoạt động
+                            const defaultRooms = createDefaultRooms();
+                            updateRoomList(defaultRooms);
+                            populateFilters(defaultRooms);
+                            generateTimeColumn();
+                            generateRoomGrid();
+                        }
+                    });
+                },
+                complete: function() {
+                    $('.loading-indicator').hide();
+                }
+            });
+        }
+
+        // Populate filter dropdowns with data
+        function populateFilters(roomData) {
+            // Get capacity values and sort ascending
+            const capacities = [...new Set(roomData
+            .map(room => room.capacity)
+            .filter(capacity => capacity !== null && capacity !== undefined))]
+            .sort((a, b) => a - b);
+
+            // Get unique room name-location combinations
+            const locationMap = {};
+            roomData.forEach(room => {
+                if (room.roomName && room.location) {
+                    const key = `${room.roomName} - ${room.location}`;
+                    if (!locationMap[key]) {
+                        locationMap[key] = {
+                            value: key,
+                            roomName: room.roomName,
+                            location: room.location
+                        };
+                    }
+                }
+            });
+            const locations = Object.values(locationMap);
+
+            // Update capacity dropdown
+            const $capacitySelect = $('.seats-input');
+            $capacitySelect.find('option:not(:first)').remove();
+
+            capacities.forEach(capacity => {
+                $capacitySelect.append($('<option>', {
+                    value: capacity,
+                    text: `${capacity} seats`
+                }));
+            });
+
+            // Update location dropdown
+            const $locationSelect = $('.location-input');
+            $locationSelect.find('option:not(:first)').remove();
+
+            locations.forEach(loc => {
+                $locationSelect.append($('<option>', {
+                    value: loc.value,
+                    text: loc.value
+                }));
+            });
+        }
+
+        // Process API response and update UI
+        function processApiResponse(response) {
+            if (response.status === 'success') {
+                // Clear existing meeting data
+                meetingData = [];
+
+                // Process and store all rooms from API first
+                const allRooms = [];
+                const roomMap = {};
+
+                // Extract unique rooms from the API response
+                response.data.forEach(item => {
+                    if (!roomMap[item.roomId]) {
+                        roomMap[item.roomId] = true;
+                        allRooms.push({
+                            roomId: item.roomId,
+                            roomName: item.roomName,
+                            location: item.location || 'Sky Room - Floor 1', // Default location if not provided
+                            capacity: item.capacity || 10, // Default capacity if not provided
+                            room: `room-${item.roomId}`
+                        });
+                    }
+                });
+                // Get the current selected date for filtering
+                const selectedDate = $('#date-input').val();
+                // Store the meeting data
+                response.data.forEach(item => {
+                    try {
+                        // Parse dates
+                        const startDateTime = new Date(item.startTime);
+                        const endDateTime = new Date(item.endTime);
+                        const startHour = startDateTime.getHours();
+                        const startMinute = startDateTime.getMinutes();
+                        const endHour = endDateTime.getHours();
+                        const endMinute = endDateTime.getMinutes();
+
+                        // Calculate duration in minutes
+                        const durationMs = endDateTime - startDateTime;
+                        const durationMinutes = Math.floor(durationMs / (1000 * 60));
+
+                        // Format time for display
+                        const formattedStartTime = `${startHour.toString().padStart(2, '0')}:${startMinute.toString().padStart(2, '0')}`;
+                        const formattedEndTime = `${endHour.toString().padStart(2, '0')}:${endMinute.toString().padStart(2, '0')}`;
+
+                        // Create room ID for internal use
+                        const roomIdFormatted = `room-${item.roomId}`;
+
+                        // Get the corresponding room from our allRooms array
+                        const room = allRooms.find(r => r.roomId === item.roomId);
+
+                        // Check if meeting is for the selected date
+                        const meetingDate = startDateTime.toISOString().split('T')[0];
+
+                        // Only add this meeting if it's for the selected date
+                        if (meetingDate === selectedDate) {
+                            meetingData.push({
+                                // Room info
+                                room: roomIdFormatted,
+                                roomId: item.roomId,
+                                roomName: item.roomName,
+                                location: item.location || (room ? room.location : 'Sky Room - Floor 1'),
+                                capacity: item.capacity || (room ? room.capacity : 10),
+
+                                // Booking info
+                                title: item.title || `${item.roomName} - ${item.username}`,
+                                organizer: item.username,
+                                attendees: item.attendees || '',
+                                content: item.content || '',
+                                description: item.content || `Status: ${item.status}`,
+
+                                // Time info
+                                startTime: formattedStartTime,
+                                endTime: formattedEndTime,
+                                duration: durationMinutes,
+                                startDateTime: startDateTime,
+                                endDateTime: endDateTime,
+                                date: meetingDate,
+
+                                // Status and type info
+                                status: item.status,
+                                bookingType: item.bookingType || 'ONLY',
+                                weekdays: item.weekdays || '',
+
+                                // Additional metadata
+                                pageInfo: {
+                                    pageSize: response.pageSize,
+                                    pageNo: response.pageNo,
+                                    total: response.total
+                                }
+                            });
+                        }
+                    } catch (error) {
+                        console.error('Error processing meeting data:', error, item);
+                    }
+                });
+
+                // Nếu không có phòng nào trong kết quả API
+                if (allRooms.length === 0) {
+
+                    // Tạo dữ liệu room ảo
+                    const defaultRooms = createDefaultRooms();
+                    // Hiển thị thông báo
+                    showNotification('No rooms found matching your criteria. Showing all available rooms.', 'info');
+
+                    // Sử dụng danh sách phòng đã lưu nếu có
+                    if (window.cachedRooms && window.cachedRooms.length > 0) {
+                        updateRoomList(window.cachedRooms);
+                        populateFilters(window.cachedRooms);
+                    } else {
+                        const defaultRooms = createDefaultRooms();
+                        updateRoomList(defaultRooms);
+                        populateFilters(defaultRooms);
+                    }
+                } else {
+                    // Lưu cache danh sách phòng
+                    window.cachedRooms = [...allRooms];
+
+                    // Cập nhật danh sách phòng và filter
+                    updateRoomList(allRooms);
+                    populateFilters(allRooms);
+                }
+
+                // Luôn tạo grid bất kể có kết quả hay không
+                generateTimeColumn();
+                generateRoomGrid();
+
+                // Log for debugging
+                console.log(`Loaded ${meetingData.length} meetings for date: ${selectedDate}`);
+            } else {
+                console.error('API returned error:', response.retMsg);
+                showNotification(response.retMsg || 'Failed to fetch meeting rooms');
+
+                // Ngay cả khi API lỗi, vẫn hiển thị grid với dữ liệu đã cache (nếu có)
+                if (window.cachedRooms && window.cachedRooms.length > 0) {
+                    updateRoomList(window.cachedRooms);
+                    populateFilters(window.cachedRooms);
+                    generateTimeColumn();
+                    generateRoomGrid();
+                }
+            }
+        }
+
+        // Cập nhật xử lý filter để phù hợp với backend
+        $('.btn-filter').on('click', function() {
+            // Lấy các giá trị từ form filter
+            const dateValue = $('#date-input').val();
+            const startTimeValue = $('#startTime').val();
+            const endTimeValue = $('#endTime').val();
+            const durationValue = $('#duration').val();
+            const capacityValue = $('.seats-input').val();
+            const locationValue = $('.location-input').val();
+            const searchValue = $('.search-input').val();
+
+            // Tạo object filters cơ bản
+            const filters = {
+                date: dateValue,
+                capacity: capacityValue !== 'Select' ? parseInt(capacityValue) : null
+            };
+
+            // Xử lý startTime và endTime
+            if (dateValue && startTimeValue) {
+                // Kết hợp ngày và giờ bắt đầu
+                const startDateTimeStr = `${dateValue}T${startTimeValue}`;
+                filters.startTime = startDateTimeStr;
+            }
+
+            if (dateValue && endTimeValue) {
+                // Kết hợp ngày và giờ kết thúc
+                const endDateTimeStr = `${dateValue}T${endTimeValue}`;
+                filters.endTime = endDateTimeStr;
+            }
+
+            // Xử lý location và roomName
+            if (locationValue && locationValue !== 'Select') {
+                if (locationValue.includes(' - ')) {
+                    // Nếu location chứa cả tên phòng và vị trí
+                    const parts = locationValue.split(' - ');
+                    filters.roomName = parts[0].trim();
+                    filters.location = parts[1].trim();
+                } else {
+                    filters.location = locationValue.trim();
+                }
+            }
+
+            // Xử lý tìm kiếm theo tên phòng (ưu tiên cao hơn location)
+            if (searchValue) {
+                filters.roomName = searchValue.trim();
+            }
+
+            // Xử lý duration (không gửi trực tiếp đến API vì backend không có field này)
+            // Thay vào đó, dùng startTime và endTime để tính toán
+            if (durationValue && durationValue !== 'Select' && !startTimeValue && !endTimeValue) {
+                // Nếu người dùng chỉ chọn duration mà không chọn startTime & endTime
+                // tính toán startTime và endTime từ duration
+                const now = new Date();
+                filters.startTime = `${dateValue}T${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+
+                let durationMinutes = 0;
+                if (durationValue.includes('h')) {
+                    durationMinutes = parseInt(durationValue) * 60;
+                } else if (durationValue.includes("'")) {
+                    durationMinutes = parseInt(durationValue.replace("'", ""));
+                } else {
+                    durationMinutes = parseInt(durationValue);
+                }
+
+                const endDateTime = new Date(now.getTime() + durationMinutes * 60000);
+                filters.endTime = `${dateValue}T${endDateTime.getHours().toString().padStart(2, '0')}:${endDateTime.getMinutes().toString().padStart(2, '0')}`;
+            }
+
+            console.log("Applied filters:", filters);
+
+            // Gọi API với các filter đã xử lý
+            fetchMeetingRooms(filters);
+        });
+
+        // Cập nhật dropdown Duration để tính toán từ Start Time và End Time
+        function updateDurationDropdown() {
+            const startTimeInput = $('#startTime');
+            const endTimeInput = $('#endTime');
+            const durationSelect = $('#duration');
+
+            // Khi người dùng thay đổi startTime hoặc endTime
+            startTimeInput.add(endTimeInput).on('change', function() {
+                const startTimeValue = startTimeInput.val();
+                const endTimeValue = endTimeInput.val();
+                const dateValue = $('#date-input').val() || new Date().toISOString().split('T')[0];
+
+                if (startTimeValue && endTimeValue) {
+                    try {
+                        // Parse thời gian từ input
+                        const startDate = new Date(`${dateValue}T${startTimeValue}`);
+                        const endDate = new Date(`${dateValue}T${endTimeValue}`);
+
+                        // Tính khoảng thời gian theo phút
+                        const durationMinutes = Math.round((endDate - startDate) / (1000 * 60));
+
+                        if (durationMinutes > 0) {
+                            // Chuyển đổi sang format hiển thị dễ đọc
+                            let displayDuration;
+
+                            if (durationMinutes < 60) {
+                                // Dưới 1 giờ, hiển thị theo phút
+                                displayDuration = `${durationMinutes}'`;
+                            } else if (durationMinutes % 60 === 0) {
+                                // Số giờ tròn
+                                displayDuration = `${durationMinutes / 60}h`;
+                            } else {
+                                // Giờ + phút
+                                const hours = Math.floor(durationMinutes / 60);
+                                const minutes = durationMinutes % 60;
+                                displayDuration = `${hours}h ${minutes}'`;
+                            }
+
+                            // Cập nhật dropdown
+                            updateDurationOptions(durationMinutes, displayDuration);
+                        } else if (durationMinutes < 0) {
+                            // Nếu thời gian kết thúc trước thời gian bắt đầu
+                            showNotification('End time must be after start time', 'error');
+                        }
+                    } catch (error) {
+                        console.error('Error calculating duration:', error);
+                    }
+                }
+            });
+        }
+
+        $('.btn-reset').on('click', function() {
+            // Reset all filters to default values
+            $('#date-input').val(formattedDate);
+            $('#startTime').val('');
+            $('#endTime').val('');
+            $('#duration').val('Select');
+            $('.seats-input').val('Select');
+            $('.location-input').val('Select');
+            $('.search-input').val('');
+
+            // Fetch with default filters (today's date)
+            fetchMeetingRooms({ date: formattedDate });
+        });
+
+        // Format datetime inputs for better display
+        $('#startTime, #endTime').on('change', function() {
+            // When date/time is selected, show it in a readable format
+            if (this.value) {
+                $(this).css('color', '#333');
+            } else {
+                $(this).css('color', 'transparent');
+            }
+        });
+
+        // Update room list based on API data
+        function updateRoomList(allRooms) {
+            console.log("Updating room list with rooms:", allRooms);
+            const roomList = $('#roomList');
+            roomList.empty();
+            // Nếu không có phòng nào, hiển thị phòng ảo
+            if (!allRooms || allRooms.length === 0) {
+                console.log("No rooms provided to updateRoomList, using default rooms");
+                allRooms = createDefaultRooms();
+            }
+            // If allRooms parameter is not provided, extract from meetingData
+            if (!allRooms) {
+                allRooms = [];
+                const roomMap = {};
+
+                meetingData.forEach(meeting => {
+                    if (!roomMap[meeting.roomId]) {
+                        roomMap[meeting.roomId] = true;
+                        allRooms.push({
+                            roomId: meeting.roomId,
+                            roomName: meeting.roomName,
+                            location: meeting.location,
+                            capacity: meeting.capacity,
+                            status: meeting.status || 'Available',
+                            room: meeting.room
+                        });
+                    }
+                });
+            }
+            // Store the rooms for reference later
+            window.allRooms = allRooms;
+            // Add rooms to the list
+            allRooms.forEach((room, index) => {
+                const isSelected = index === 0 ? 'selected-room' : '';
+                const roomStatus = room.status || 'Available';
+                const roomCard = $(`
+                <div class="room-card ${isSelected}" data-room="${room.room}">
+                    <div class="room-header">
+                        <div class="room-header-top">
+                            <div class="room-icon">
+                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAcCSURBVHgBzZgJbJRFFIBnt7+ItqGVFrT3sRViRSxHjAJCMRxR0YBGMIJgkQQRSBQQkWiknJIIeNAgoLQJmGgwUYNIgCKXSgpUrpRDe0Hb1FLSbqXtlrZ0/d7uv/jz828rtNC+5O17/8y8Y97MezOzNtUOEBsbOxEyE3zI7XZ3sdlsx5ubmzcWFxdnqjaCTbURYmJiNuPQJNgMnDpgt9s1nBxC2xRoJt8zioqK6lVHQFxc3CIcvBwdHf2kuY/2h4msE/xAdQQkJCQEY7wKXOhvDE5+KGOYSIi6RbCrWwSWsx8kBJrpb0xAQMAXMoalHqRuEew32X4NcEwT6nA4LvobU1hYWA65CnRXrYNlPmg+Jj4+/lGMLoJ9AryfWeey0XfW19evLC8vt3KiTH7y8vL6Qw5bKdd1BqDnrFW/LD125sBOBmPASnAHuPz8+fNnZIwnUuyTmSjKhr0PXAKfCv0JfKFr167ZKIozK79w4UIuJJcsnav8AJGbhwP5lJuj5j5sxtN3DHY2uBmbU5nIUvg+4GkS703PQBgHg93gMrOSiIiIaHw7Qd/ZlJQUzdxPoowQWZIhzdgvkaF9tfShf6yV8/QVgPnh4eFh5j6pDvS5wEE2lGfi+WOENMlKkUSP2Z1mtqlE4ltTnyzR97ApoOy3U2AT+LjyJse2urq6iZcuXbpslMPpCUT+G+zGUyOLrOzi1376a+38jELRBuUHdAWylENNRhzIHYdNBvfBHwZdYCN4UNrQPTQwMPCkjDXKomuY9PtzTgDZrZC+sizdUehULQAKKxkT7vuW5SRDs2Ar2GeDS0pKSq3kJPrIbUU+C7Yf/njs0NYDB1wt2WTVapALszO4hMG9VcsQzrhrmZifny9HWyhyL/lzTkAixJiRyrvcU33ttP0J9lEtAM5J1M/IEsteeIMNGW41kJm/hvJHGPOdwYDssRxxALm1kZGRvSzk4iTxJGrI7xEdhu7tfEezz8Zb2aQ8xUJeBbPEwY9hnNB95nKCgRdRtAZ2NUn0h6FLypHvAjBTksxshCUaAlmYlJTUBVoDBvr60PU7JB259ZhMNcrhdAKy22HdTU1Nn2oyQwYNx5GdNBbCH4BekSDQ9iA0IywsbAFKVXsC+mYRgCvY2AR9hybZKqHKWwdP4PyY0tLSEk+hDg0Nlc6j+szvQegqeJd8M/CvnJycRnUbAN0lyrsSPbFXB0qk75L9rmma56TyFNeKioo0KTc4N4xad8CnQAomg5cT9sOcHHtUOwI6R6J7NbgI3Ytpcks70eyPL1kNDQ2f8TndxgaPwttiGlNZ7kyzIgS2QYLoH0dJ8ZwKZNg0SCgTWgmfAb8J/qBRjvbBkGnITONWMwn5e+HX0ebiOxvHNsI3sdRPW9h8HbKWe0CsjY+n+NhTW1vbzVjxZbOipC9sCMbWyJJjJFC1D0hmB0FngVXoPeW7HAjIXZPJOJn0aI2fIBxQ5uOItgkomQ9+pDt5xOVyDedm41JtgAEDBgRgaxdOpaD7AegyqCzxNQcLCgqqCZzs0S7X3fs4kgbSsVT/lPIi5WeB/j0e52qhzW1BSTiWWJ4BbnTLjeVyY2Pjl2IA2+ns+2SjT9c5iIBs1Hks7xR56BC1d5X3FMhs6dy8WSBCv6JzPWxPbKaVlZXVYVNOJ3H4umPXRtSex5Ef2QM2fRYbEB5XU1PjqKys/Ee/VcTQlm2YiNxYdiDz9f9xCB0jkJksT1JDs2RrHTqSpZiTA+fo30dGp+p+8Ol+7oarPULzQS0oKEhuurIXpzBwF6zLgJIsW6Kiop5pzTkMjUPfbuUtwkYdv9HuqQoE4z2Ihq00s/wNl1A5WVC6ShxlP/iWdrqF4WOUJzlLf1YtAHpGM8G9ROpZq379xjOHcSustpHmR2kWQkvAX/SkqTb20y63YDmPj6lWgCpRgL6X2UoziNBFkx45tSR63Rh3xEpe86N0C0oPKe+Z/JXFkCb6tzP59NZyB12fE2kH49PVjS83Scr9OCnVQUrNXuXN9v9AkkQ2pO9bqrh8Wz2UbhfwdE2UiwM41eCHvHXGyHXL47Hckrm1RMC+L0+A9iwrrQEX4DxsfgK7Sv8XwhNp2hrshP+kfPC+HcL74W3hKaTL1R0G9ucKSD1H3FxZVWkjeKUBVVVV1SEhIb0ZMAuPR0GXELyd6g6D0+msxw9xajE4CF9+oCZu9IQyMTHxbo6bc7BuykG86kCQNzikO072kpLnKdTcvQZKH17PVh0M8j6C9GCpPc8I3/FWCDlE9F5RnQDI3t1stUjyo59Nvxyu44HSJzg4uEh1Aqiuro4jUXPluicOymmQrDon/C0niVxvMuRYU50I2IvD5B8ITd4iHEdz+NBUJwL8usI+fMuTJPqNQm7QY1XHg6zocf0RV/QvQA+PNaYcGL0AAAAASUVORK5CYII=" alt="room image" width="40" height="40">
+                            </div>
+                            <h4 class="room-name">${room.roomName} - ${room.location}</h4>
+                        </div>
+                        <div class="room-info text-neutral-8 text-sm">
+                            <span>${room.capacity} seats</span>
+                        </div>
+                        <div class="room-info">
+                            <span>${roomStatus}</span>
+                        </div>
+                    </div>
+                </div>
+            `);
+
+                roomList.append(roomCard);
+            });
+
+            // Bind click event to room cards
+            $('.room-card').on('click', function() {
+                // Remove 'selected-room' class from all room cards
+                $('.room-card').removeClass('selected-room');
+                // Add 'selected-room' class to clicked room card
+                $(this).addClass('selected-room');
+
+                const roomId = $(this).data('room');
+                // Scroll the grid to show the corresponding room column
+                const roomIndex = $(this).index();
+                const gridScrollPosition = roomIndex * (window.innerWidth * 0.25 - 16); // 200px column width
+                $('.schedule-container').scrollLeft(gridScrollPosition);
+            });
+            console.log("Room list updated with", allRooms.length, "rooms");
+        }
+
+        // Generate time slots (8:00 - 18:00)
+        const startHour = 8;
+        const endHour = 18;
+
+        // Generate time column
+        function generateTimeColumn() {
+            const timeColumn = $('#timeColumn');
+            timeColumn.empty();
+
+            for (let hour = startHour; hour <= endHour; hour++) {
+                const formattedHour = hour.toString().padStart(2, '0') + ':00';
+                timeColumn.append(`<div class="time-slot">${formattedHour}</div>`);
+            }
+        }
+
+        // Check if time is in the past compared to current time
+        function isPastTime(hour, minute) {
+            const now = new Date();
+            const currentDate = $('#date-input').val(); // Get selected date from input
+
+            if (!currentDate) {
+                return false; // If no date selected, default to allow booking
+            }
+
+            // Create Date objects for comparison
+            const selectedDate = new Date(currentDate);
+            const today = new Date();
+
+            // Reset time portions to compare just the dates
+            const selectedDateOnly = new Date(selectedDate.setHours(0, 0, 0, 0));
+            const todayOnly = new Date(today.setHours(0, 0, 0, 0));
+
+            // If selected date is in the past, all times are "past"
+            if (selectedDateOnly < todayOnly) {
+                return true;
+            }
+
+            // If selected date is in the future, no times are "past"
+            if (selectedDateOnly > todayOnly) {
+                return false;
+            }
+
+            // For current date, compare hours and minutes
+            const currentHour = now.getHours();
+            const currentMinute = now.getMinutes();
+
+            // Check if the time is in the past
+            if (currentHour > hour) {
+                return true;
+            } else if (currentHour === hour && currentMinute >= minute) {
+                return true;
+            }
+
+            return false;
+        }
+
+        // Thêm thẻ div current-time-indicator và hàm để cập nhật vị trí của nó
+        function addCurrentTimeIndicator() {
+            // Thêm CSS cho chỉ báo thời gian hiện tại
+            const timeIndicatorCSS = `
+                    <style>
+                        .current-time-indicator {
+                            position: absolute;
+                            left: 22px;
+                            right: 0;
+                            height: 2px;
+                            background-color: #f44336;
+                            z-index: 1;
+                            pointer-events: none;
+                        }
+
+                        .current-time-label {
+                            position: absolute;
+                            left: 22px;
+                            transform: translateY(-50%);
+                            background-color: #f44336;
+                            color: white;
+                            padding: 2px 5px;
+                            font-size: 12px;
+                            border-radius: 3px;
+                            z-index: 1;
+                            pointer-events: none;
+                        }
+
+                        .current-hour-highlight {
+                            position: absolute;
+                            left: 59px;
+                            right: 0;
+                            background-color: rgba(171, 245, 250, 0.3);
+                            z-index: 1;
+                            pointer-events: none;
+                        }
+                    </style>
+                `;
+
+            $('head').append(timeIndicatorCSS);
+
+            // Tạo và thêm thẻ div cho chỉ báo thời gian
+            const timeIndicator = $('<div class="current-time-indicator"></div>');
+            const timeLabel = $('<div class="current-time-label"></div>');
+            const hourHighlight = $('<div class="current-hour-highlight"></div>');
+
+            // Thêm vào DOM
+            $('.schedule-container').append(timeIndicator);
+            $('.schedule-container').append(timeLabel);
+            $('.schedule-container').append(hourHighlight);
+
+            // Cập nhật vị trí ban đầu
+            updateCurrentTimeIndicator();
+
+            // Cập nhật vị trí mỗi phút
+            setInterval(updateCurrentTimeIndicator, 60000);
+        }
+
+        // Hàm cập nhật vị trí chỉ báo thời gian hiện tại
+        function updateCurrentTimeIndicator() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            const currentMinute = now.getMinutes();
+
+            // Kiểm tra xem thời gian hiện tại có nằm trong phạm vi hiển thị của lịch không
+            if (currentHour < 8 || currentHour >= 18) {
+                $('.current-time-indicator, .current-time-label, .current-hour-highlight').hide();
+                return;
+            }
+
+            // Hiển thị chỉ báo
+            $('.current-time-indicator, .current-time-label, .current-hour-highlight').show();
+
+            // Tính toán vị trí dựa trên giờ và phút hiện tại
+            const startHour = 8; // Giờ bắt đầu của lịch
+            const hoursSinceStart = currentHour - startHour;
+            const minutePercentage = currentMinute / 60;
+
+            // Mỗi giờ là 180px chiều cao (45px * 4 khung 15 phút)
+            const timeSlotHeight = 45; // Chiều cao của mỗi khung 15 phút
+            const topPosition = (hoursSinceStart * 4 + minutePercentage * 4) * timeSlotHeight;
+
+            // Cập nhật vị trí chỉ báo thời gian
+            $('.current-time-indicator').css('top', `${topPosition}px`);
+
+            // Cập nhật label thời gian
+            const timeLabel = `${currentHour.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}`;
+            $('.current-time-label').text(timeLabel).css('top', `${topPosition}px`);
+
+            // Tính toán vị trí và chiều cao cho phần highlight 1 giờ tiếp theo
+            const nextHour = new Date(now);
+            nextHour.setHours(nextHour.getHours() + 1);
+
+            // Nếu giờ tiếp theo vượt quá phạm vi hiển thị
+            const nextHourValue = nextHour.getHours();
+            const highlightHeight = nextHourValue >= 18 ?
+                ((18 - currentHour) * 60 - currentMinute) / 60 * 4 * timeSlotHeight :
+                4 * timeSlotHeight; // 4 slots mỗi giờ
+
+            // Cập nhật vị trí và kích thước highlight
+            $('.current-hour-highlight').css({
+                'top': `${topPosition}px`,
+                'height': `${highlightHeight}px`
+            });
+
+            // Cập nhật trạng thái past-time cho các ô thời gian
+            updatePastTimeCells();
+        }
+
+        // Cập nhật trạng thái past-time cho các ô thời gian
+        function updatePastTimeCells() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            const currentMinute = now.getMinutes();
+
+            // Cập nhật các ô thời gian
+            $('.time-cell').each(function() {
+                const timeStr = $(this).data('time');
+                if (!timeStr) return;
+
+                const [hour, minute] = timeStr.split(':').map(Number);
+            });
+        }
+        // Generate grid for each room
+        function generateRoomGrid() {
+            console.log("Generating room grid");
+            const gridContainer = $('#gridContainer');
+            gridContainer.empty();
+
+            // Use stored rooms from window.allRooms if available
+            let roomsToShow = window.allRooms;
+
+            // Nếu không có phòng trong window.allRooms, tạo phòng ảo
+            if (!roomsToShow || roomsToShow.length === 0) {
+                console.log("No rooms available, creating default rooms for grid");
+                roomsToShow = createDefaultRooms();
+                window.allRooms = roomsToShow; // Cập nhật lại biến toàn cục
+            }
+
+            console.log("Creating grid with rooms:", roomsToShow);
+
+            // If no rooms stored, try to get from room cards
+            if (!roomsToShow || roomsToShow.length === 0) {
+                roomsToShow = [];
+                $('.room-card').each(function() {
+                    const roomId = $(this).data('room');
+                    if (roomId) {
+                        roomsToShow.push({
+                            room: roomId,
+                            roomName: $(this).find('.room-name').text(),
+                            location: ''
+                        });
+                    }
+                });
+            }
+
+            // If still no rooms, add default rooms
+            if (roomsToShow.length === 0) {
+                for (let i = 1; i <= 5; i++) {
+                    roomsToShow.push({
+                        room: `room-${i}`,
+                        roomName: `Meeting Room ${i}`,
+                        location: 'Floor 1'
+                    });
+                }
+            }
+
+            // Create a column for each room
+            roomsToShow.forEach(room => {
+                const roomColumn = $(`<div class="room-column" data-room="${room.room}"></div>`);
+                const eventGrid = $(`<div class="event-grid"></div>`);
+
+                // Create time cells (15 min intervals) for 8:00 - 18:00
+                for (let hour = startHour; hour <= endHour; hour++) {
+                    for (let minute = 0; minute < 60; minute += 15) {
+                        const isHourMarker = minute === 0;
+                        const isPast = isPastTime(hour, minute);
+                        const timeCell = $(`<div class="time-cell ${isHourMarker ? 'hour-marker' : ''} ${isPast ? 'past-time' : ''}"
+                                    data-time="${hour}:${minute.toString().padStart(2, '0')}"></div>`);
+                        eventGrid.append(timeCell);
+                    }
+                }
+
+                roomColumn.append(eventGrid);
+                gridContainer.append(roomColumn);
+            });
+
+            // Add meetings to the grid
+            addMeetingsToGrid();
+
+            // Add tooltips to meetings
+            addMeetingTooltips();
+
+            addCurrentTimeIndicator();
+        }
+
+        // Add meetings to the grid based on the data
+        function addMeetingsToGrid() {
+            // Format selected date to compare with meeting dates
+            const selectedDate = $('#date-input').val();
+
+            // Group meetings by room for better handling
+            const meetingsByRoom = {};
+
+            // First, group all meetings by room
+            meetingData.forEach(meeting => {
+                if (!meeting.room) return;
+
+                if (!meetingsByRoom[meeting.room]) {
+                    meetingsByRoom[meeting.room] = [];
+                }
+
+                meetingsByRoom[meeting.room].push(meeting);
+            });
+
+            // Process each room separately
+            Object.keys(meetingsByRoom).forEach(roomId => {
+                // Get all meetings for this room
+                const roomMeetings = meetingsByRoom[roomId];
+
+                // Sort meetings by start time to handle overlaps
+                roomMeetings.sort((a, b) => {
+                    // Convert start times to comparable values
+                    const timeA = convertToMinutes(a.startTime);
+                    const timeB = convertToMinutes(b.startTime);
+                    return timeA - timeB;
+                });
+
+                // Clear existing meetings for this room
+                $(`.room-column[data-room="${roomId}"] .event-grid .meeting-event`).remove();
+
+                // Add each meeting to the grid
+                roomMeetings.forEach(meeting => {
+                    // Check if meeting is for the selected date (using startDateTime)
+                    if (meeting.startDateTime) {
+                        const meetingDate = new Date(meeting.startDateTime).toISOString().split('T')[0];
+                        if (meetingDate !== selectedDate) {
+                            return; // Skip meetings not on the selected date
+                        }
+                    }
+
+                    let hours, minutes;
+                    if (meeting.startTime.includes('T')) {
+                        // If startTime is ISO format (e.g.: 2025-04-11T09:30:00)
+                        const startTimeObj = new Date(meeting.startTime);
+                        hours = startTimeObj.getHours();
+                        minutes = startTimeObj.getMinutes();
+                    } else {
+                        // If startTime is string format (e.g.: "09:30")
+                        [hours, minutes] = meeting.startTime.split(':').map(Number);
+                    }
+
+                    // Skip if outside our time range
+                    if (hours < startHour || hours > endHour) {
+                        return;
+                    }
+
+                    // Calculate position
+                    const startTimeMinutes = (hours - startHour) * 60 + minutes;
+                    const topPosition = (startTimeMinutes / 15) * 45; // 45 pixels per 15 minutes
+
+                    // Calculate duration in minutes
+                    let duration = meeting.duration || 15; // Default to 15 minutes if not specified
+
+                    // Calculate height based on duration (each 15 minutes is 45px height)
+                    const displayHeight = (duration / 15) * 45;
+
+                    // Set color based on status or organizer
+                    let statusColor;
+                    switch (meeting.status) {
+                        case 'Confirmed':
+                            statusColor = 'rgba(118, 191, 250, 0.7)';
+                            break;
+                        case 'Cancelled':
+                            statusColor = 'rgba(118, 191, 250, 0.7)';
+                            break;
+                        case 'Requested':
+                            statusColor = 'rgba(118, 191, 250, 0.7)';
+                            break;
+                        default:
+                            statusColor = 'rgba(118, 191, 250, 0.7)';
+                    }
+
+                    // Format times for tooltip
+                    const startTime = meeting.startDateTime ?
+                        meeting.startDateTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) :
+                        meeting.startTime;
+
+                    const endTime = meeting.endDateTime ?
+                        meeting.endDateTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) :
+                        calculateEndTime(meeting.startTime, duration);
+
+                    const dateStr = meeting.startDateTime ?
+                        meeting.startDateTime.toLocaleDateString() :
+                        selectedDate;
+
+                    // Create the meeting event element with a tooltip
+                    const meetingEvent = $(`
+                    <div class="meeting-event"
+                         style="top: ${topPosition}px; height: ${displayHeight}px; background-color: ${statusColor};"
+                         data-room="${meeting.room}"
+                         data-start="${meeting.startTime}"
+                         data-duration="${meeting.duration}"
+                         data-id="${meeting.roomId}"
+                         data-status="${meeting.status}">
+                        <div class="meeting-title">${meeting.title}</div>
+                        <div class="meeting-organizer">${meeting.organizer}</div>
+                        ${meeting.description ? `<div class="meeting-description">${meeting.description}</div>` : ''}
+                        <div class="meeting-tooltip">
+                            <div class="tooltip-title">${meeting.title || 'Unnamed Meeting'}</div>
+                            <div class="tooltip-info"><strong>Date:</strong> ${dateStr}</div>
+                            <div class="tooltip-info"><strong>Time:</strong> ${startTime} - ${endTime}</div>
+                            <div class="tooltip-info"><strong>Duration:</strong> ${meeting.duration} min</div>
+                            <div class="tooltip-info"><strong>Organizer:</strong> ${meeting.organizer || 'Unnamed'}</div>
+                            <div class="tooltip-info"><strong>Room:</strong> ${meeting.roomName}</div>
+                            <div class="tooltip-info"><strong>Location:</strong> ${meeting.location}</div>
+                            ${meeting.bookingType !== 'ONLY' ? `<div class="tooltip-info">
+                                                        <strong>Type:</strong>
+                                                        ${meeting.bookingType}</div>` : ''}
+                            ${meeting.weekdays ? `<div class="tooltip-info">
+                                                        <strong>Weekly:</strong>
+                                                        ${meeting.weekdays}</div>` : ''}
+                            ${meeting.attendees ? `<div class="tooltip-info">
+                                                        <strong>Attendees:</strong>
+                                                        ${meeting.attendees}</div>` : ''}
+                            ${meeting.content ? `<div class="tooltip-info">
+                                                        <strong>Content:</strong>
+                                                        ${meeting.content}</div>` : ''}
+                        </div>
+                    </div>
+                `);
+
+                    // Append to the correct room column
+                    $(`.room-column[data-room="${meeting.room}"] .event-grid`).append(meetingEvent);
+                });
+            });
+
+            viewMeetingEvent();
+        }
+
+        // Helper function to convert time string to minutes for sorting
+        function convertToMinutes(timeStr) {
+            if (!timeStr) return 0;
+
+            if (timeStr.includes('T')) {
+                // Handle ISO date string
+                return new Date(timeStr).getHours() * 60 + new Date(timeStr).getMinutes();
+            } else {
+                // Handle HH:MM format
+                const [hours, minutes] = timeStr.split(':').map(Number);
+                return hours * 60 + minutes;
+            }
+        }
+
+        // Helper function to calculate end time from start time and duration
+        function calculateEndTime(startTime, durationMinutes) {
+            if (!startTime) return '';
+
+            let hours, minutes;
+            if (startTime.includes('T')) {
+                // If ISO format
+                const startDate = new Date(startTime);
+                hours = startDate.getHours();
+                minutes = startDate.getMinutes();
+            } else {
+                // If HH:MM format
+                [hours, minutes] = startTime.split(':').map(Number);
+            }
+
+            const totalMinutes = hours * 60 + minutes + durationMinutes;
+            const endHours = Math.floor(totalMinutes / 60);
+            const endMinutes = totalMinutes % 60;
+
+            return `${endHours.toString().padStart(2, '0')}:${endMinutes.toString().padStart(2, '0')}`;
+        }
+
+        // Add detailed tooltips for meetings
+        function addMeetingTooltips() {
+            $('.meeting-event').hover(
+                function() { // Mouse enter
+                    const tooltip = $(this).find('.meeting-tooltip');
+
+                    // Adjust position to ensure tooltip is visible
+                    const parent = $(this).closest('.schedule-container');
+                    const parentRight = parent.offset().left + parent.width();
+                    const tooltipWidth = tooltip.outerWidth();
+
+                    // Check if tooltip would go outside container
+                    if ($(this).offset().left + $(this).outerWidth() + tooltipWidth > parentRight) {
+                        tooltip.css({
+                            left: 'auto',
+                            right: '100%'
+                        });
+                    }
+                },
+                function() { // Mouse leave
+                    // No action needed when mouse leaves
+                }
+            );
+        }
+
+        // Cập nhật hàm xem chi tiết cuộc họp khi click vào event
+        function viewMeetingEvent() {
+            $(document).on('click', '.meeting-event', function(e) {
+                // Prevent default behavior
+                e.preventDefault();
+                e.stopPropagation();
+
+                console.log("Meeting event clicked");
+
+                // Extract meeting data from data attributes
+                const roomIdentifier = $(this).data('room');
+                const startTime = $(this).data('start');
+                const duration = $(this).data('duration');
+                const roomId = $(this).data('id');
+                const status = $(this).data('status');
+
+                // Find the meeting in our data array
+                const meeting = meetingData.find(m =>
+                    m.room === roomIdentifier &&
+                    m.startTime === startTime);
+
+                if (!meeting) {
+                    console.error(`Meeting in room ${roomIdentifier} at ${startTime} not found in data`);
+                    return;
+                }
+
+                // Kiểm tra nếu thời gian trong quá khứ
+                const now = new Date();
+                const meetingStartTime = meeting.startDateTime || new Date(meeting.date + 'T' + meeting.startTime);
+                const isPast = meetingStartTime < now;
+
+                // Populate form fields with meeting data
+                $('#title').val(meeting.title || 'Untitled Meeting');
+                $('#attendees').val(meeting.attendees || meeting.organizer || '');
+                $('#username').val(meeting.organizer || '');
+
+                // Set the roomId in the hidden field - extract numeric ID from room format (room-X)
+                let roomIdValue = 1; // Default to Sky Room (ID 1)
+
+                if (meeting.roomId) {
+                    // If roomId is directly available, use it
+                    roomIdValue = meeting.roomId;
+                } else if (roomIdentifier) {
+                    // Try to extract from roomIdentifier (format: "room-X")
+                    const match = roomIdentifier.match(/room-(\d+)/);
+                    if (match && match[1]) {
+                        roomIdValue = parseInt(match[1], 10);
+                    }
+                }
+
+                // If room name is "Sun Room", override with ID 2
+                if (meeting.roomName && meeting.roomName.includes('Sun Room')) {
+                    roomIdValue = 2;
+                }
+
+                $('#roomId').val(roomIdValue);
+                console.log('Setting roomId to:', roomIdValue);
+
+                // Handle content field (might be in TinyMCE)
+                if (meeting.content) {
+                    if (tinymce && tinymce.get('content')) {
+                        tinymce.get('content').setContent(meeting.content);
+                    } else {
+                        $('#content').val(meeting.content);
+                    }
+                } else {
+                    if (tinymce && tinymce.get('content')) {
+                        tinymce.get('content').setContent('');
+                    } else {
+                        $('#content').val('');
+                    }
+                }
+
+                // Set MS Teams link radio buttons
+                const hasTeamsLink = meeting.linkMS === 'yes' || meeting.linkMS === true;
+                $('#linkYes').prop('checked', hasTeamsLink);
+                $('#linkNo').prop('checked', !hasTeamsLink);
+
+                // Handle recurrence pattern
+                const bookingType = meeting.bookingType || 'ONLY';
+                $('#only').prop('checked', bookingType === 'ONLY');
+                $('#daily').prop('checked', bookingType === 'DAILY');
+                $('#weekly').prop('checked', bookingType === 'WEEKLY');
+
+                // Toggle appropriate recurrence section
+                toggleRecurrence(bookingType.toLowerCase());
+
+                // Format dates for the form
+                if (meeting.startDateTime) {
+                    const startDateTimeStr = DateTimeUtils.formatDate(meeting.startDateTime, 'datetime-local');
+
+                    // Tính toán thời gian kết thúc nếu không có sẵn
+                    const endDateTime = meeting.endDateTime ||
+                        new Date(meeting.startDateTime.getTime() + (meeting.duration || 60) * 60000);
+                    const endDateTimeStr = DateTimeUtils.formatDate(endDateTime, 'datetime-local');
+                    const endTimeStr = DateTimeUtils.formatDate(endDateTime, 'HH:MM');
+                    // Set date/time values in the form based on booking type
+                    if (bookingType === 'ONLY') {
+                        $('#dateOnly').val(startDateTimeStr);
+                        $('#timeOnly').val(endTimeStr);
+                    } else if (bookingType === 'DAILY') {
+                        $('#dateStartDaily').val(startDateTimeStr);
+                        $('#dateEndDaily').val(endDateTimeStr);
+                    } else if (bookingType === 'WEEKLY') {
+                        $('#dateStartWeekly').val(startDateTimeStr);
+                        $('#dateEndWeekly').val(endDateTimeStr);
+
+                        // Handle weekdays for weekly recurrence
+                        if (meeting.weekdays) {
+                            const weekdays = meeting.weekdays.split(',');
+                            $('#mo').prop('checked', weekdays.includes('Mo'));
+                            $('#tu').prop('checked', weekdays.includes('Tu'));
+                            $('#we').prop('checked', weekdays.includes('We'));
+                            $('#th').prop('checked', weekdays.includes('Th'));
+                            $('#fr').prop('checked', weekdays.includes('Fr'));
+                        }
+                    }
+                } else {
+                    // Fallback if we don't have startDateTime objects
+                    const selectedDate = $('#date-input').val() || DateTimeUtils.formatDate(new Date());
+
+                    // Parse startTime using our utility function
+                    const timeObj = DateTimeUtils.parseTimeString(meeting.startTime);
+                    if (!timeObj) {
+                        console.error('Invalid meeting time format:', meeting.startTime);
+                        return;
+                    }
+                    // Create start date object
+                    const startDateTime = new Date(selectedDate);
+                    startDateTime.setHours(timeObj.hour, timeObj.minute, 0, 0);
+
+                    // Calculate end time based on duration
+                    const endDateTime = new Date(startDateTime.getTime() + (meeting.duration || 60) * 60000);
+
+                    // Format times using our utility functions
+                    const formattedStartDateTime = DateTimeUtils.formatDate(startDateTime, 'datetime-local');
+                    const formattedEndDateTime = DateTimeUtils.formatDate(endDateTime, 'datetime-local');
+                    const formattedEndTime = DateTimeUtils.formatDate(endDateTime, 'HH:MM');
+
+                    // Set values based on booking type
+                    if (bookingType === 'ONLY') {
+                        $('#dateOnly').val(formattedStartDateTime);
+                        $('#timeOnly').val(formattedEndTime);
+                    } else if (bookingType === 'DAILY') {
+                        $('#dateStartDaily').val(formattedStartDateTime);
+                        $('#dateEndDaily').val(formattedEndDateTime);
+                    } else if (bookingType === 'WEEKLY') {
+                        $('#dateStartWeekly').val(formattedStartDateTime);
+                        $('#dateEndWeekly').val(formattedEndDateTime);
+                    }
+                }
+
+                // Update room information in the sidebar
+                const roomInfo = `
+                        <h5>Room Information</h5>
+                        <p><strong>Time:</strong> ${meeting.startTime} - ${meeting.endTime || 'N/A'}</p>
+                        <p><strong>Building:</strong> ${meeting.building || '789 Tower'}</p>
+                        <p><strong>Floor:</strong> ${meeting.location || 'Tầng 8 - new'}</p>
+                        <p><strong>Meeting room:</strong> ${meeting.roomName || 'Room ' + roomId}</p>
+                        <p><strong>Price:</strong> ${meeting.price || '100,000 VNĐ/h'}</p>
+                        <p><strong>Seats:</strong> ${meeting.capacity || '6'}</p>
+                        <p><strong>Devices and services:</strong> ${meeting.devices || 'Standard equipment'}</p>
+                        <p><strong>Status:</strong> ${meeting.status || 'Confirmed'}</p>
+                    `;
+
+                $('#bookingModal .room-info').html(roomInfo);
+                // Sau khi điền dữ liệu vào form, thiết lập tất cả các trường thành readonly
+                $('#bookingForm input, #bookingForm textarea').prop('readonly', true);
+
+                // Vô hiệu hóa các nút radio và checkbox
+                $('#bookingForm input[type="radio"], #bookingForm input[type="checkbox"]').prop('disabled', true);
+
+                // Đảm bảo nút Edit hiển thị "Edit" (không phải "Save")
+                $('#editButton').text('Edit');
+                // Show the modal
+                $('#bookingModal').modal('show');
+
+                // Disable edit button if meeting is in the past
+                const editButton = document.getElementById('editButton');
+                if (editButton) {
+                    if (isPast) {
+                        editButton.disabled = true;
+                        editButton.classList.add('disabled');
+                        //editButton.title = "Cannot edit meetings in the past";
+
+                        const modalFooter = document.querySelector('#bookingModal .modal-footer');
+                        if (modalFooter) {
+                            const existingMsg = modalFooter.querySelector('.past-meeting-msg');
+                            if (existingMsg) {
+                                existingMsg.remove();
+                            }
+
+                            const pastMeetingMsg = document.createElement('div');
+                            pastMeetingMsg.className = 'past-meeting-msg text-danger';
+                            pastMeetingMsg.style.marginRight = '10px';
+                            //pastMeetingMsg.textContent = 'Cannot edit meetings in the past';
+                            modalFooter.insertBefore(pastMeetingMsg, editButton);
+                        }
+                    } else {
+                        editButton.disabled = false;
+                        editButton.classList.remove('disabled');
+                        //editButton.title = "";
+
+                        const pastMeetingMsg = document.querySelector('#bookingModal .modal-footer .past-meeting-msg');
+                        if (pastMeetingMsg) {
+                            pastMeetingMsg.remove();
+                        }
+                    }
+                }
+            });
+        }
+
+        // Hàm hỗ trợ để cập nhật thông tin phòng
+        function updateRoomInfo(meeting) {
+            // Cập nhật các thông tin phòng khác nếu có
+            const elements = {
+                'roomBuilding': meeting.building || '',
+                'roomFloor': meeting.location || '',
+                'roomPrice': meeting.price || '',
+                'roomSeats': meeting.capacity || '',
+                'roomDevices': meeting.devices || ''
+            };
+
+            // Cập nhật an toàn từng phần tử
+            Object.keys(elements).forEach(id => {
+                const element = document.getElementById(id);
+                if (element && elements[id]) {
+                    element.textContent = elements[id];
+                }
+            });
+        }
+
+        // Setup double-click to add new event
+        function setupAddNewEvent() {
+            $(document).on('click', '.time-cell', function() {
+                const clickedTime = $(this).data('time');
+                const roomId = $(this).closest('.room-column').data('room');
+
+                // Check if this time is in the past
+                if ($(this).hasClass('past-time')) {
+                    showNotification('Cannot schedule a meeting in the past!');
+                    return;
+                }
+
+                // Find room details
+                //const room = meetingData.find(meeting => meeting.room === roomId);
+
+                //if (!room) {
+                //    console.error(`Room ${roomId} not found in data`);
+                //    return;
+                //}
+
+                // Validation: Check if the time slot is already booked
+                const isTimeSlotBooked = meetingData.some(meeting => {
+                    if (meeting.room !== roomId) return false;
+
+                    const [meetingHours, meetingMinutes] = meeting.startTime.split(':').map(Number);
+                    const meetingStartMinutes = meetingHours * 60 + meetingMinutes;
+                    const meetingEndMinutes = meetingStartMinutes + meeting.duration;
+
+                    const [clickedHours, clickedMinutes] = clickedTime.split(':').map(Number);
+                    const clickedTimeMinutes = clickedHours * 60 + clickedMinutes;
+
+                    // Check if clicked time falls within this meeting's time span
+                    return (clickedTimeMinutes >= meetingStartMinutes &&
+                        clickedTimeMinutes < meetingEndMinutes);
+                });
+
+                if (isTimeSlotBooked) {
+                    showNotification('This time has been reserved. Please select a different time.');
+                    return;
+                }
+                // Populate modal with selected time and room details
+                populateCreateBookingModal(roomId, clickedTime);
+                // Open the create booking modal
+                $('#createBookingModal').modal('show');
+            });
+        }
+
+        // Function to populate create booking modal with selected details
+        function populateCreateBookingModal(roomId, clickedTime) {
+            // Find the room details
+            const room = window.allRooms ?
+                window.allRooms.find(r => r.room === roomId) :
+                { room: roomId, roomName: `Room ${roomId}` };
+
+            // Get current selected date or use today's date
+            const selectedDate = $('#date-input').val() ||
+                DateTimeUtils.formatDate(new Date());
+
+            const timeObj = DateTimeUtils.parseTimeString(clickedTime);
+
+            if (!timeObj) {
+                console.error('Invalid time format:', clickedTime);
+                return;
+            }
+            // Create a datetime object for the clicked time
+            const clickedDateTime = new Date(selectedDate);
+            clickedDateTime.setHours(timeObj.hour, timeObj.minute, 0, 0);
+
+            // Format for datetime-local input (YYYY-MM-DDThh:mm)
+            const formattedDateTime =  DateTimeUtils.formatDate(clickedDateTime, 'datetime-local');
+            // Calculate a default end time (1 hour after start)
+            const endDateTime = new Date(clickedDateTime);
+            endDateTime.setHours(endDateTime.getHours() + 1);
+            const formattedEndTime = DateTimeUtils.formatDate(endDateTime, 'HH:MM');
+            const formattedEndDateTime = DateTimeUtils.formatDate(endDateTime, 'datetime-local');
+
+            // Set the room ID in the hidden input field
+            // Extract numeric ID from roomId (format: 'room-X')
+            let numericRoomId = 1; // Default to Sky Room (ID 1)
+
+            // Check if the room is Sun Room based on room information
+            let roomName = room.roomName || '';
+            if (roomName.includes('Sun Room')) {
+                numericRoomId = 2; // Sun Room ID
+            } else if (roomId) {
+                // Try to extract from roomId (format: "room-X")
+                const match = roomId.match(/room-(\d+)/);
+                if (match && match[1]) {
+                    numericRoomId = parseInt(match[1], 10);
+                }
+            }
+
+            // Update the hidden input with the room ID
+            $('#roomIdInput').val(roomId);
+            console.log('Setting roomId to:', roomId, 'Numeric ID:', numericRoomId);
+
+            // Populate room information in the modal
+            $('#createBookingModal .room-info').html(`
+                    <h5>Room Information</h5>
+                    <p><strong>Time:</strong> ${clickedTime}</p>
+                    <p><strong>Date:</strong> ${selectedDate}</p>
+                    <p><strong>Room:</strong> ${room.roomName || `Room ${roomId.replace('room-', '')}`}</p>
+                    <p><strong>Building:</strong> ${room.building || '789 Tower'}</p>
+                    <p><strong>Floor:</strong> ${room.location || 'Tầng 8 - new'}</p>
+                    <p><strong>Seats:</strong> ${room.capacity || '6'}</p>
+                `);
+
+            // Set default values for the form
+            $('#createTitle').val('');
+            $('#createAttendees').val('');
+            $('#createContent').val('');
+            $('#createUsername').val(localStorage.getItem('Username') || 'User');
+
+            // Set recurrence to "Only" by default
+            $('#createOnly').prop('checked', true);
+            toggleCreateRecurrence('only');
+
+            // Set the datetime values
+            $('#createDateOnly').val(formattedDateTime);
+            $('#createTimeOnly').val(formattedEndTime);
+
+            // Also set the daily/weekly datetime fields as fallback
+            $('#createDateStartDaily').val(formattedDateTime);
+            $('#createDateEndDaily').val(formattedEndDateTime);
+
+            $('#createDateStartWeekly').val(formattedDateTime);
+            $('#createDateEndWeekly').val(formattedEndDateTime);
+        }
+
+        // Show notification modal
+        function showNotification(message, confirm = false) {
+            const modalTitle = document.getElementById("modal-title");
+            const modalMessage = document.getElementById("modal-message");
+            const icon = document.querySelector(".modal-box i");
+            const section = document.querySelector("section");
+
+            modalTitle.textContent = confirm ? "Confirmation" : "Notification";
+            modalMessage.textContent = message;
+            icon.className = "fa-solid fa-triangle-exclamation";
+            icon.style.color = "#f5a623";
+            section.classList.add("active");
+        }
+
+        // Handle close button for notification modal
+        const closeBtn = document.querySelector(".close-btn");
+        const overlay = document.querySelector(".overlay");
+
+        if (closeBtn) {
+            closeBtn.addEventListener("click", () => {
+                document.querySelector("section").classList.remove("active");
+            });
+        }
+
+        if (overlay) {
+            overlay.addEventListener("click", () => {
+                document.querySelector("section").classList.remove("active");
+            });
+        }
+
+        // Handle navigation arrows for room list
+        let currentRoomIndex = 0;
+
+        // Function to update room scroll position
+        function updateRoomScrollPosition() {
+            const roomCards = $('.room-card');
+            const totalRooms = roomCards.length;
+
+            // Ensure current index is within bounds
+            if (currentRoomIndex < 0) currentRoomIndex = 0;
+            if (currentRoomIndex >= totalRooms) currentRoomIndex = totalRooms - 1;
+
+            // Calculate the scroll position based on the current room index
+            const scrollPosition = currentRoomIndex * 215; // 200px width + 15px margin
+            $('.room-list').animate({ scrollLeft: scrollPosition }, 300);
+
+            // Also scroll the grid container to show the corresponding column
+            const gridScrollPosition = currentRoomIndex * 200; // 200px column width
+            $('.schedule-container').scrollLeft(gridScrollPosition);
+
+            // Update selected room
+            roomCards.removeClass('selected-room');
+            $(roomCards[currentRoomIndex]).addClass('selected-room');
+        }
+
+        // Handle navigation arrows
+        $('.av-left').on('click', function() {
+            if (currentRoomIndex > 0) {
+                currentRoomIndex--;
+                updateRoomScrollPosition();
+            }
+        });
+
+        $('.av-right').on('click', function() {
+            const roomCards = $('.room-card');
+            const totalRooms = roomCards.length;
+
+            if (currentRoomIndex < totalRooms - 1) {
+                currentRoomIndex++;
+                updateRoomScrollPosition();
+            }
+        });
+
+        // Handle date change
+        $('.date-input').on('change', function() {
+            // Get selected date
+            const selectedDate = $(this).val();
+
+            // Call API with selected date
+            fetchMeetingRooms({ date: selectedDate });
+        });
+        // Lấy thông tin username từ localStorage
+        const username = localStorage.getItem('Username') || 'Guest';
+
+        // Lấy chữ cái đầu tiên của username để hiển thị trong avatar
+        const firstLetter = username.charAt(0).toUpperCase();
+
+        // Cập nhật phần hiển thị user profile
+        $('.user-profile span').text(`${username}`);
+        $('.user-profile .avatar').text(firstLetter);
+
+        // Initialize the page
+        setupAddNewEvent();
+        $(window).on('load', function() {
+            setTimeout(initializeRoomCache, 1000); // Chờ 1 giây để đảm bảo dữ liệu đã được tải
+        });
+    });
+    // Updated CSS for meeting events and tooltips
+    const meetingEventStyles = `
+                                <style>
+                                /* Meeting event styles */
+                                .meeting-event {
+                                    position: absolute;
+                                    overflow: visible;
+                                    border-radius: 4px;
+                                    padding: 5px 8px;
+                                    color: white;
+                                    cursor: pointer;
+                                    font-size: 12px;
+                                    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+                                    transition: box-shadow 0.2s ease;
+                                }
+                                </style>
+                                `;
+
+    // Add styles to document
+    $(document).ready(function() {
+        $('head').append(meetingEventStyles);
+    });
+
+    function openDeletePopup(bookingId) {
+        if (!bookingId) {
+            console.error('Booking ID is missing');
+            return;
+        }
+
+        // Hide the edit form modal if it's open
+        $('#bookingModal').modal('hide');
+
+        // Show the delete confirmation popup
+        const userConfirmed = confirm("Confirm whether to delete (Booked) or not?");
+        if (userConfirmed) {
+            jQuery.ajax({
+                url: '/bookings/delete/' + bookingId,
+                type: 'POST', // Use POST instead of DELETE
+                success: function(response) {
+                    showNotification("Deleted (Booked) successfully.", 'success');
+                    setTimeout(() => location.reload(), 1000); // Reload the page after deletion
+                },
+                error: function(xhr) {
+                    console.error('Error deleting booking:', xhr.responseText);
+                    showNotification("Failed to delete booking.", 'error');
+                }
+            });
+        } else {
+            showNotification("Deletion cancelled.", 'warning');
+        }
+    }
+
+    function openEditForm(bookingId) {
+        fetchBookingDetails(bookingId, true); // Mở form chỉnh sửa
+    }
+
+    function fetchBookingDetails(bookingId, isEdit) {
+        jQuery.ajax({
+            url: `/api/v1/bookings/${bookingId}`, // Updated URL to use the REST API
+            type: 'GET',
+            success: function(response) {
+                const booking = response;
+                $('#bookingForm').data('booking-id', booking.bookingId); // Gán ID vào form
+                // Gán giá trị vào input
+                $('#title').val(booking.title);
+                $('#attendees').val(booking.attendees);
+                $('#content').val(booking.content);
+                $('#dateOnly').val(booking.startTime); // Gán cả ngày và giờ
+
+                const timeOnly = booking.endTime.split('T')[1].slice(0, 5);
+                $('#timeOnly').val(timeOnly);
+                $('#dateStartDaily').val(booking.startTime);
+                $('#dateEndDaily').val(booking.endTime);
+                $('#dateStartWeekly').val(booking.startTime);
+                $('#dateEndWeekly').val(booking.endTime);
+                $('#username').val(booking.username); // Ensure username is populated
+
+                // Set the roomId value correctly, ensuring it's a number
+                if (booking.roomId) {
+                    $('#roomId').val(booking.roomId);
+                } else {
+                    // If no roomId, use default (1 for Sky Room)
+                    $('#roomId').val(1);
+                }
+                console.log('Setting roomId to:', booking.roomId || 1);
+
+                // Cập nhật radio button Link MS Teams
+                $('#linkYes').prop('checked', booking.linkMS === "yes");
+                $('#linkNo').prop('checked', booking.linkMS === "no");
+
+                // Cập nhật radio button Recurrence
+                $('#only').prop('checked', booking.bookingType === "ONLY");
+                $('#daily').prop('checked', booking.bookingType === "DAILY");
+                $('#weekly').prop('checked', booking.bookingType === "WEEKLY");
+
+                // Hiển thị phần Recurrence tương ứng
+                toggleRecurrence(booking.bookingType.toLowerCase());
+
+                // Cập nhật checkbox Weekly
+                let days = ["mo", "tu", "we", "th", "fr"];
+                let weekdays = booking.weekdays ? booking.weekdays.split(',') : [];
+                days.forEach(day => {
+                    $('#' + day).prop('checked', weekdays.includes(day.charAt(0).toUpperCase() + day.slice(1)));
+                });
+
+                // Mở khóa các input để chỉnh sửa nếu là form chỉnh sửa
+                $('#bookingForm input, #bookingForm textarea').prop('readonly', !isEdit).prop('disabled', !isEdit);
+
+                // Hiển thị modal
+                $('#bookingModal').modal('show');
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                console.error('Lỗi lấy dữ liệu cuộc họp:', xhr.status, textStatus, errorThrown);
+                showNotification(`Failed to fetch booking details: ${xhr.status} ${textStatus}`, false);
+            }
+        });
+    }
+
+    let initialFormData = {};
+
+    function storeInitialData() {
+        const formElements = document.querySelectorAll('#bookingForm input, #bookingForm textarea');
+        formElements.forEach(element => {
+            if (element.type === 'checkbox' || element.type === 'radio') {
+                initialFormData[element.id] = element.checked;
+            } else {
+                initialFormData[element.id] = element.value;
+            }
+        });
+    }
+
+    function resetFormData() {
+        const formElements = document.querySelectorAll('#bookingForm input, #bookingForm textarea');
+        formElements.forEach(element => {
+            if (element.type === 'checkbox' || element.type === 'radio') {
+                element.checked = initialFormData[element.id];
+            } else {
+                element.value = initialFormData[element.id];
+            }
+        });
+    }
+
+    // Cập nhật hàm toggleEdit để xử lý việc chuyển đổi giữa chế độ xem và chỉnh sửa
+    function toggleEdit() {
+        const editButton = document.getElementById('editButton');
+        const isEditing = editButton.textContent === 'Edit';
+
+        // Nếu đang ở chế độ xem và chuyển sang chế độ chỉnh sửa
+        if (isEditing) {
+            // Bật chế độ chỉnh sửa cho tất cả các trường (trừ username)
+            $('#bookingForm input:not(#username), #bookingForm textarea').prop('readonly', false);
+
+            // Bật các nút radio và checkbox (trừ các checkbox weekday nếu cần)
+            $('#bookingForm input[type="radio"]').prop('disabled', false);
+
+
+            // Đổi nhãn nút thành "Save"
+            editButton.textContent = 'Save';
+
+            // Hiển thị thông báo
+            showNotification("Editing mode enabled", 'info');
+        }
+        // Nếu đang ở chế độ chỉnh sửa và lưu thay đổi
+        else {
+            // Lưu các thay đổi ở đây (có thể gọi API để cập nhật dữ liệu)
+            saveBookingChanges();
+
+            // Đặt lại tất cả các trường thành readonly
+            $('#bookingForm input, #bookingForm textarea').prop('readonly', true);
+
+            // Vô hiệu hóa các nút radio và checkbox
+            $('#bookingForm input[type="radio"], #bookingForm input[type="checkbox"]').prop('disabled', true);
+
+
+            // Đổi nhãn nút thành "Edit"
+            editButton.textContent = 'Edit';
+        }
+    }
+
+    // Thêm hàm để lưu các thay đổi (gọi API để cập nhật dữ liệu)
+    function saveBookingChanges() {
+        // Lấy ID của booking đang được chỉnh sửa
+        const bookingId = $('#bookingForm').data('booking-id');
+        if (!bookingId) {
+            showNotification("Error: Cannot identify the booking to update", 'error');
+            return;
+        }
+
+        // Thu thập dữ liệu từ form
+        const updatedData = {
+            bookingId: bookingId,
+            title: $('#title').val(),
+            attendees: $('#attendees').val(),
+            content: tinymce && tinymce.get('content') ? tinymce.get('content').getContent() : $('#content').val(),
+            linkMS: $('#linkYes').prop('checked') ? 'yes' : 'no',
+            bookingType: $('input[name="recurrence"]:checked').attr('id').toUpperCase(),
+            username: $('#username').val() // Important: include the username
+        };
+
+        // Lấy roomId từ modal info hoặc data attribute nếu có
+        const roomText = $('#bookingModal .room-info strong:contains("Meeting room:")').parent().text();
+        if (roomText) {
+            // Try to extract room name from text like "Meeting room: Sun Room"
+            const roomName = roomText.replace('Meeting room:', '').trim();
+
+            // Check for Sun Room specifically
+            if (roomName.includes('Sun Room')) {
+                updatedData.roomId = 2; // Sun Room ID
+            } else if (roomName.includes('Sky Room')) {
+                updatedData.roomId = 1; // Sky Room ID
+            } else {
+                // Default to the original roomId or 1 if not found
+                updatedData.roomId = $('#roomId').val() || 1;
+            }
+        } else {
+            // Default to the original roomId or 1 if not found
+            updatedData.roomId = $('#roomId').val() || 1;
+        }
+
+        // Format dates correctly using our helper function
+        function formatLocalDateTime(date) {
+            if (!date) return '';
+
+            // If it's already a string in the right format, return it
+            if (typeof date === 'string' && date.includes('-') && date.includes(':')) {
+                return date;
+            }
+
+            // If it's a Date object or can be converted to one
+            const dateObj = new Date(date);
+            if (isNaN(dateObj.getTime())) return '';
+
+            const year = dateObj.getFullYear();
+            const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const day = String(dateObj.getDate()).padStart(2, '0');
+            const hours = String(dateObj.getHours()).padStart(2, '0');
+            const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+            const seconds = String(dateObj.getSeconds()).padStart(2, '0');
+
+            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        }
+
+        // Thêm dữ liệu ngày giờ dựa trên loại booking
+        if (updatedData.bookingType === 'ONLY') {
+            const startDateTime = new Date($('#dateOnly').val());
+            const timeStr = $('#timeOnly').val();
+
+            if (timeStr && startDateTime) {
+                const [endHours, endMinutes] = timeStr.split(':');
+                const endDateTime = new Date(startDateTime);
+                endDateTime.setHours(endHours, endMinutes, 0, 0);
+
+                updatedData.startTime = formatLocalDateTime(startDateTime);
+                updatedData.endTime = formatLocalDateTime(endDateTime);
+            }
+        } else if (updatedData.bookingType === 'DAILY') {
+            updatedData.startTime = formatLocalDateTime($('#dateStartDaily').val());
+            updatedData.endTime = formatLocalDateTime($('#dateEndDaily').val());
+        } else if (updatedData.bookingType === 'WEEKLY') {
+            updatedData.startTime = formatLocalDateTime($('#dateStartWeekly').val());
+            updatedData.endTime = formatLocalDateTime($('#dateEndWeekly').val());
+
+            // Thu thập weekdays đã chọn
+            const selectedDays = [];
+            if ($('#mo').prop('checked')) selectedDays.push('Mo');
+            if ($('#tu').prop('checked')) selectedDays.push('Tu');
+            if ($('#we').prop('checked')) selectedDays.push('We');
+            if ($('#th').prop('checked')) selectedDays.push('Th');
+            if ($('#fr').prop('checked')) selectedDays.push('Fr');
+            updatedData.weekdays = selectedDays.join(',');
+        }
+
+        console.log("Updating booking with data:", updatedData);
+
+        // Make the API call to update the booking
+        $.ajax({
+            url: `/api/v1/bookings/${bookingId}`,
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify(updatedData),
+            success: function(response) {
+                showNotification("Changes saved successfully", 'success');
+                // Cập nhật lại dữ liệu trên lịch
+                setTimeout(() => {
+                    fetchMeetingRooms({ date: $('#date-input').val() });
+                    $('#bookingModal').modal('hide');
+                }, 1000);
+            },
+            error: function(xhr) {
+                console.error("Error updating booking:", xhr);
+                showNotification(`Failed to save changes: ${xhr.responseJSON?.retMsg || xhr.status + ' ' + xhr.statusText}`, 'error');
+            }
+        });
+    }
+
+    // Hàm hỗ trợ để kết hợp ngày và giờ
+    function combineDateAndTime(dateStr, timeStr) {
+        if (!dateStr || !timeStr) return '';
+
+        // Lấy phần ngày từ chuỗi datetime-local
+        const datePart = dateStr.split('T')[0];
+        // Kết hợp với giờ
+        return `${datePart}T${timeStr}`;
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        storeInitialData();
+
+        $('#bookingModal').on('hidden.bs.modal', function (event) {
+            resetFormData();
+            const formElements = document.querySelectorAll('#bookingForm input, #bookingForm textarea');
+            formElements.forEach(element => {
+                if (element.type !== 'radio' && element.type !== 'checkbox') {
+                    element.readOnly = true;
+                }
+                element.disabled = true;
+            });
+            document.getElementById('editButton').textContent = 'Edit';
+        });
+    });
+
+    function toggleRecurrence(type) {
+        document.getElementById('recurrenceOnly').style.display = 'none';
+        document.getElementById('recurrenceDaily').style.display = 'none';
+        document.getElementById('recurrenceWeekly').style.display = 'none';
+        if (type === 'only') {
+            document.getElementById('recurrenceOnly').style.display = 'block';
+        } else if (type === 'daily') {
+            document.getElementById('recurrenceDaily').style.display = 'block';
+        } else if (type === 'weekly') {
+            document.getElementById('recurrenceWeekly').style.display = 'block';
+        }
+    }
+
+    tinymce.init({
+        selector: '#content',
+        plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+        toolbar: 'bold italic underline | alignleft aligncenter alignright alignjustify | link image',
+        external_plugins: {
+            'print': 'https://cdn.tiny.cloud/1/q8eyc0pclp8vkwynx04vs7o65308fed83bgx6k7udmbjg26m/tinymce/5/plugins/print/plugin.min.js',
+            'hr': 'https://cdn.tiny.cloud/1/q8eyc0pclp8vkwynx04vs7o65308fed83bgx6k7udmbjg26m/tinymce/5/plugins/hr/plugin.min.js'
+        }
+    });
+
+    function openCreateForm() {
+        // Reset các trường trong form
+        $('#createTitle').val('');
+        $('#createAttendees').val('');
+        $('#createContent').val('');
+        $('#createLinkMS').prop('checked', false);
+        $('input[name="createRecurrence"]').prop('checked', false);
+        $('#createDateOnly').val('');
+        $('#createTimeOnly').val('');
+        $('#createDateStartDaily').val('');
+        $('#createDateEndDaily').val('');
+        $('#createDateStartWeekly').val('');
+        $('#createDateEndWeekly').val('');
+        $('#createUsername').val('');
+        $('input[type="checkbox"]').prop('checked', false);
+
+        // Hiển thị modal form tạo booking
+        $('#createBookingModal').modal('show');
+        $('#createBookingModalLabel').text('Create Booking');
+    }
+
+    function toggleCreateRecurrence(type) {
+        // Điều chỉnh hiển thị các phần của recurrence dựa trên lựa chọn
+        document.getElementById('createRecurrenceOnly').style.display = type === 'only' ? 'block' : 'none';
+        document.getElementById('createRecurrenceDaily').style.display = type === 'daily' ? 'block' : 'none';
+        document.getElementById('createRecurrenceWeekly').style.display = type === 'weekly' ? 'block' : 'none';
+    }
+
+    function createBooking() {
+        const selectedType = $('input[name="createRecurrence"]:checked').attr('id');
+
+        let bookingData = {
+            title: $('#createTitle').val(),
+            attendees: $('#createAttendees').val(),
+            content: $('#createContent').val(),
+            linkMS: $('input[name="createLinkMS"]:checked').attr('id') === 'createLinkYes',
+            bookingType: selectedType.replace('create', '').toUpperCase(),
+            startTime: '',
+            endTime: '',
+            weekdays: null,
+            username: $('#createUsername').val() || localStorage.getItem('username') || 'User'
+        };
+
+        // Get the roomId from the hidden input or from the modal data
+        const roomIdElement = $('#roomIdInput');
+        if (roomIdElement.length) {
+            // Extract room ID from the format "room-X"
+            const roomIdValue = roomIdElement.val();
+
+            // Check if the roomId contains "Sun Room" text
+            if (roomIdValue && typeof roomIdValue === 'string' &&
+                (roomIdValue.includes('Sun') || roomIdValue.includes('sun'))) {
+                bookingData.roomId = 2; // Sun Room ID
+                console.log('Setting roomId to Sun Room (2)');
+            } else {
+                // Try to extract numeric ID from the format "room-X"
+                const match = roomIdValue.match(/room-(\d+)/);
+                if (match && match[1]) {
+                    bookingData.roomId = parseInt(match[1], 10);
+                    console.log('Extracted roomId:', bookingData.roomId);
+                } else {
+                    // Default to Sky Room (ID 1)
+                    bookingData.roomId = 1;
+                    console.log('Defaulting to Sky Room (1)');
+                }
+            }
+        } else {
+            // Get room ID from the modal data if possible
+            const roomInfo = $('#createBookingModal .room-info strong:contains("Room:")').parent();
+            if (roomInfo.length) {
+                const roomText = roomInfo.text();
+                // Extract roomId from text like "Room: Sun Room" or get room name for lookup
+                const roomName = roomText.replace('Room:', '').trim();
+
+                // First try to find room by name in cached rooms data
+                if (window.allRooms && window.allRooms.length) {
+                    const foundRoom = window.allRooms.find(r => r.roomName === roomName);
+                    if (foundRoom) {
+                        bookingData.roomId = foundRoom.roomId;
+                    }
+                }
+
+                // If no room ID found, look for Sun Room specifically
+                if (!bookingData.roomId && roomName.includes('Sun Room')) {
+                    bookingData.roomId = 2; // Set Sun Room ID directly
+                } else if (!bookingData.roomId) {
+                    bookingData.roomId = 1; // Default to Sky Room ID
+                }
+            } else {
+                bookingData.roomId = 1; // Default to Sky Room ID if no room info found
+            }
+        }
+
+        const now = new Date();
+
+        if (selectedType === 'createOnly') {
+            const date = $('#createDateOnly').val();
+            const time = $('#createTimeOnly').val();
+
+            if (!date || !time) {
+                showNotification("Vui lòng nhập đầy đủ ngày, giờ bắt đầu và giờ kết thúc.");
+                return;
+            }
+
+            // Parse the datetime-local input
+            const startDateTime = new Date(date);
+            const [endHours, endMinutes] = time.split(':');
+            const endDateTime = new Date(startDateTime);
+            endDateTime.setHours(endHours);
+            endDateTime.setMinutes(endMinutes);
+
+            if (isNaN(startDateTime.getTime()) || isNaN(endDateTime.getTime())) {
+                showNotification("Ngày giờ không hợp lệ.");
+                return;
+            }
+
+            if (startDateTime < now) {
+                showNotification("Thời gian bắt đầu không được ở quá khứ.");
+                return;
+            }
+
+            const diffMinutes = (endDateTime - startDateTime) / (60 * 1000);
+            if (diffMinutes < 15) {
+                showNotification("Thời lượng đặt phòng tối thiểu là 15 phút.");
+                return;
+            }
+
+            if (endDateTime <= startDateTime) {
+                showNotification("Giờ kết thúc phải sau giờ bắt đầu.");
+                return;
+            }
+
+            // Fix timezone issue - format dates with local timezone instead of UTC
+            bookingData.startTime = formatLocalDateTime(startDateTime);
+            bookingData.endTime = formatLocalDateTime(endDateTime);
+        } else if (selectedType === 'createDaily' || selectedType === 'createWeekly') {
+            const start = selectedType === 'createDaily' ? $('#createDateStartDaily').val() : $('#createDateStartWeekly').val();
+            const end = selectedType === 'createDaily' ? $('#createDateEndDaily').val() : $('#createDateEndWeekly').val();
+
+            if (!start || !end) {
+                showNotification("Please provide start and end dates.");
+                return;
+            }
+
+            const startDate = new Date(start);
+            const endDate = new Date(end);
+
+            if (startDate < now || endDate < now) {
+                showNotification("Start or end date cannot be in the past.");
+                return;
+            }
+
+            if (endDate <= startDate) {
+                showNotification("End date must be after start date.");
+                return;
+            }
+
+            // Fix timezone issue for recurring bookings as well
+            bookingData.startTime = formatLocalDateTime(startDate);
+            bookingData.endTime = formatLocalDateTime(endDate);
+
+            if (selectedType === 'createWeekly') {
+                const weekdays = getSelectedWeekdays();
+                if (!weekdays) return;
+                bookingData.weekdays = weekdays;
+            }
+        }
+
+        // Helper function to format date in local timezone
+        function formatLocalDateTime(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            const seconds = String(date.getSeconds()).padStart(2, '0');
+
+            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        }
+
+        console.log("Creating booking with data:", bookingData);
+
+        jQuery.ajax({
+            url: '/api/v1/bookings',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(bookingData),
+            success: function(response) {
+                showNotification("Created booking successfully.", 'success');
+                $('#createBookingModal').modal('hide');
+                setTimeout(() => location.reload(), 4000);
+            },
+            error: function(xhr) {
+                if (xhr.status === 400 && xhr.responseJSON && xhr.responseJSON.retMsg) {
+                    showNotification(`Failed to create booking: ${xhr.responseJSON.retMsg}`);
+                } else if (xhr.status === 409 && xhr.responseJSON && xhr.responseJSON.retMsg) {
+                    // ⚠ Thông báo khi có trùng lịch
+                    showNotification(`Time conflict with existing booking: ${xhr.responseJSON.retMsg}`);
+                } else {
+                    console.error('Error creating booking:', xhr.status, xhr.statusText, xhr.responseText);
+                    showNotification("Failed to create booking.");
+                }
+            }
+        });
+    }
+
+    function getSelectedWeekdays() {
+        const selectedDays = [];
+
+        if ($('#createMo').prop('checked')) selectedDays.push('Mo');
+        if ($('#createTu').prop('checked')) selectedDays.push('Tu');
+        if ($('#createWe').prop('checked')) selectedDays.push('We');
+        if ($('#createTh').prop('checked')) selectedDays.push('Th');
+        if ($('#createFr').prop('checked')) selectedDays.push('Fr');
+
+        if ($('#createSa').prop('checked') || $('#createSu').prop('checked')) {
+            showNotification("Saturday and Sunday are not allowed for weekly bookings.");
+            return null;
+        }
+
+        if (selectedDays.length === 0) {
+            showNotification("Please select at least one weekday for weekly bookings.");
+            return null;
+        }
+
+        return selectedDays.join(',');
+    }
+
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.innerText = message;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.remove();
+        }, 4000);
+    }
+
+    // Example CSS for the notification
+    const style = document.createElement('style');
+    style.innerHTML = `
+            .notification {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background-color: #444;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 5px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+                opacity: 0.9;
+                transition: opacity 0.3s ease;
+            }
+            .notification.success {
+                background-color: #4caf50;
+            }
+            .notification.error {
+                background-color: #f44336;
+            }
+            .notification.info {
+                background-color: #2196f3;
+            }
+            `;
+    document.head.appendChild(style);
+    document.addEventListener('DOMContentLoaded', (event) => {
+        storeInitialData();
+
+        $('#bookingModal').on('hidden.bs.modal', function (event) {
+            resetFormData();
+            const formElements = document.querySelectorAll('#bookingForm input, #bookingForm textarea');
+            formElements.forEach(element => {
+                if (element.type !== 'radio' && element.type !== 'checkbox') {
+                    element.readOnly = true;
+                }
+                element.disabled = true;
+            });
+            document.getElementById('editButton').textContent = 'Edit';
+        });
+    });
+    // Thêm xử lý sự kiện cho nút đóng (X) và nút Cancel trong các modal
+    $(document).ready(function() {
+        // Xử lý nút đóng (X) trong modal xem booking
+        $('#bookingModal .close').on('click', function() {
+            $('#bookingModal').modal('hide');
+        });
+
+        // Xử lý nút Cancel trong modal xem booking
+        $('#bookingModal .btn-secondary').on('click', function() {
+            $('#bookingModal').modal('hide');
+        });
+
+        // Xử lý nút đóng (X) trong modal tạo booking
+        $('#createBookingModal .close').on('click', function() {
+            $('#createBookingModal').modal('hide');
+        });
+
+        // Xử lý nút Cancel trong modal tạo booking
+        $('#createBookingModal .btn-secondary').on('click', function() {
+            $('#createBookingModal').modal('hide');
+        });
+    });
+    // Đảm bảo các input được hiển thị với placeholder phù hợp
+    function updateTimeInputLabels() {
+        $('#startTime').attr('placeholder', 'HH:MM');
+        $('#endTime').attr('placeholder', 'HH:MM');
+    }
+
+    // Gọi hàm khi document ready
+    $(document).ready(function() {
+        updateTimeInputLabels();
+    });
+
+    // Đảm bảo reset form khi đóng modal
+    $('#bookingModal').on('hidden.bs.modal', function() {
+        // Reset form
+        $('#bookingForm')[0].reset();
+
+        // Đặt lại nút Edit
+        $('#editButton').text('Edit');
+
+        // Đặt lại tất cả các trường thành readonly
+        $('#bookingForm input, #bookingForm textarea').prop('readonly', true);
+
+        // Vô hiệu hóa các nút radio và checkbox
+        $('#bookingForm input[type="radio"], #bookingForm input[type="checkbox"]').prop('disabled', true);
+
+        // Reset TinyMCE nếu có
+        if (tinymce && tinymce.get('content')) {
+            tinymce.get('content').setContent('');
+        }
+    });
+</script>
+</body>
+</html>

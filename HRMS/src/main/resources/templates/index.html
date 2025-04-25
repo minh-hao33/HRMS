@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Meeting CMC Global</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #1b7cb3;
+            --primary-hover: #4786ba;
+            --danger-color: #d31616;
+            --danger-hover: #17dce3;
+            --success-color: #2ecc71;
+            --success-hover: #27ae60;
+            --warning-color: #f39c12;
+            --warning-hover: #d35400;
+            --dark-color: #1fbec3;
+            --light-color: #ecf0f1;
+            --border-color: #dfe6e9;
+            --text-color: #030303;
+            --text-light: #070707;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: var(--text-color);
+            line-height: 2.3;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .ftco-navbar-light {
+            background: #ffff !important;
+            flex-shrink: 0;
+            position: static;
+            width: 100%;
+            padding: 0.5rem 1rem;
+            box-shadow: 0 2px 4px rgba(239, 243, 244, 0.1);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px 0;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        /* Navbar container */
+        .navbar-container {
+            display: flex;
+            width: 100%;
+            padding: 0 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 20px;
+            text-transform: uppercase;
+        }
+
+        .navbar-toggler {
+            order: 2;
+            margin-left: auto;
+        }
+
+        .ftco-navbar-light .navbar-nav > .nav-item.active > a {
+            color: #000;
+        }
+
+        .ftco-navbar-light .navbar-nav > .nav-item > .nav-link {
+            font-size: 15px;
+            color: #000000 !important;
+            font-weight: 400;
+            opacity: 1 !important;
+            padding-left: 20px;
+        }
+
+        #ftco-nav {
+            order: 1;
+            flex-grow: 1;
+        }
+
+        .ftco-navbar-light .navbar-brand {
+            color: #0078D4 !important;
+        }
+
+        .navbar-nav {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-item {
+            margin: 0 0.5rem;
+            white-space: nowrap;
+        }
+
+        .nav-link {
+            padding: 0.5rem 0.75rem;
+            color: #FFFFFF;
+        }
+
+        .dropdown-toggle::after {
+            display: inline-block;
+            margin-left: 0.255em;
+            vertical-align: 0.255em;
+            content: "";
+            border-top: 0.3em solid;
+            border-right: 0.3em solid transparent;
+            border-bottom: 0;
+            border-left: 0.3em solid transparent;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0; /* Căn trái với phần tử gốc */
+            transform: none; /* Bỏ dịch chuyển giữa */
+            min-width: 180px;
+            padding: 0.25rem 0;
+            margin: 0.125rem 0 0;
+            font-size: 13px;
+            background-color: white;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: block;
+            text-align: left; /* Căn lề trái nội dung */
+        }
+
+        .nav-item.dropdown .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            /* Các thuộc tính khác giữ nguyên */
+        }
+
+        .nav-item.dropdown.show .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .dropdown-item {
+            display: block;
+            width: 100%;
+            padding: 0.4rem 1rem; /* Thu nhỏ padding và căn trái */
+            font-size: 15px; /* Giảm kích thước font */
+            color: var(--text-color);
+            background-color: transparent;
+            border: 0;
+            transition: background-color 0.2s ease;
+            text-align: left;
+        }
+
+
+        .dropdown-item:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        /* Responsive styles */
+        @media (min-width: 1200px) {
+            container-fluid {
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+        }
+
+
+        @media (max-width: 992px) {
+            .navbar-toggler {
+                order: 3;
+            }
+            #ftco-nav {
+                order: 4;
+                flex-basis: 100%;
+            }
+            .navbar-nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .nav-item {
+                margin: 0.25rem 0;
+                width: 100%;
+            }
+
+            /* Adjust dropdown for mobile */
+            .nav-item.dropdown .dropdown-menu {
+                position: static;
+                transform: none;
+                box-shadow: none;
+                border: none;
+                display: none;
+                opacity: 1;
+                visibility: visible;
+                width: 100%;
+            }
+
+            .nav-item.dropdown.show .dropdown-menu {
+                display: block;
+            }
+        }
+
+        .ftco-navbar-light .navbar-nav > .nav-item > .nav-link:hover {
+            color: #ffffff;
+        }
+
+        /* Main content takes 70% of the screen */
+        .dashboard-wrapper {
+            width: 75%;
+            padding: 20px;
+        }
+
+        .right-side {
+            width: 25%;
+            padding: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column; /* Đặt các iframe theo chiều dọc */
+        }
+
+        iframe {
+            width: 100%;
+            height: 210px;
+            border: none;
+            overflow: hidden;
+        }
+
+        .dashboard-container {
+            display: flex;
+            gap: 30px;
+            width: 100%; /* Full width of the parent container */
+        }
+
+        /* Card styles */
+        .dashboard-card {
+            background-color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            flex: 1;
+            border-left: 4px solid;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+        }
+
+        .label {
+            font-size: 1.5rem; /* Tăng cỡ chữ cho label */
+            text-transform: uppercase;
+            font-weight: bold;
+            flex: 1; /* Phần trái sẽ chiếm 1 phần */
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .value {
+            font-size: 2rem; /* Tăng cỡ chữ cho value */
+            font-weight: bold;
+            color: #5a5c69;
+            flex: 1; /* Phần phải sẽ chiếm 1 phần */
+            text-align: right; /* Căn phải cho value */
+            white-space: nowrap;
+        }
+        .dashboard-container a {
+            text-decoration: none; /* Bỏ gạch chân */
+            color: inherit; /* Giữ nguyên màu chữ bên trong */
+        }
+
+        /* Specific card styles */
+        #departmentBox {
+            border-color: #4e73df;
+        }
+
+        #departmentBox .label {
+            color: #4e73df;
+        }
+
+        #employeeBox {
+            border-color: #1cc88a;
+        }
+
+        #employeeBox .label {
+            color: #1cc88a;
+        }
+
+        /* Chart container layout */
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        /* Pie chart and legend container */
+        .pie-chart {
+            width: 50%;
+            max-width: 400px;
+            padding: 20px;
+        }
+
+        .chart-legend {
+            width: 50%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Legend item styles */
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            text-decoration: none;
+        }
+
+        .legend-color {
+            width: 25px;
+            height: 25px;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+
+        .legend-text {
+            font-size: 16px;
+            font-weight: 500;
+            width: 150px;
+        }
+
+        .legend-value {
+            margin-left: auto;
+            font-weight: bold;
+            text-align: right;
+            min-width: 100px;
+        }
+
+        .total-requests {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* Hover and active state for legend items */
+        .chart-legend .legend-item:hover {
+            background-color: #f1f1f1;
+            cursor: pointer;
+            border-radius: 5px;
+            transform: scale(1.05);
+        }
+
+        .chart-legend .legend-item:active {
+            transform: scale(1.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive adjustments for small screens */
+        @media (max-width: 768px) {
+            .chart-container {
+                flex-direction: column;
+            }
+
+            .dashboard-container {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .pie-chart, .chart-legend {
+                width: 100%;
+            }
+        }
+
+        /* Cố định header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        /* Cố định footer */
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px; /* Điều chỉnh bo góc của thẻ */
+            box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+        }
+
+        .card-header {
+            border: none;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            padding: 1rem 1.5rem;
+        }
+
+        .bg-primary {
+            background: linear-gradient(135deg, #4e54c8, #8f94fb) !important;
+        }
+
+        .bg-success {
+            background: linear-gradient(135deg, #42e695, #3bb2b8) !important;
+        }
+
+        .card-title {
+            margin: 0;
+            color: #fff;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .table {
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 0;
+            width: 100%;
+        }
+
+        .table th, .table td {
+            vertical-align: middle;
+            text-align: center;
+            border: none;
+            padding: 0.5rem;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100px; /* Giảm xuống để tránh thanh cuộn */
+        }
+
+        /* Khi di chuột vào ô, hiển thị toàn bộ nội dung */
+        .table td:hover {
+            overflow: visible; /* Hiển thị nội dung khi di chuột */
+            text-overflow: unset; /* Hủy bỏ dấu ba chấm */
+            white-space: normal; /* Cho phép dòng xuống khi hover */
+            background-color: #e1eaff; /* Thêm hiệu ứng màu nền khi hover */
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f5f7fa;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #e1eaff;
+            transition: all 0.3s ease;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #4e54c8, #8f94fb);
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .card-title {
+                font-size: 1rem;
+            }
+
+            .table th, .table td {
+                font-size: 0.85rem;
+            }
+        }
+        /* Nâng cấp các style cho dropdown thông báo */
+        .notification-dropdown .dropdown-menu {
+            width: 380px;
+            max-height: 500px;
+            overflow: hidden;
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            padding: 0;
+            right: -10px !important;
+            left: auto !important;
+            transform: none !important;
+        }
+
+        /* Header của dropdown thông báo */
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #fff;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            font-size: 16px;
+            margin: 0;
+            color: #333;
+        }
+
+        .btn-mark-all {
+            background: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-mark-all:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Body của dropdown thông báo */
+        .notification-body {
+            max-height: 350px;
+            overflow-y: auto;
+            background-color: #fff;
+            padding: 0;
+        }
+
+        /* Tùy chỉnh thanh cuộn */
+        .notification-body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .notification-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .notification-body::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 10px;
+        }
+
+        .notification-body::-webkit-scrollbar-thumb:hover {
+            background: #a1a1a1;
+        }
+
+        /* Mục thông báo */
+        .notification-item {
+            display: flex;
+            padding: 15px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .notification-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .notification-item.unread {
+            background-color: #edf7ff;
+        }
+
+        .notification-item.unread:hover {
+            background-color: #e5f2ff;
+        }
+
+        /* Animation khi có thông báo mới */
+        .notification-item.new {
+            animation: fadeInDown 0.5s ease forwards;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Icon thông báo */
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .icon-info {
+            background-color: rgba(33, 150, 243, 0.1);
+            color: #2196f3;
+        }
+
+        .icon-success {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: #4caf50;
+        }
+
+        .icon-warning {
+            background-color: rgba(255, 152, 0, 0.1);
+            color: #ff9800;
+        }
+
+        .icon-danger {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: #f44336;
+        }
+
+        /* Nội dung thông báo */
+        .notification-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .notification-item-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 4px;
+            line-height: 1.4;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .notification-item-text {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            line-height: 1.4;
+        }
+
+        /* Meta thông báo */
+        .notification-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: #888;
+        }
+
+        .notification-time, .notification-sender {
+            display: flex;
+            align-items: center;
+        }
+
+        .notification-time i, .notification-sender i {
+            font-size: 11px;
+            margin-right: 4px;
+        }
+
+        /* Footer của dropdown */
+        .notification-footer {
+            padding: 12px 0;
+            text-align: center;
+            background-color: #fff;
+            border-top: 1px solid #eaeaea;
+        }
+
+        .notification-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .notification-footer a:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            text-decoration: none;
+        }
+
+        /* Trạng thái rỗng */
+        .empty-notification {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            color: #aaa;
+        }
+
+        .empty-notification i {
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: #ddd;
+        }
+
+        .empty-text {
+            font-size: 14px;
+        }
+
+        /* Toast thông báo khi có thông báo mới */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+
+        .toast {
+            width: 300px;
+            overflow: hidden;
+            font-size: 0.875rem;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 0;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            border-radius: 8px;
+            animation: toastFadeIn 0.3s ease forwards;
+        }
+
+        @keyframes toastFadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .toast-header {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0.75rem;
+            color: white;
+            background-color: var(--primary-color);
+            background-clip: padding-box;
+            border-bottom: 0;
+        }
+
+        .toast-body {
+            padding: 0.75rem;
+        }
+        /* Notification styles */
+        .notification-bell {
+            position: relative;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #dc3545;
+            color: white;
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 50%;
+            display: none;
+        }
+
+        .notification-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Notification Bell */
+        .notification-bell {
+            position: relative;
+            padding: 8px 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notification-bell:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+
+        .notification-bell i {
+            font-size: 1.3rem;
+            color: #555;
+        }
+
+        /* Badge styling */
+        .notification-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 18px;
+            height: 18px;
+            border-radius: 10px;
+            background-color: #f44336;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 5px;
+            border: 2px solid white;
+            transform: translate(25%, -25%);
+            z-index: 1;
+        }
+
+        /* Bell animation */
+        @keyframes bell-shake {
+            0% { transform: rotate(0); }
+            10% { transform: rotate(10deg); }
+            20% { transform: rotate(-10deg); }
+            30% { transform: rotate(6deg); }
+            40% { transform: rotate(-6deg); }
+            50% { transform: rotate(3deg); }
+            60% { transform: rotate(-3deg); }
+            70% { transform: rotate(1deg); }
+            80% { transform: rotate(-1deg); }
+            90% { transform: rotate(0); }
+            100% { transform: rotate(0); }
+        }
+
+        .notification-bell.shake i {
+            animation: bell-shake 1s;
+        }
+
+        .dropdown-menu.notification-dropdown.show {
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            z-index: 1050 !important;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="navbar-container">
+        <a class="navbar-brand" href="/users/home">Request Management System</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a href="/users/home" class="nav-link">Home</a></li>
+                <li class="nav-item" id="request"><a href="/requests" class="nav-link">Request</a></li>
+                <li class="nav-item" id="office"><a href="#" class="nav-link">Office</a></li>
+                <li class="nav-item" id="meeting"><a href="/meeting-room" class="nav-link">Meeting</a></li>
+                <li class="nav-item" id="account"><a href="/users" class="nav-link">Account</a></li>
+                <li class="nav-item" id="dpment"><a href="/departments" class="nav-link">Department</a></li>
+                <div class="dropdown notification-dropdown me-3">
+                    <div class="notification-bell" id="notificationBell" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge" id="notificationCount">0</span>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end notification-dropdown" aria-labelledby="notificationBell">
+                        <li>
+                            <div class="notification-header">
+                                <span class="notification-title">Thông báo</span>
+                                <button class="btn btn-mark-all" id="markAllRead">
+                                    <i class="fas fa-check-double me-1"></i> Đánh dấu đã đọc
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="notification-body" id="notificationList">
+                                <!-- Danh sách thông báo -->
+                                <div class="empty-notification">
+                                    <i class="fas fa-bell-slash"></i>
+                                    <p class="empty-text">Không có thông báo nào</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="notification-footer">
+                                <a href="/notification" id="viewAllNotifications">Xem tất cả thông báo</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <li class="nav-item cta mr-md-2" id="loginBtn"><a href="/users/login" class="nav-link">Login</a></li>
+                <li class="nav-item dropdown" id="userInfo" style="display:none;">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="/images/person_1.jpg" class="rounded-circle me-2" alt="User Avatar" width="32" height="32">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end p-2 shadow" style="width: 250px; right: -20px !important;
+                                                                                                left: auto !important;
+                                                                                                transform: none !important;" aria-labelledby="userMenu">
+                        <!-- User Info -->
+                        <li class="d-flex align-items-center mb-2 px-2">
+                            <img src="/images/person_1.jpg" class="rounded-circle me-2" alt="User Avatar" width="40" height="40">
+                            <div>
+                                <div id="dropdownUsername" class="fw-semibold"></div>
+                                <small id="dropdownRole" class="text-muted"></small>
+                            </div>
+                        </li>
+                        <li><hr class="dropdown-divider my-1"></li>
+                        <!-- Menu items -->
+                        <li><a class="dropdown-item d-flex align-items-center" href="/users/profile"><i class="fas fa-user me-2"></i> Profile</a></li>
+                        <li><a class="dropdown-item d-flex align-items-center" href="/users/change-password"><i class="fas fa-gear me-2"></i> Change Password</a></li>
+                        <li><hr class="dropdown-divider my-1"></li>
+                        <!-- Logout -->
+                        <li><a class="dropdown-item d-flex align-items-center text-danger" href="#" onclick="logout()"><i class="fas fa-right-from-bracket me-2"></i> Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="main-content">
+    <div class="container-fluid" style="display: flex;">
+        <div class="dashboard-wrapper">
+            <div class="dashboard-container">
+                <a href="/departments" class="dashboard-card" id="departmentBox">
+                    <div class="label">Departments</div>
+                    <div class="value count">0</div>
+                </a>
+                <a href="/users" class="dashboard-card" id="employeeBox">
+                    <div class="label">Employees</div>
+                    <div class="value count">0</div>
+                </a>
+            </div>
+            <div class="chart-container">
+                <div class="pie-chart">
+                    <canvas id="requestsChart"></canvas>
+                </div>
+                <div class="chart-legend">
+                    <a href="/requests" class="legend-item" id="pendingLegend">
+                        <div class="legend-color" style="background-color: #ff8c00;"></div>
+                        <span class="legend-text">Pending Requests</span>
+                        <span class="legend-value" id="pendingPercent">0 (0%)</span>
+                    </a>
+                    <a href="/requests" class="legend-item" id="rejectedLegend">
+                        <div class="legend-color" style="background-color: #d32f2f;"></div>
+                        <span class="legend-text">Rejected Requests</span>
+                        <span class="legend-value" id="rejectedPercent">0 (0%)</span>
+                    </a>
+                    <a href="/requests" class="legend-item" id="approvedLegend">
+                        <div class="legend-color" style="background-color: #388e3c;"></div>
+                        <span class="legend-text">Approved Requests</span>
+                        <span class="legend-value" id="approvedPercent">0 (0%)</span>
+                    </a>
+                    <div class="total-requests">
+                        Total Requests: <span id="totalRequests">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-side">
+            <iframe src="https://thoitiet247.vn/widget/embed/ha-noi?style=3&day=3&td=%23ffffff&ntd=%234f7ffa&mvb=%23e5eeff&mv=%23335fd1&mdk=%23e5eeff&htd=true"
+                    id="widget-hn" width="100%" height="450px" scrolling="no" frameborder="0"
+                    allowtransparency="true" style="border:none;overflow:hidden;"></iframe>
+            <iframe src="https://thoitiet247.vn/widget/embed/da-nang?style=3&day=3&td=%23ffffff&ntd=%234f7ffa&mvb=%23e5eeff&mv=%23335fd1&mdk=%23e5eeff&htd=true"
+                    id="widge-dn" width="100%" height="450px" scrolling="no" frameborder="0"
+                    allowtransparency="true" style="border:none;overflow:hidden;"></iframe>
+            <iframe src="https://thoitiet247.vn/widget/embed/ho-chi-minh?style=3&day=3&td=%23ffffff&ntd=%234f7ffa&mvb=%23e5eeff&mv=%23335fd1&mdk=%23e5eeff&htd=true"
+                    id="widget-hcm" width="100%" height="450px" scrolling="no" frameborder="0"
+                    allowtransparency="true" style="border:none;overflow:hidden;"></iframe>
+        </div>
+    </div>
+</main>
+<div class="container">
+    <div class="row">
+        <!-- Cuộc Họp Đang Diễn Ra -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-lg border-light rounded">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title">Cuộc Họp Đang Diễn Ra</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover">
+                            <tbody id="ongoing-meetings">
+                            <!-- Dynamic content will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cuộc Họp Sắp Diễn Ra -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-lg border-light rounded">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title">Cuộc Họp Sắp Diễn Ra</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover">
+                            <tbody id="upcoming-meetings">
+                            <!-- Dynamic content will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="overlay">
+    <div class="modal">
+        <h2 id="modal-title"></h2>
+        <p id="modal-message"></p>
+        <button class="close-btn">Đóng</button>
+    </div>
+</section>
+<!-- Toast container -->
+<div class="toast-container" id="toastContainer"></div>
+<!-- Modal xem chi tiết thông báo -->
+<div class="modal fade" id="notificationDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Chi tiết thông báo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="notification-icon me-3" id="modalIcon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <h5 id="modalNotificationTitle" class="mb-0"></h5>
+                    </div>
+                    <div class="alert alert-light border p-3">
+                        <p id="modalNotificationContent" class="mb-0"></p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between text-muted">
+                    <small><i class="fas fa-user me-1"></i> Người gửi: <span id="modalSender"></span></small>
+                    <small><i class="far fa-clock me-1"></i> <span id="modalTime"></span></small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" id="markReadBtn">Đánh dấu đã đọc</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Notification sound -->
+<audio id="notificationSound" preload="auto">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-software-interface-alert-217.mp3" type="audio/mpeg">
+</audio>
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="/js/notification.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Xử lý click chuông thông báo
+        $('#notificationBell').on('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('.dropdown-menu.notification-dropdown').toggleClass('show');
+
+            // Tải thông báo khi mở dropdown
+            if ($('.dropdown-menu.notification-dropdown').hasClass('show')) {
+                // Gọi hàm tải thông báo nếu có
+                if (typeof loadNotifications === 'function') {
+                    loadNotifications();
+                }
+            }
+        });
+
+        // Đóng dropdown khi click bên ngoài
+        $(document).on('click', function(e) {
+            if (!$(e.target).closest('.notification-dropdown').length) {
+                $('.dropdown-menu.notification-dropdown').removeClass('show');
+            }
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        const username = localStorage.getItem('Username');
+        const role = localStorage.getItem('Role');
+        // Toggle dropdown on click
+        userMenu.addEventListener('click', function (event) {
+            event.preventDefault(); // Ngừng sự kiện mặc định
+            userInfo.classList.toggle('show'); // Thêm hoặc bỏ class "show"
+        });
+
+        // Đảm bảo khi click ra ngoài thì dropdown sẽ đóng
+        document.addEventListener('click', function (event) {
+            if (!userInfo.contains(event.target)) {
+                userInfo.classList.remove('show');
+            }
+        });
+        if (username && role) {
+            document.getElementById('userInfo').style.display = 'block';
+            document.getElementById('loginBtn').style.display = 'none';
+            document.getElementById('dropdownUsername').textContent = username;
+            document.getElementById('dropdownRole').textContent = role.charAt(0) + role.slice(1).toLowerCase();
+
+            if (role === 'ADMIN') {
+                document.getElementById('meeting').style.display = 'none';
+            } else if (role === 'EMPLOYEE') {
+                document.getElementById('office').style.display = 'none';
+                document.getElementById('account').style.display = 'none';
+                document.getElementById('dpment').style.display = 'none';
+            } else if (role === 'SUPERVISOR') {
+                document.getElementById('office').style.display = 'none';
+                document.getElementById('meeting').style.display = 'none';
+                document.getElementById('dpment').style.display = 'none';
+            }
+        }
+    });
+
+    function logout() {
+        fetch('/api/v1/users/logout', {
+            method: 'POST',
+            credentials: 'include',
+        })
+            .then(response => {
+                if (response.ok) {
+                    localStorage.clear();
+                    document.cookie.split(";").forEach(function(c) {
+                        document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+                    });
+                    window.location.href = "/users/login";
+                } else {
+                    alert("Đăng xuất không thành công. Vui lòng thử lại.");
+                }
+            })
+            .catch(error => {
+                console.error("Logout error:", error);
+                alert("Lỗi trong quá trình đăng xuất.");
+            });
+    }
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const username = localStorage.getItem('Username');
+        const role = localStorage.getItem('Role');
+
+        if (username && role) {
+            const loginBtn = document.getElementById('loginBtn');
+            const userInfo = document.getElementById('userInfo');
+            const usernameDisplay = document.getElementById('usernameDisplay');
+
+            if (loginBtn && userInfo && usernameDisplay) {
+                loginBtn.style.display = 'none';
+                userInfo.style.display = 'block';
+                usernameDisplay.textContent = username;
+            }
+
+            if (role === 'EMPLOYEE') {
+                document.querySelectorAll('.dashboard-container a').forEach(link => {
+                    link.removeAttribute('href');
+                    link.style.cursor = 'default';
+                });
+            }
+        }
+        if (role === 'SUPERVISOR') {
+            const departmentBox = document.getElementById('departmentBox');
+            if (departmentBox) {
+                departmentBox.href = '#'; // tạm gỡ link chính
+                departmentBox.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    window.location.href = '/users';
+                });
+            }
+        }
+        fetch('/api/v1/departments')
+            .then(res => res.json())
+            .then(data => {
+                document.querySelector('#departmentBox .count').textContent = data.total || data.length || 0;
+            });
+
+        fetch('/api/v1/users')
+            .then(res => res.json())
+            .then(data => {
+                document.querySelector('#employeeBox .count').textContent = data.total || data.length || 0;
+            });
+
+        fetch('/api/v1/requests')
+            .then(response => response.json())
+            .then(data => {
+                const requests = data.data || [];
+
+                const Pending = requests.filter(r => r.requestStatus === 'PENDING').length;
+                const Approved = requests.filter(r => r.requestStatus === 'APPROVED').length;
+                const Rejected = requests.filter(r => r.requestStatus === 'REJECTED').length;
+                const total = requests.length;
+
+                // Tính phần trăm
+                const pendingPercent = total > 0 ? Math.round((Pending / total) * 100) : 0;
+                const rejectedPercent = total > 0 ? Math.round((Rejected / total) * 100) : 0;
+                const approvedPercent = total > 0 ? Math.round((Approved / total) * 100) : 0;
+
+                // Cập nhật số liệu trong legend
+                document.getElementById('pendingPercent').textContent = `${Pending} (${pendingPercent}%)`;
+                document.getElementById('rejectedPercent').textContent = `${Rejected} (${rejectedPercent}%)`;
+                document.getElementById('approvedPercent').textContent = `${Approved} (${approvedPercent}%)`;
+                document.getElementById('totalRequests').textContent = total;
+
+                // Tạo biểu đồ tròn
+                const ctx = document.getElementById('requestsChart').getContext('2d');
+                const chartData = total > 0 ? [Pending, Rejected, Approved] : [1]; // Default to 1 for empty data
+                const chartLabels = total > 0 ? ['Pending', 'Rejected', 'Approved'] : ['Total'];
+                const backgroundColors = total > 0 ? ['#ff8c00', '#d32f2f', '#388e3c'] : ['#0078d4']; // Blue for no data
+
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: chartLabels,
+                        datasets: [{
+                            data: chartData,
+                            backgroundColor: backgroundColors,
+                            borderColor: ['#ffffff'],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                display: true
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        const label = context.label || '';
+                                        const value = context.raw || 0;
+                                        const totalValue = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        const percentage = totalValue > 0 ? Math.round((value / totalValue) * 100) : 100; // 100% for "No Data"
+                                        return `${label}: ${value} (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    });
+
+    async function fetchOngoingMeetings() {
+        const Username = localStorage.getItem('Username'); // Lưu ý 'Username' viết hoa
+        if (!Username) {
+            console.error('User is not logged in.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/v1/bookings/ongoing?username=${Username}`);
+            if (response.status === 404) {
+                console.error('API endpoint not found');
+                return;
+            }
+            const data = await response.json();
+
+            if (Array.isArray(data)) {
+                const ongoingMeetings = data.filter(booking => {
+                    const now = new Date();
+                    const startTime = new Date(booking.startTime);
+                    const endTime = new Date(booking.endTime);
+                    const isOngoing = startTime <= now && endTime >= now;
+                    const attendeesArray = booking.attendees
+                        ? booking.attendees.split(',').map(name => name.trim().toLowerCase())
+                        : [];
+                    const isAttendee = attendeesArray.includes(Username.toLowerCase());
+                    const isOrganizer = booking.username.toLowerCase() === Username.toLowerCase();
+                    return isOngoing && (isAttendee || isOrganizer);
+                });
+                displayMeetings(ongoingMeetings, 'ongoing');
+            } else {
+                console.error('Expected an array, got:', data);
+            }
+        } catch (error) {
+            console.error('Error fetching ongoing meetings:', error);
+        }
+    }
+
+    async function fetchUpcomingMeetings() {
+        const Username = localStorage.getItem('Username'); // Lưu ý 'Username' viết hoa
+        if (!Username) {
+            console.error('User is not logged in.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/v1/bookings/upcoming?username=${Username}`);
+            if (response.status === 404) {
+                console.error('API endpoint not found');
+                return;
+            }
+            const data = await response.json();
+
+            if (Array.isArray(data)) {
+                const upcomingMeetings = data.filter(booking => {
+                    const now = new Date();
+                    const startTime = new Date(booking.startTime);
+                    const isUpcoming = startTime > now;
+                    const attendeesArray = booking.attendees
+                        ? booking.attendees.split(',').map(name => name.trim().toLowerCase())
+                        : [];
+                    const isAttendee = attendeesArray.includes(Username.toLowerCase());
+                    const isOrganizer = booking.username.toLowerCase() === Username.toLowerCase();
+                    return isUpcoming && (isAttendee || isOrganizer);
+                });
+                displayMeetings(upcomingMeetings, 'upcoming');
+            } else {
+                console.error('Expected an array, got:', data);
+            }
+        } catch (error) {
+            console.error('Error fetching upcoming meetings:', error);
+        }
+    }
+
+    function displayMeetings(bookings, type) {
+        const tbody = document.getElementById(type === 'ongoing' ? 'ongoing-meetings' : 'upcoming-meetings');
+        if (!tbody) {
+            console.error('Table body not found for', type);
+            return;
+        }
+        tbody.innerHTML = '';
+
+        bookings.forEach(booking => {
+            const row = document.createElement('tr');
+            const startTime = new Date(booking.startTime);
+            const endTime = new Date(booking.endTime);
+            const startDisplay = startTime.toLocaleString();
+            const endDisplay = endTime.toLocaleString();
+
+            row.innerHTML = `
+        <td>${booking.roomId}</td>
+        <td>${booking.title}</td>
+        <td>${booking.attendees}</td>
+        <td>${startDisplay}</td>
+        <td>${endDisplay}</td>
+    `;
+            tbody.appendChild(row);
+        });
+
+        // Thêm các dòng trống nếu cần thiết
+        const rowCount = tbody.rows.length;
+        const maxRows = 5;
+        for (let i = rowCount; i < maxRows; i++) {
+            const emptyRow = tbody.insertRow();
+            for (let j = 0; j < 5; j++) {
+                const cell = emptyRow.insertCell();
+                cell.innerHTML = "&nbsp;";
+            }
+        }
+    }
+
+    window.onload = () => {
+        fetchOngoingMeetings();
+        fetchUpcomingMeetings();
+    };
+</script>
+</body>
+</html>

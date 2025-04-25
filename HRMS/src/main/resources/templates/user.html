@@ -1,0 +1,2176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Meeting CMC Global</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="/js/sessionTimeout.js"></script>
+  <style>
+    :root {
+      --primary-color: #1b7cb3;
+      --primary-hover: #4786ba;
+      --danger-color: #d31616;
+      --danger-hover: #17dce3;
+      --success-color: #2ecc71;
+      --success-hover: #27ae60;
+      --warning-color: #f39c12;
+      --warning-hover: #d35400;
+      --dark-color: #1fbec3;
+      --light-color: #ecf0f1;
+      --border-color: #dfe6e9;
+      --text-color: #030303;
+      --text-light: #070707;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+    html, body {
+      overflow-x: hidden;
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f8f9fa;
+      color: var(--text-color);
+      line-height: 2.3;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    .ftco-navbar-light {
+      background: #ffff !important;
+      flex-shrink: 0;
+      position: static;
+      width: 100%;
+      padding: 0.5rem 1rem;
+      box-shadow: 0 2px 4px rgba(239, 243, 244, 0.1);
+    }
+
+    .main-content {
+      flex: 1;
+      overflow: auto;
+      padding: 20px 0;
+      min-height: calc(100vh - 60px - 10px);
+    }
+
+    /* Modal styles */
+    .modal-content {
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-header {
+      background-color: #0078D4;
+      color: white;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .modal-body {
+      padding: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-label {
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
+    .password-strength {
+      height: 5px;
+      background-color: #e9ecef;
+      margin-top: 5px;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .password-strength-bar {
+      height: 100%;
+      width: 0;
+      transition: width 0.3s ease;
+    }
+
+    .password-hint {
+      font-size: 12px;
+      color: #6c757d;
+      margin-top: 5px;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--dark-color);
+    }
+
+    .filter-container {
+      margin-bottom: 30px;
+    }
+
+    .filter-box {
+      display: flex;
+      gap: 15px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .filter-group label {
+      margin-bottom: 5px;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .action-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 3px;
+      transition: var(--transition);
+    }
+
+    .action-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+      border-color: var(--primary-hover);
+    }
+
+    .btn-danger {
+      background-color: var(--danger-color);
+      border-color: var(--danger-color);
+    }
+
+    .btn-danger:hover {
+      background-color: var(--danger-hover);
+      border-color: var(--danger-hover);
+    }
+
+    .alert-error {
+      background-color: rgba(231, 76, 60, 0.1);
+      color: var(--danger-color);
+      border-color: rgba(231, 76, 60, 0.3);
+    }
+
+    .pagination-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    /* Navbar container */
+    .navbar-container {
+      display: flex;
+      width: 100%;
+      padding: 0 1rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .navbar-brand {
+      font-weight: 600;
+      font-size: 20px;
+      text-transform: uppercase;
+    }
+
+    .navbar-toggler {
+      order: 2;
+      margin-left: auto;
+    }
+
+    .ftco-navbar-light .navbar-nav > .nav-item.active > a {
+      color: #000;
+    }
+
+    .ftco-navbar-light .navbar-nav > .nav-item > .nav-link {
+      font-size: 15px;
+      color: #000000 !important;
+      font-weight: 400;
+      opacity: 1 !important;
+      padding-left: 20px;
+    }
+
+    #ftco-nav {
+      order: 1;
+      flex-grow: 1;
+    }
+
+    .ftco-navbar-light .navbar-brand {
+      color: #0078D4 !important;
+    }
+
+    .navbar-nav {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-item {
+      margin: 0 0.5rem;
+      white-space: nowrap;
+    }
+
+    .nav-link {
+      padding: 0.5rem 0.75rem;
+      color: #FFFFFF;
+    }
+
+    .content-padding {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
+    /* Dropdown styles - Updated */
+    .nav-item.dropdown {
+      position: relative;
+    }
+
+    .dropdown-toggle::after {
+      display: inline-block;
+      margin-left: 0.255em;
+      vertical-align: 0.255em;
+      content: "";
+      border-top: 0.3em solid;
+      border-right: 0.3em solid transparent;
+      border-bottom: 0;
+      border-left: 0.3em solid transparent;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0; /* Căn trái với phần tử gốc */
+      transform: none; /* Bỏ dịch chuyển giữa */
+      min-width: 180px;
+      padding: 0.25rem 0;
+      margin: 0.125rem 0 0;
+      font-size: 13px;
+      background-color: white;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      display: block;
+      text-align: left; /* Căn lề trái nội dung */
+    }
+
+    .nav-item.dropdown .dropdown-menu {
+      opacity: 0;
+      visibility: hidden;
+      /* Các thuộc tính khác giữ nguyên */
+    }
+
+    .nav-item.dropdown.show .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .dropdown-item {
+      display: block;
+      width: 100%;
+      padding: 0.4rem 1rem; /* Thu nhỏ padding và căn trái */
+      font-size: 15px; /* Giảm kích thước font */
+      color: var(--text-color);
+      background-color: transparent;
+      border: 0;
+      transition: background-color 0.2s ease;
+      text-align: left;
+    }
+
+
+    .dropdown-item:hover {
+      background-color: #ffffff;
+      color: #000000;
+    }
+
+    .dropdown-divider {
+      height: 0;
+      margin: 0.5rem 0;
+      overflow: hidden;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    /* Table styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      min-width: 800px;
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+      background-color: #0078D4;
+      color: white;
+      font-weight: 500;
+      position: sticky;
+      top: 0;
+    }
+
+    tr:hover {
+      background-color: #f8f9fa;
+    }
+
+    .btn-add-new {
+      background-color: #0078D4;
+      border-color: #0078D4;
+      color: white;
+    }
+
+    .btn-add-new:hover {
+      background-color: #005a9e;
+      border-color: #005a9e;
+    }
+
+
+    @media (max-width: 992px) {
+      .navbar-toggler {
+        order: 3;
+      }
+      #ftco-nav {
+        order: 4;
+        flex-basis: 100%;
+      }
+      .navbar-nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-item {
+        margin: 0.25rem 0;
+        width: 100%;
+      }
+
+      /* Adjust dropdown for mobile */
+      .nav-item.dropdown .dropdown-menu {
+        position: static;
+        transform: none;
+        box-shadow: none;
+        border: none;
+        display: none;
+        opacity: 1;
+        visibility: visible;
+        width: 100%;
+      }
+
+      .nav-item.dropdown.show .dropdown-menu {
+        display: block;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .filter-group {
+        min-width: 100%;
+      }
+
+      .pagination-container {
+        flex-wrap: wrap;
+      }
+    }
+
+    .ftco-navbar-light .navbar-nav > .nav-item > .nav-link:hover {
+      color: #ffffff;
+    }
+    /* Nâng cấp các style cho dropdown thông báo */
+    .notification-dropdown .dropdown-menu {
+      width: 380px;
+      max-height: 500px;
+      overflow: hidden;
+      border-radius: 12px;
+      border: none;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      padding: 0;
+      right: -10px !important;
+      left: auto !important;
+      transform: none !important;
+    }
+
+    /* Header của dropdown thông báo */
+    .notification-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background-color: #fff;
+      border-bottom: 1px solid #eaeaea;
+    }
+
+    .notification-title {
+      font-weight: 600;
+      font-size: 16px;
+      margin: 0;
+      color: #333;
+    }
+
+    .btn-mark-all {
+      background: transparent;
+      color: var(--primary-color);
+      border: 1px solid var(--primary-color);
+      padding: 4px 10px;
+      border-radius: 5px;
+      font-size: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-mark-all:hover {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    /* Body của dropdown thông báo */
+    .notification-body {
+      max-height: 350px;
+      overflow-y: auto;
+      background-color: #fff;
+      padding: 0;
+    }
+
+    /* Tùy chỉnh thanh cuộn */
+    .notification-body::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .notification-body::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    .notification-body::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 10px;
+    }
+
+    .notification-body::-webkit-scrollbar-thumb:hover {
+      background: #a1a1a1;
+    }
+
+    /* Mục thông báo */
+    .notification-item {
+      display: flex;
+      padding: 15px 20px;
+      border-bottom: 1px solid #f0f0f0;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .notification-item:hover {
+      background-color: #f8f9fa;
+    }
+
+    .notification-item.unread {
+      background-color: #edf7ff;
+    }
+
+    .notification-item.unread:hover {
+      background-color: #e5f2ff;
+    }
+
+    /* Animation khi có thông báo mới */
+    .notification-item.new {
+      animation: fadeInDown 0.5s ease forwards;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Icon thông báo */
+    .notification-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+
+    .icon-info {
+      background-color: rgba(33, 150, 243, 0.1);
+      color: #2196f3;
+    }
+
+    .icon-success {
+      background-color: rgba(76, 175, 80, 0.1);
+      color: #4caf50;
+    }
+
+    .icon-warning {
+      background-color: rgba(255, 152, 0, 0.1);
+      color: #ff9800;
+    }
+
+    .icon-danger {
+      background-color: rgba(244, 67, 54, 0.1);
+      color: #f44336;
+    }
+
+    /* Nội dung thông báo */
+    .notification-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .notification-item-title {
+      font-weight: 600;
+      font-size: 14px;
+      color: #333;
+      margin-bottom: 4px;
+      line-height: 1.4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .notification-item-text {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 8px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      line-height: 1.4;
+    }
+
+    /* Meta thông báo */
+    .notification-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: #888;
+    }
+
+    .notification-time, .notification-sender {
+      display: flex;
+      align-items: center;
+    }
+
+    .notification-time i, .notification-sender i {
+      font-size: 11px;
+      margin-right: 4px;
+    }
+
+    /* Footer của dropdown */
+    .notification-footer {
+      padding: 12px 0;
+      text-align: center;
+      background-color: #fff;
+      border-top: 1px solid #eaeaea;
+    }
+
+    .notification-footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14px;
+      padding: 6px 12px;
+      border-radius: 4px;
+      transition: background-color 0.2s;
+    }
+
+    .notification-footer a:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+      text-decoration: none;
+    }
+
+    /* Trạng thái rỗng */
+    .empty-notification {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      color: #aaa;
+    }
+
+    .empty-notification i {
+      font-size: 40px;
+      margin-bottom: 15px;
+      color: #ddd;
+    }
+
+    .empty-text {
+      font-size: 14px;
+    }
+
+    /* Toast thông báo khi có thông báo mới */
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1050;
+    }
+
+    .toast {
+      width: 300px;
+      overflow: hidden;
+      font-size: 0.875rem;
+      background-color: #fff;
+      background-clip: padding-box;
+      border: 0;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      border-radius: 8px;
+      animation: toastFadeIn 0.3s ease forwards;
+    }
+
+    @keyframes toastFadeIn {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .toast-header {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 0.75rem;
+      color: white;
+      background-color: var(--primary-color);
+      background-clip: padding-box;
+      border-bottom: 0;
+    }
+
+    .toast-body {
+      padding: 0.75rem;
+    }
+    /* Notification styles */
+    .notification-bell {
+      position: relative;
+      cursor: pointer;
+      padding: 10px;
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: #dc3545;
+      color: white;
+      font-size: 10px;
+      padding: 2px 5px;
+      border-radius: 50%;
+      display: none;
+    }
+
+    .notification-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    /* Notification Bell */
+    .notification-bell {
+      position: relative;
+      padding: 8px 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .notification-bell:hover {
+      background-color: rgba(0,0,0,0.05);
+    }
+
+    .notification-bell i {
+      font-size: 1.3rem;
+      color: #555;
+    }
+
+    /* Badge styling */
+    .notification-badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      min-width: 18px;
+      height: 18px;
+      border-radius: 10px;
+      background-color: #f44336;
+      color: white;
+      font-size: 10px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 5px;
+      border: 2px solid white;
+      transform: translate(25%, -25%);
+      z-index: 1;
+    }
+
+    /* Bell animation */
+    @keyframes bell-shake {
+      0% { transform: rotate(0); }
+      10% { transform: rotate(10deg); }
+      20% { transform: rotate(-10deg); }
+      30% { transform: rotate(6deg); }
+      40% { transform: rotate(-6deg); }
+      50% { transform: rotate(3deg); }
+      60% { transform: rotate(-3deg); }
+      70% { transform: rotate(1deg); }
+      80% { transform: rotate(-1deg); }
+      90% { transform: rotate(0); }
+      100% { transform: rotate(0); }
+    }
+
+    .notification-bell.shake i {
+      animation: bell-shake 1s;
+    }
+
+    .dropdown-menu.notification-dropdown.show {
+      display: block !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      z-index: 1050 !important;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+  <div class="navbar-container">
+    <a class="navbar-brand" href="/users/home">Request Management System</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="oi oi-menu"></span> Menu
+    </button>
+
+    <div class="collapse navbar-collapse" id="ftco-nav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active"><a href="/users/home" class="nav-link">Home</a></li>
+        <li class="nav-item" id="request"><a href="/requests" class="nav-link">Request</a></li>
+        <li class="nav-item" id="office"><a href="#" class="nav-link">Office</a></li>
+        <li class="nav-item" id="meeting"><a href="/meeting-room" class="nav-link">Meeting</a></li>
+        <li class="nav-item" id="account"><a href="/users" class="nav-link">Account</a></li>
+        <li class="nav-item" id="dpment"><a href="/departments" class="nav-link">Department</a></li>
+        <div class="dropdown notification-dropdown me-3">
+          <div class="notification-bell" id="notificationBell" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-bell"></i>
+            <span class="notification-badge" id="notificationCount">0</span>
+          </div>
+          <ul class="dropdown-menu dropdown-menu-end notification-dropdown" aria-labelledby="notificationBell">
+            <li>
+              <div class="notification-header">
+                <span class="notification-title">Thông báo</span>
+                <button class="btn btn-mark-all" id="markAllRead">
+                  <i class="fas fa-check-double me-1"></i> Đánh dấu đã đọc
+                </button>
+              </div>
+            </li>
+            <li>
+              <div class="notification-body" id="notificationList">
+                <!-- Danh sách thông báo -->
+                <div class="empty-notification">
+                  <i class="fas fa-bell-slash"></i>
+                  <p class="empty-text">Không có thông báo nào</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="notification-footer">
+                <a href="/notification" id="viewAllNotifications">Xem tất cả thông báo</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <li class="nav-item cta mr-md-2" id="loginBtn"><a href="/users/login" class="nav-link">Login</a></li>
+        <li class="nav-item dropdown" id="userInfo" style="display:none;">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="/images/person_1.jpg" class="rounded-circle me-2" alt="User Avatar" width="32" height="32">
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end p-2 shadow" style="width: 250px; right: -20px !important;
+                                                                                                left: auto !important;
+                                                                                                transform: none !important;" aria-labelledby="userMenu">
+            <!-- User Info -->
+            <li class="d-flex align-items-center mb-2 px-2">
+              <img src="/images/person_1.jpg" class="rounded-circle me-2" alt="User Avatar" width="40" height="40">
+              <div>
+                <div id="dropdownUsername" class="fw-semibold"></div>
+                <small id="dropdownRole" class="text-muted"></small>
+              </div>
+            </li>
+            <li><hr class="dropdown-divider my-1"></li>
+            <!-- Menu items -->
+            <li><a class="dropdown-item d-flex align-items-center" href="/users/profile"><i class="fas fa-user me-2"></i> Profile</a></li>
+            <li><a class="dropdown-item d-flex align-items-center" href="/users/change-password"><i class="fas fa-gear me-2"></i> Change Password</a></li>
+            <li><hr class="dropdown-divider my-1"></li>
+            <!-- Logout -->
+            <li><a class="dropdown-item d-flex align-items-center text-danger" href="#" onclick="logout()"><i class="fas fa-right-from-bracket me-2"></i> Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="main-content">
+  <div class="content-padding">
+    <div id="errorAlert" class="alert alert-error alert-dismissible fade show" style="display: none;">
+      <span id="errorMessage"></span>
+      <button type="button" class="btn-close" onclick="document.getElementById('errorAlert').style.display = 'none'"></button>
+    </div>
+
+    <div class="filter-container mb-4">
+      <div class="filter-box row gx-3">
+        <div class="filter-group col-md-4 col-sm-6 mb-3">
+          <label for="department">Department</label>
+          <select id="department" class="form-select">
+            <option value="">All Departments</option>
+          </select>
+        </div>
+
+        <div class="filter-group col-md-4 col-sm-6 mb-3">
+          <label for="role">Role</label>
+          <select id="role" class="form-select">
+            <option value="">All Roles</option>
+          </select>
+        </div>
+
+        <div class="filter-group col-md-4 col-sm-8 mb-3">
+          <label for="keyword">Search</label>
+          <div class="input-group">
+            <input type="text" id="keyword" class="form-control" placeholder="Enter username...">
+            <button class="btn btn-primary" onclick="searchAccount()">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="filter-group col-md-3 col-sm-4 mb-3 d-flex align-items-end justify-content-between">
+          <button id="addButton" class="btn btn-add-new w-100" data-bs-toggle="modal" data-bs-target="#createAccountModal">
+            <i class="fas fa-plus"></i> Add New
+          </button>
+          <button id="exportExcelBtn" class="btn btn-success w-100 ms-2">
+            <i class="fas fa-file-excel"></i> Export Excel
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="table-container">
+      <table >
+        <thead>
+        <tr>
+          <th>Username</th>
+          <th>Employee Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Department</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="accountsTableBody"></tbody>
+      </table>
+    </div>
+    <div class="pagination-container">
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+          <li class="page-item" id="prevPage">
+            <a class="page-link" href="#" aria-label="Previous" onclick="changePage(currentPage - 1)">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item" id="nextPage">
+            <a class="page-link" href="#" aria-label="Next" onclick="changePage(currentPage + 1)">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</main>
+
+<!-- Create Account Modal -->
+<div class="modal fade" id="createAccountModal" tabindex="-1" aria-labelledby="createAccountModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createAccountModalLabel">Create New Account</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="createAccountForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="username" class="form-label">Username *</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="username" required>
+                  <button class="btn btn-outline-secondary" type="button" onclick="checkUsernameAvailability()">Check</button>
+                </div>
+                <span id="usernameMessage" class="form-text"></span>
+                <div id="usernameAvailability" class="form-text"></div>
+              </div>
+
+              <div class="form-group mt-3">
+                <label for="employeeName" class="form-label">Employee Name *</label>
+                <input type="text" class="form-control" id="employeeName" required>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="password" class="form-label">Password *</label>
+                <input type="password" class="form-control" id="password" required>
+                <div class="password-strength">
+                  <div class="password-strength-bar" id="passwordStrengthBar"></div>
+                </div>
+                <div class="password-hint">
+                  Password must be at least 10 characters, contain uppercase, lowercase, numbers and special characters
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hàng chứa Email và Confirm Password -->
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email" class="form-label">Email *</label>
+                <input type="email" class="form-control" id="email" required>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="confirmPassword" class="form-label">Confirm Password *</label>
+                <input type="password" class="form-control" id="confirmPassword" required>
+                <div id="passwordMatch" class="form-text"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hàng chứa Department và Role -->
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="modalDepartment" class="form-label">Department *</label>
+                <select class="form-select" id="modalDepartment" required>
+                  <option value="">Select Department</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="modalRole" class="form-label">Role *</label>
+                <select class="form-select" id="modalRole" required>
+                  <option value="">Select Role</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Checkbox -->
+          <div class="form-group form-check mt-3">
+            <input type="checkbox" class="form-check-input" id="status" checked>
+            <label class="form-check-label" for="status">Active Account</label>
+          </div>
+
+          <!-- Footer Buttons -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Create Account</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Success Toast -->
+<div class="modal fade" id="editAccountModal" tabindex="-1" aria-labelledby="editAccountModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editAccountModalLabel">Edit Account</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editAccountForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="editUsername" class="form-label">Username</label>
+                <input type="text" class="form-control" id="editUsername" readonly>
+              </div>
+
+              <div class="form-group mt-3">
+                <label for="editEmployeeName" class="form-label">Employee Name *</label>
+                <input type="text" class="form-control" id="editEmployeeName" required>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="editDepartment" class="form-label">Department *</label>
+                <select class="form-select" id="editDepartment" required>
+                  <option value="">Select Department</option>
+                </select>
+              </div>
+
+              <div class="form-group mt-3">
+                <label for="editRole" class="form-label">Role *</label>
+                <select class="form-select" id="editRole" required>
+                  <option value="">Select Role</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Email và Active Account ngang hàng -->
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="editEmail" class="form-label">Email *</label>
+                <input type="email" class="form-control" id="editEmail" required>
+              </div>
+            </div>
+
+            <div class="col-md-6 d-flex align-items-center mt-4">
+              <div class="form-check d-flex align-items-center">
+                <input type="checkbox" class="form-check-input me-2" id="editStatus">
+                <label class="form-check-label mb-0" for="editStatus">Active Account</label>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4">
+            <button type="button" class="btn btn-warning" id="resetPasswordBtn">
+              <i class="fas fa-key"></i> Reset Password
+            </button>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header bg-success text-white">
+      <strong class="me-auto">Success</strong>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      <span id="toastMessage">Account created successfully!</span>
+    </div>
+  </div>
+</div>
+
+<!-- Password Reset Modal - Đã di chuyển lên đầu và thêm class d-flex để căn giữa -->
+<div class="modal fade" id="passwordResetModal" tabindex="-1" aria-labelledby="passwordResetModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="passwordResetModalLabel">Reset Password</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="newPassword" class="form-label">New Password *</label>
+          <input type="password" class="form-control" id="newPassword" required>
+          <div class="password-strength">
+            <div class="password-strength-bar" id="editPasswordStrengthBar"></div>
+          </div>
+          <div class="password-hint">
+            Password must be at least 10 characters, contain uppercase, lowercase, numbers and special characters
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmNewPassword" class="form-label">Confirm Password *</label>
+          <input type="password" class="form-control" id="confirmNewPassword" required>
+          <div id="editPasswordMatch" class="form-text"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="confirmResetBtn">Reset Password</button>
+      </div>
+    </div>
+  </div>
+</div>
+<section class="overlay">
+  <div class="modal">
+    <h2 id="modal-title"></h2>
+    <p id="modal-message"></p>
+    <button class="close-btn">Đóng</button>
+  </div></section>
+<!-- Toast container -->
+<div class="toast-container" id="toastContainer"></div>
+<!-- Modal xem chi tiết thông báo -->
+<div class="modal fade" id="notificationDetailModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle">Chi tiết thông báo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <div class="d-flex align-items-center mb-3">
+            <div class="notification-icon me-3" id="modalIcon">
+              <i class="fas fa-bell"></i>
+            </div>
+            <h5 id="modalNotificationTitle" class="mb-0"></h5>
+          </div>
+          <div class="alert alert-light border p-3">
+            <p id="modalNotificationContent" class="mb-0"></p>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between text-muted">
+          <small><i class="fas fa-user me-1"></i> Người gửi: <span id="modalSender"></span></small>
+          <small><i class="far fa-clock me-1"></i> <span id="modalTime"></span></small>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-primary" id="markReadBtn">Đánh dấu đã đọc</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Notification sound -->
+<audio id="notificationSound" preload="auto">
+  <source src="https://assets.mixkit.co/sfx/preview/mixkit-software-interface-alert-217.mp3" type="audio/mpeg">
+</audio>
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="/js/notification.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  $(document).ready(function() {
+    // Xử lý click chuông thông báo
+    $('#notificationBell').on('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      $('.dropdown-menu.notification-dropdown').toggleClass('show');
+
+      // Tải thông báo khi mở dropdown
+      if ($('.dropdown-menu.notification-dropdown').hasClass('show')) {
+        // Gọi hàm tải thông báo nếu có
+        if (typeof loadNotifications === 'function') {
+          loadNotifications();
+        }
+      }
+    });
+
+    // Đóng dropdown khi click bên ngoài
+    $(document).on('click', function(e) {
+      if (!$(e.target).closest('.notification-dropdown').length) {
+        $('.dropdown-menu.notification-dropdown').removeClass('show');
+      }
+    });
+  });
+  let allUsers = [];
+  let filteredUsers = [];
+  let departmentsList = [];
+  let currentUserRole = '';
+  let isUsernameAvailable = false;
+
+  // Pagination variables
+  let currentPage = 1;
+  let pageSize = 8;
+  let totalPages = 1;
+
+  function showError(message) {
+    const errorAlert = document.getElementById('errorAlert');
+    const errorMessage = document.getElementById('errorMessage');
+    errorMessage.textContent = message;
+    errorAlert.style.display = 'block';
+    setTimeout(() => errorAlert.style.display = 'none', 500);
+  }
+
+  async function fetchData() {
+    try {
+      const response = await fetch('/api/v1/users');
+      if (!response.ok) throw new Error('Error fetching user data');
+
+      const result = await response.json();
+      if (Array.isArray(result.data)) {
+        allUsers = result.data.map(user => {
+          const department = departmentsList.find(d => d.departmentId === user.departmentId);
+          return {
+            ...user,
+            departmentName: department ? department.departmentName : null
+          };
+        });
+        filterData();
+      } else {
+        allUsers = [];
+        showError('Invalid user data');
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      showError('Failed to load user list');
+    }
+  }
+
+  async function fetchDepartments() {
+    try {
+      const response = await fetch('/api/v1/departments');
+      if (!response.ok) throw new Error('Error fetching departments');
+
+      const result = await response.json();
+      departmentsList = Array.isArray(result.data)
+              ? [...new Map(result.data.map(item => [item.departmentName, item])).values()]
+              : [];
+
+      departmentsList.sort((a, b) => a.departmentName.localeCompare(b.departmentName));
+
+      // Populate department select in filter
+      const departmentSelect = document.getElementById('department');
+      departmentSelect.innerHTML = '<option value="">All Departments</option>';
+
+      // Populate department select in modal
+      const modalDepartmentSelect = document.getElementById('modalDepartment');
+      modalDepartmentSelect.innerHTML = '<option value="">Select Department</option>';
+
+      // Populate department select in update modal
+      const editDepartmentSelect = document.getElementById('editDepartment');
+      editDepartmentSelect.innerHTML = '<option value="">Select Department</option>';
+
+      departmentsList.forEach(dept => {
+        const option = document.createElement('option');
+        option.value = dept.departmentName;
+        option.textContent = dept.departmentName;
+
+        // Disable inactive departments and make them gray
+        if (dept.status === 'Inactive') {
+          option.disabled = true;  // Disable inactive departments
+          option.style.color = 'gray';  // Change color for inactive departments
+        }
+
+        // Append to department selects
+        departmentSelect.appendChild(option);
+
+        const modalOption = option.cloneNode(true);
+        modalDepartmentSelect.appendChild(modalOption);
+
+        const editOption = option.cloneNode(true);
+        editDepartmentSelect.appendChild(editOption);
+      });
+
+    } catch (error) {
+      console.error('Error fetching departments:', error);
+      showError('Failed to load departments');
+    }
+  }
+
+  async function fetchRoles() {
+    try {
+      const response = await fetch('/api/v1/roles/all');
+      if (!response.ok) throw new Error('Error fetching roles');
+
+      const result = await response.json();
+      const roles = Array.isArray(result.data) ? result.data : [];
+
+      // Populate role select in filter
+      const roleSelect = document.getElementById('role');
+      roleSelect.innerHTML = '<option value="">All Roles</option>';
+
+      // Populate role select in modal
+      const modalRoleSelect = document.getElementById('modalRole');
+      modalRoleSelect.innerHTML = '<option value="">Select Role</option>';
+
+      roles.forEach(role => {
+        const option = document.createElement('option');
+        option.value = role.roleName;
+        option.textContent = role.roleName;
+        roleSelect.appendChild(option);
+
+        const modalOption = option.cloneNode(true);
+        modalRoleSelect.appendChild(modalOption);
+      });
+    } catch (error) {
+      console.error('Error fetching roles:', error);
+      showError('Failed to load roles');
+    }
+  }
+
+  async function fetchCurrentUserRole() {
+    try {
+      const response = await fetch('/api/v1/users/getUserRole');
+      if (!response.ok) throw new Error('Error fetching user role');
+
+      const result = await response.json();
+      const userRole = result.data;
+      currentUserRole = userRole;
+      renderButtonBasedOnRole(userRole);
+    } catch (error) {
+      console.error('Error fetching user role:', error);
+      showError('Failed to load user role');
+    }
+  }
+
+  function renderButtonBasedOnRole(userRole) {
+    const addButton = document.getElementById('addButton');
+    const departmentManagerBtn = document.getElementById('departmentManagerBtnContainer');
+
+    if (addButton) {
+      addButton.style.display = userRole === 'ADMIN' ? 'block' : 'none';
+    }
+
+    if (departmentManagerBtn) {
+      departmentManagerBtn.style.display = userRole === 'ADMIN' ? 'block' : 'none';
+    }
+  }
+
+  function populateTable(users) {
+    const tableBody = document.getElementById('accountsTableBody');
+    if (!tableBody) return;
+    // Calculate pagination
+    totalPages = Math.ceil(users.length / pageSize);
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = Math.min(startIndex + pageSize, users.length);
+    const paginatedUsers = users.slice(startIndex, endIndex);
+    console.log(paginatedUsers); // Thêm dòng này để kiểm tra dữ liệu
+    tableBody.innerHTML = paginatedUsers.map(user => {
+      const deleteBtn = currentUserRole === 'ADMIN'
+              ? `<button class="action-btn btn btn-sm btn-danger" onclick="deleteAccount('${user.username}')"><i class="fas fa-trash-alt"></i></button>`
+              : '';
+      return `
+            <tr>
+                <td>${user.username || '-'}</td>
+                <td>${user.employeeName || '-'}</td>
+                <td>${user.email || '-'}</td>
+                <td>${user.roleName || '-'}</td>
+                <td>${user.departmentName || (user.departmentId ? 'Updating...' : 'None')}</td>
+                <td>${user.status || '-'}</td>
+                <td>
+                    <button class="action-btn btn btn-sm btn-primary" onclick="editAccount('${user.username}')"><i class="fas fa-edit"></i></button>
+                    ${deleteBtn}
+                </td>
+            </tr>
+        `;
+    }).join('');
+    if (paginatedUsers.length === 0) {
+      tableBody.innerHTML = `
+            <tr>
+                <td colspan="7" class="text-center py-4 text-muted">No accounts found</td>
+            </tr>
+        `;
+    }
+    // Update pagination controls
+    updatePaginationControls();
+    updatePageInfo(users.length, startIndex, endIndex);
+  }
+
+  function updatePageInfo(totalItems, startIndex, endIndex) {
+    const pageInfoText = document.getElementById('pageInfoText');
+    if (!pageInfoText) return;
+
+    if (totalItems === 0) {
+      pageInfoText.textContent = 'No items';
+    } else {
+      pageInfoText.textContent = `Showing ${startIndex + 1} to ${endIndex} of ${totalItems} items`;
+    }
+  }
+
+  function updatePaginationControls() {
+    const paginationElement = document.querySelector('.pagination');
+    const prevPageElement = document.getElementById('prevPage');
+    const nextPageElement = document.getElementById('nextPage');
+
+    // Clear existing page numbers (except prev/next)
+    const existingPages = document.querySelectorAll('.page-number');
+    existingPages.forEach(el => el.remove());
+
+    // Update prev/next button states
+    prevPageElement.classList.toggle('disabled', currentPage === 1);
+    nextPageElement.classList.toggle('disabled', currentPage === totalPages);
+
+    // Determine which page numbers to show
+    let startPage = Math.max(1, currentPage - 2);
+    let endPage = Math.min(totalPages, currentPage + 2);
+
+    // Adjust if we're at the beginning or end
+    if (currentPage <= 3) {
+      endPage = Math.min(5, totalPages);
+    }
+    if (currentPage >= totalPages - 2) {
+      startPage = Math.max(1, totalPages - 4);
+    }
+
+    // Always show first page
+    if (startPage > 1) {
+      const li = document.createElement('li');
+      li.className = `page-item page-number ${1 === currentPage ? 'active' : ''}`;
+      li.innerHTML = `<a class="page-link" href="#" onclick="changePage(1)">1</a>`;
+      paginationElement.insertBefore(li, nextPageElement);
+
+      if (startPage > 2) {
+        const ellipsis = document.createElement('li');
+        ellipsis.className = 'page-item disabled';
+        ellipsis.innerHTML = `<span class="page-link">...</span>`;
+        paginationElement.insertBefore(ellipsis, nextPageElement);
+      }
+    }
+
+    // Add the page numbers
+    for (let i = startPage; i <= endPage; i++) {
+      const li = document.createElement('li');
+      li.className = `page-item page-number ${i === currentPage ? 'active' : ''}`;
+      li.innerHTML = `<a class="page-link" href="#" onclick="changePage(${i})">${i}</a>`;
+      paginationElement.insertBefore(li, nextPageElement);
+    }
+
+    // Always show last page if needed
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) {
+        const ellipsis = document.createElement('li');
+        ellipsis.className = 'page-item disabled';
+        ellipsis.innerHTML = `<span class="page-link">...</span>`;
+        paginationElement.insertBefore(ellipsis, nextPageElement);
+      }
+
+      const li = document.createElement('li');
+      li.className = `page-item page-number ${totalPages === currentPage ? 'active' : ''}`;
+      li.innerHTML = `<a class="page-link" href="#" onclick="changePage(${totalPages})">${totalPages}</a>`;
+      paginationElement.insertBefore(li, nextPageElement);
+    }
+  }
+
+  function changePage(newPage) {
+    if (newPage < 1 || newPage > totalPages || newPage === currentPage) return;
+    currentPage = newPage;
+    populateTable(filteredUsers);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  async function searchAccount() {
+    const username = document.getElementById('keyword')?.value.trim();
+    if (!username) {
+      filterData();
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/v1/users/getUserByUsername/${username}`);
+      if (!response.ok) throw new Error("User not found");
+
+      const data = await response.json();
+      filteredUsers = [data];
+      currentPage = 1;
+      populateTable(filteredUsers);
+
+    } catch (error) {
+      console.error('Search error:', error);
+      showError('User not found');
+    }
+  }
+
+  function filterData() {
+    const departmentSelect = document.getElementById('department');
+    const roleSelect = document.getElementById('role');
+    const selectedDepartment = departmentSelect.value;
+    const selectedRole = roleSelect.value;
+
+    filteredUsers = allUsers;
+    if (selectedDepartment) {
+      filteredUsers = filteredUsers.filter(user => user.departmentName === selectedDepartment);
+    }
+    if (selectedRole) {
+      filteredUsers = filteredUsers.filter(user => user.roleName === selectedRole);
+    }
+
+    currentPage = 1;
+    populateTable(filteredUsers);
+  }
+
+  async function editAccount(username) {
+    try {
+      const response = await fetch(`/api/v1/users/getUserByUsername/${username}`);
+      if (!response.ok) throw new Error('Error fetching user data');
+
+      const user = await response.json();
+      currentEditingUser = user;
+
+      // Populate the edit form
+      document.getElementById('editUsername').value = user.username || '';
+      document.getElementById('editEmployeeName').value = user.employeeName || '';
+      document.getElementById('editEmail').value = user.email || '';
+      document.getElementById('editStatus').checked = user.status === 'Active';
+
+      // Populate departments dropdown
+      const departmentSelect = document.getElementById('editDepartment');
+      departmentSelect.innerHTML = '<option value="">Select Department</option>';
+
+      // Loop through departments and apply inactive styling and disabling
+      departmentsList.forEach(dept => {
+        const option = document.createElement('option');
+        option.value = dept.departmentName;
+        option.textContent = dept.departmentName;
+
+        // Disable inactive departments and make them gray
+        if (dept.status === 'Inactive') {
+          option.disabled = true;
+          option.style.color = 'gray';  // Apply gray color for inactive departments
+        }
+
+        departmentSelect.appendChild(option);
+      });
+
+      // Set the department value if available
+      if (user.departmentName) {
+        departmentSelect.value = user.departmentName;
+      } else if (user.departmentId) {
+        const dept = departmentsList.find(d => d.departmentId === user.departmentId);
+        if (dept) departmentSelect.value = dept.departmentName;
+      }
+
+      // Populate roles dropdown
+      const roleSelect = document.getElementById('editRole');
+      roleSelect.innerHTML = '<option value="">Select Role</option>';
+
+      // Fetch roles again to ensure we have the latest
+      const rolesResponse = await fetch('/api/v1/roles/all');
+      if (rolesResponse.ok) {
+        const rolesResult = await rolesResponse.json();
+        const roles = Array.isArray(rolesResult.data) ? rolesResult.data : [];
+
+        roles.forEach(role => {
+          // Skip adding ADMIN role if current user is SUPERVISOR
+          if (currentUserRole === 'SUPERVISOR' && role.roleName === 'ADMIN') {
+            return;
+          }
+
+          const option = document.createElement('option');
+          option.value = role.roleName;
+          option.textContent = role.roleName;
+          roleSelect.appendChild(option);
+        });
+
+        // Set the role value if available
+        if (user.roleName) {
+          roleSelect.value = user.roleName;
+        }
+      }
+
+      // Disable fields based on current user role
+      if (currentUserRole === 'ADMIN') {
+        document.getElementById('editUsername').readOnly = true;
+        document.getElementById('editEmail').readOnly = true;
+      } else if (currentUserRole === 'SUPERVISOR') {
+        document.getElementById('editUsername').readOnly = true;
+        document.getElementById('editEmail').readOnly = true;
+        document.getElementById('editDepartment').disabled = true;
+      }
+
+      // Show the modal
+      editModal.show();
+
+    } catch (error) {
+      console.error('Error editing account:', error);
+      showError('Failed to load user data for editing');
+    }
+  }
+  async function deleteAccount(username) {
+
+
+    try {
+      const response = await fetch(`/api/v1/users/${username}`, {
+        method: 'DELETE'
+      });
+
+      if (!response.ok) throw new Error("Unable to delete user");
+
+      const result = await response.json();
+
+      // Show Bootstrap toast notification
+      const toastMessageEl = document.getElementById('toastMessage');
+      if (toastMessageEl) {
+        toastMessageEl.textContent = result.message || 'Deleted successfully';
+      }
+
+      const toastEl = document.getElementById('successToast');
+      if (toastEl) {
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+      }
+
+      await fetchData();
+
+    } catch (error) {
+      console.error("Delete error:", error);
+      showError("Failed to delete user");
+    }
+  }
+
+  function getDepartmentId(departmentName) {
+    const department = departmentsList.find(d => d.departmentName === departmentName);
+    return department ? department.departmentId : null;
+  }
+
+  function isValidPassword(password) {
+    // At least 10 characters, uppercase, lowercase, number and special character
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/;
+    return regex.test(password);
+  }
+
+  function checkPasswordStrength(password, targetElementId = 'passwordStrengthBar') {
+    const strengthBar = document.getElementById(targetElementId);
+    if (!strengthBar) return;
+
+    let strength = 0;
+    if (password.length >= 10) strength += 1;
+    if (/[A-Z]/.test(password)) strength += 1;
+    if (/[a-z]/.test(password)) strength += 1;
+    if (/\d/.test(password)) strength += 1;
+    if (/[@$!%*?&]/.test(password)) strength += 1;
+
+    const width = (strength / 5) * 100;
+    strengthBar.style.width = `${width}%`;
+
+    if (strength <= 2) {
+      strengthBar.style.backgroundColor = '#dc3545'; // red
+    } else if (strength <= 4) {
+      strengthBar.style.backgroundColor = '#ffc107'; // yellow
+    } else {
+      strengthBar.style.backgroundColor = '#28a745'; // green
+    }
+  }
+
+  function checkPasswordMatch() {
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const matchText = document.getElementById('passwordMatch');
+
+    if (!matchText) return;
+
+    if (password && confirmPassword) {
+      if (password === confirmPassword) {
+        matchText.textContent = 'Passwords match';
+        matchText.style.color = 'green';
+      } else {
+        matchText.textContent = 'Passwords do not match';
+        matchText.style.color = 'red';
+      }
+    } else {
+      matchText.textContent = '';
+    }
+  }
+
+  async function checkUsernameAvailability() {
+    const usernameInput = document.getElementById('username');
+    if (!usernameInput) return;
+
+    const username = usernameInput.value.trim();
+    const messageSpan = document.getElementById('usernameMessage'); // Khai báo messageSpan
+
+    if (!username) {
+      showError('Please enter a username to check');
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/v1/users/check?username=${username}`);
+
+      if (!response.ok) {
+        throw new Error('Server error');
+      }
+
+      const result = await response.json();
+
+      if (result.status === 'Success') {
+        messageSpan.textContent = 'Username is available';
+        messageSpan.className = 'message text-success';
+        isUsernameAvailable = true;
+        updateEmail();
+      } else {
+        messageSpan.textContent = result.message || 'Username is not available';
+        messageSpan.className = 'message text-danger';
+        isUsernameAvailable = false;
+      }
+    } catch (error) {
+      messageSpan.textContent = 'Error checking username';
+      messageSpan.className = 'message text-danger';
+      isUsernameAvailable = false;
+      console.error('🚨 Username check error:', error);
+    }
+  }
+
+  function updateEmail() {
+    const username = document.getElementById('username').value.trim();
+    const emailField = document.getElementById('email');
+    if (username && /^[a-z0-9_]+$/i.test(username)) {
+      emailField.value = `${username}@cmcglobal.vn`;
+    } else {
+      emailField.value = '';
+    }
+  }
+
+  async function createAccount(event) {
+    event.preventDefault();
+    const errorAlert = document.getElementById('errorAlert');
+    errorAlert.style.display = 'none';
+
+    if (!isUsernameAvailable) {
+      showError('Please check and confirm username availability before creating account');
+      return;
+    }
+
+    const password = document.getElementById('password').value;
+    if (!isValidPassword(password)) {
+      showError('Password must be at least 10 characters, contain both uppercase and lowercase letters, and include a special character');
+      return;
+    }
+
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    if (password !== confirmPassword) {
+      showError('Passwords do not match');
+      return;
+    }
+
+    const accountData = {
+      username: document.getElementById('username').value.trim(),
+      employeeName: document.getElementById('employeeName').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      departmentName: document.getElementById('modalDepartment').value,
+      departmentId: getDepartmentId(document.getElementById('modalDepartment').value),
+      roleName: document.getElementById('modalRole').value,
+      password: password,
+      status: document.getElementById('status').checked ? 'Active' : 'Inactive'
+    };
+
+    if (!accountData.departmentName || !accountData.roleName) {
+      showError('Please select department and role');
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/v1/users/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(accountData)
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Account creation failed');
+      }
+
+      if (result.status === 'Success') {
+        const toast = new bootstrap.Toast(document.getElementById('successToast'));
+        document.getElementById('toastMessage').textContent = 'Account created successfully!';
+        toast.show();
+
+        // Close modal and refresh data
+        const modal = bootstrap.Modal.getInstance(document.getElementById('createAccountModal'));
+        if (modal) modal.hide();
+
+        // Reset form
+        document.getElementById('createAccountForm').reset();
+        document.getElementById('passwordStrengthBar').style.width = '0';
+        document.getElementById('usernameAvailability').textContent = '';
+        document.getElementById('passwordMatch').textContent = '';
+        isUsernameAvailable = false;
+
+        // Refresh user list
+        await fetchData();
+      } else {
+        showError(result.message || 'Failed to create account');
+      }
+    } catch (error) {
+      console.error('Account creation error:', error);
+      showError(error.message || 'Failed to create account');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      await fetchCurrentUserRole();
+      await fetchDepartments();
+      await fetchRoles();
+      await fetchData();
+
+      document.getElementById('exportExcelBtn').addEventListener('click', exportToExcel);
+      document.getElementById('department')?.addEventListener('change', filterData);
+      document.getElementById('role')?.addEventListener('change', filterData);
+      document.getElementById('keyword')?.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') searchAccount();
+      });
+
+      // Setup create account form
+      const createAccountForm = document.getElementById('createAccountForm');
+      if (createAccountForm) {
+        createAccountForm.addEventListener('submit', createAccount);
+      }
+
+      // Password strength checker
+      const passwordInput = document.getElementById('password');
+      if (passwordInput) {
+        passwordInput.addEventListener('input', (e) => {
+          checkPasswordStrength(e.target.value);
+        });
+      }
+
+      // Password match checker
+      const confirmPasswordInput = document.getElementById('confirmPassword');
+      if (confirmPasswordInput) {
+        confirmPasswordInput.addEventListener('input', checkPasswordMatch);
+      }
+
+    } catch (error) {
+      console.error('Initialization error:', error);
+      showError('App initialization failed');
+    }
+  });
+  async function resetPassword() {
+    const newPassword = document.getElementById('newPassword').value;
+    const confirmPassword = document.getElementById('confirmNewPassword').value;
+
+    if (!isValidPassword(newPassword)) {
+      showError('Password must be at least 10 characters, contain both uppercase and lowercase letters, and include a special character');
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      showError('Passwords do not match');
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/v1/users/change-password/${currentEditingUser.username}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ password: newPassword })
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Password reset failed');
+      }
+
+      // Show success toast
+      const toastMessageEl = document.getElementById('toastMessage');
+      if (toastMessageEl) {
+        toastMessageEl.textContent = 'Password reset successfully!';
+      }
+
+      const toastEl = document.getElementById('successToast');
+      if (toastEl) {
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+      }
+
+      // Close the password reset modal
+      passwordResetModal.hide();
+
+    } catch (error) {
+      console.error('Password reset error:', error);
+      showError(error.message || 'Failed to reset password');
+    }
+  }
+  async function updateAccount(event) {
+    event.preventDefault();
+
+    if (!currentEditingUser) return;
+
+    const userData = {
+      username: document.getElementById('editUsername').value,
+      employeeName: document.getElementById('editEmployeeName').value,
+      email: document.getElementById('editEmail').value,
+      departmentName: document.getElementById('editDepartment').value,
+      departmentId: getDepartmentId(document.getElementById('editDepartment').value),
+      roleName: document.getElementById('editRole').value,
+      status: document.getElementById('editStatus').checked ? 'Active' : 'Inactive'
+    };
+
+    try {
+      const response = await fetch(`/api/v1/users/update/${currentEditingUser.username}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Account update failed');
+      }
+
+      // Show success toast
+      const toastMessageEl = document.getElementById('toastMessage');
+      if (toastMessageEl) {
+        toastMessageEl.textContent = 'Account updated successfully!';
+      }
+
+      const toastEl = document.getElementById('successToast');
+      if (toastEl) {
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+      }
+
+      // Close modal and refresh data
+      editModal.hide();
+      await fetchData();
+
+    } catch (error) {
+      console.error('Account update error:', error);
+      showError(error.message || 'Failed to update account');
+    }
+  }
+  let editModal = null;
+  let passwordResetModal = null;
+  let currentEditingUser = null;
+
+  // Initialize the modals when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    editModal = new bootstrap.Modal(document.getElementById('editAccountModal'));
+    passwordResetModal = new bootstrap.Modal(document.getElementById('passwordResetModal'));
+
+    // Setup password reset button
+    document.getElementById('resetPasswordBtn').addEventListener('click', () => {
+      document.getElementById('newPassword').value = '';
+      document.getElementById('confirmNewPassword').value = '';
+      document.getElementById('editPasswordMatch').textContent = '';
+      passwordResetModal.show();
+    });
+
+    // Setup confirm reset button
+    document.getElementById('confirmResetBtn').addEventListener('click', resetPassword);
+
+    // Setup edit form submission
+    document.getElementById('editAccountForm').addEventListener('submit', updateAccount);
+
+    // Password strength checker for reset modal
+    document.getElementById('newPassword').addEventListener('input', (e) => {
+      checkPasswordStrength(e.target.value, 'editPasswordStrengthBar');
+    });
+
+    // Password match checker for reset modal
+    document.getElementById('confirmNewPassword').addEventListener('input', () => {
+      const password = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmNewPassword').value;
+      const matchText = document.getElementById('editPasswordMatch');
+
+      if (password && confirmPassword) {
+        if (password === confirmPassword) {
+          matchText.textContent = 'Passwords match';
+          matchText.style.color = 'green';
+        } else {
+          matchText.textContent = 'Passwords do not match';
+          matchText.style.color = 'red';
+        }
+      } else {
+        matchText.textContent = '';
+      }
+    });
+  });
+  document.addEventListener('DOMContentLoaded', function () {
+    const username = localStorage.getItem('Username');
+    const role = localStorage.getItem('Role');
+// Toggle dropdown on click
+    userMenu.addEventListener('click', function (event) {
+      event.preventDefault(); // Ngừng sự kiện mặc định
+      userInfo.classList.toggle('show'); // Thêm hoặc bỏ class "show"
+    });
+
+    // Đảm bảo khi click ra ngoài thì dropdown sẽ đóng
+    document.addEventListener('click', function (event) {
+      if (!userInfo.contains(event.target)) {
+        userInfo.classList.remove('show');
+      }
+    });
+    if (username && role) {
+      document.getElementById('userInfo').style.display = 'block';
+      document.getElementById('loginBtn').style.display = 'none';
+      document.getElementById('dropdownUsername').textContent = username;
+      document.getElementById('dropdownRole').textContent = role.charAt(0) + role.slice(1).toLowerCase();
+
+      if (role === 'ADMIN') {
+        document.getElementById('meeting').style.display = 'none';
+      } else if (role === 'EMPLOYEE') {
+        document.getElementById('office').style.display = 'none';
+        document.getElementById('account').style.display = 'none';
+        document.getElementById('dpment').style.display = 'none';
+      } else if (role === 'SUPERVISOR') {
+        document.getElementById('office').style.display = 'none';
+        document.getElementById('meeting').style.display = 'none';
+        document.getElementById('dpment').style.display = 'none';
+      }
+    }
+  });
+
+  function logout() {
+    fetch('/api/v1/users/logout', {
+      method: 'POST',
+      credentials: 'include',
+    })
+            .then(response => {
+              if (response.ok) {
+                localStorage.clear();
+                document.cookie.split(";").forEach(function(c) {
+                  document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+                });
+                window.location.href = "/users/login";
+              } else {
+                alert("Đăng xuất không thành công. Vui lòng thử lại.");
+              }
+            })
+            .catch(error => {
+              console.error("Logout error:", error);
+              alert("Lỗi trong quá trình đăng xuất.");
+            });
+  }
+  function exportToExcel() {
+    if (!allUsers || allUsers.length === 0) {
+      showError("No user data to export.");
+      return;
+    }
+
+    // Chuyển đổi dữ liệu sang định dạng phù hợp
+    const data = allUsers.map(user => ({
+      Username: user.username || '-',
+      Name: user.employeeName || '-',
+      Email: user.email || '-',
+      Role: user.roleName || '-',
+      Department: user.departmentName || (user.departmentId ? 'Updating...' : 'None'),
+      Status: user.status || '-'
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+
+    // Style for header row
+    const headerStyle = {
+      fill: {
+        fgColor: { rgb: "0078D4" } // Blue background for the header row
+      },
+      font: {
+        color: { rgb: "FFFFFF" }, // White text color for the header
+        bold: true // Bold text for the header
+      },
+      alignment: {
+        horizontal: "center", // Center align header text
+      }
+    };
+
+    // Apply header style
+    const range = XLSX.utils.decode_range(worksheet['!ref']);
+    for (let col = range.s.c; col <= range.e.c; col++) {
+      const headerCell = worksheet[XLSX.utils.encode_cell({ r: 0, c: col })];
+      if (headerCell) {
+        headerCell.s = headerStyle;
+      }
+    }
+
+    // Adjust column widths based on content
+    const columnWidths = [];
+    for (let col = range.s.c; col <= range.e.c; col++) {
+      let maxLength = 0;
+      for (let row = range.s.r; row <= range.e.r; row++) {
+        const cell = worksheet[XLSX.utils.encode_cell({ r: row, c: col })];
+        if (cell && cell.v) {
+          maxLength = Math.max(maxLength, cell.v.toString().length);
+        }
+      }
+      columnWidths.push(maxLength + 2); // Add some padding
+    }
+
+    // Set column widths
+    worksheet['!cols'] = columnWidths.map(width => ({ wpx: width * 7 }));
+
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Users");
+
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const year = now.getFullYear();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const timestamp = `${day}-${month}-${year}_${hours}-${minutes}-${seconds}`;
+
+    XLSX.writeFile(workbook, `Danh_sach_Account_${timestamp}.xlsx`);
+  }
+
+
+</script>
+</body>
+</html>

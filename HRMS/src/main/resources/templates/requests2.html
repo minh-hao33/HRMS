@@ -1,0 +1,2030 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <title>Meeting CMC Global</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/aos.css">
+    <link rel="stylesheet" href="/css/ionicons.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/css/jquery.timepicker.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/icomoon.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/sessionTimeout.js"></script>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --primary-hover: #2980b9;
+            --danger-color: #e74c3c;
+            --danger-hover: #c0392b;
+            --success-color: #2ecc71;
+            --success-hover: #27ae60;
+            --warning-color: #f39c12;
+            --warning-hover: #d35400;
+            --dark-color: #34495e;
+            --light-color: #ecf0f1;
+            --border-color: #dfe6e9;
+            --text-color: #2d3436;
+            --text-light: #636e72;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color:  #f8f9fa;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-top: 10px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .logout-button {
+            cursor: pointer;
+            font-size: 14px;
+            background: var(--danger-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .logout-button:hover {
+            background: var(--danger-hover);
+            transform: translateY(-2px);
+        }
+
+        .logout-button i {
+            margin-right: 8px;
+        }
+
+        .filter-container {
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .filter-box {
+            display: flex;
+            gap: 35px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            min-width: fit-content;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            min-width: 150px;
+        }
+
+        .filter-group label {
+            font-size: 13px;
+            margin-bottom: 5px;
+            color: var(--text-light);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .filter-box select,
+        .filter-box input {
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 14px;
+            transition: var(--transition);
+            background: white;
+            width: 100%;
+            height: 40px;
+        }
+
+        .filter-box select:focus,
+        .filter-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 25px;
+            margin-left: 70px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+
+            color: white;
+            background: #0078d4 !important;
+        }
+        .btn.btn-primary {
+            background: #0097d4 !important;
+            border: 1px solid #0078d4 !important;
+            color: #fff !important;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: white;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        .btn-outline:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-top: -20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            min-width: 800px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #0078d4;
+            color: white;
+            font-weight: 500;
+            position: sticky;
+            top: 0;
+        }
+
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-approved {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: var(--success-color);
+        }
+
+        .status-pending {
+            background-color: rgba(241, 196, 15, 0.1);
+            color: #f1c40f;
+        }
+
+        .status-rejected {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--danger-color);
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--primary-color);
+            margin: 0 5px;
+            transition: var(--transition);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .action-btn:hover {
+            background-color: rgba(52, 152, 219, 0.1);
+            transform: scale(1.1);
+        }
+
+        .action-btn.delete {
+            color: var(--danger-color);
+        }
+
+        .action-btn.delete:hover {
+            background-color: rgba(231, 76, 60, 0.1);
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-light);
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(3px);
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 700px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(-50px);
+            transition: transform 0.3s ease;
+            overflow: hidden;
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 20px;
+            background: var(--dark-color);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-weight: 500;
+            font-size: 20px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .detail-row {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .detail-label {
+            width: 150px;
+            font-weight: 500;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .detail-value {
+            flex: 1;
+            font-size: 15px;
+        }
+
+        .modal-footer {
+            padding: 15px 25px;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        /* Navigation buttons in modal */
+        .modal-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .modal-nav-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            background-color: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-nav-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .modal-nav-btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .filter-box {
+                gap: 10px;
+            }
+
+            .filter-group {
+                min-width: 120px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .filter-container {
+                padding-bottom: 15px;
+            }
+
+            .filter-box {
+                width: fit-content;
+                min-width: calc(100% - 40px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .modal-content {
+                width: 95%;
+            }
+
+            .detail-row {
+                flex-direction: column;
+            }
+
+            .detail-label {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* Scrollbar styling */
+        .filter-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .filter-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .filter-container::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 10px;
+        }
+
+        .filter-container::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+        .btn-approve {
+            background-color: #4CAF50; /* Green for Approve */
+            border: 1px solid #80e080; /* Light green border */
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: #d9534f; /* Red for Reject */
+            border: 1px solid #f5b0b0; /* Light red border */
+            color: white;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .popup-content {
+            background-color: white;
+            padding: 50px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .popup.show {
+            display: flex;
+        }
+        /* Navbar container */
+        .ftco-navbar-light {
+            background: #ffff !important;
+            flex-shrink: 0;
+            position: static;
+            width: 100%;
+            padding: 0.5rem 1rem;
+            box-shadow: 0 2px 4px rgba(239, 243, 244, 0.1);
+        }
+
+        .main-content {
+            display: flex;
+            gap: 20px;
+            padding: 20px 1rem;
+            min-height: calc(100vh - 70px);
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .navbar-container {
+            display: flex;
+            width: 100%;
+            padding: 0 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 20px;
+            text-transform: uppercase;
+        }
+
+        .navbar-toggler {
+            order: 2;
+            margin-left: auto;
+        }
+
+        .ftco-navbar-light .navbar-nav > .nav-item.active > a {
+            color: #000;
+        }
+
+        .ftco-navbar-light .navbar-nav > .nav-item > .nav-link {
+            font-size: 15px;
+            color: #000000 !important;
+            font-weight: 400;
+            opacity: 1 !important;
+            padding-left: 20px;
+        }
+
+        #ftco-nav {
+            order: 1;
+            flex-grow: 1;
+        }
+
+        .ftco-navbar-light .navbar-brand {
+            color: #0078D4 !important;
+        }
+
+        .navbar-nav {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-item {
+            margin: 0 0.5rem;
+            white-space: nowrap;
+        }
+
+        .nav-link {
+            padding: 0.5rem 0.75rem;
+            color: #FFFFFF;
+        }
+
+        .dropdown-toggle::after {
+            display: inline-block;
+            margin-left: 0.255em;
+            vertical-align: 0.255em;
+            content: "";
+            border-top: 0.3em solid;
+            border-right: 0.3em solid transparent;
+            border-bottom: 0;
+            border-left: 0.3em solid transparent;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0; /* Căn trái với phần tử gốc */
+            transform: none; /* Bỏ dịch chuyển giữa */
+            min-width: 180px;
+            padding: 0.25rem 0;
+            margin: 0.125rem 0 0;
+            font-size: 13px;
+            background-color: white;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: block;
+            text-align: left; /* Căn lề trái nội dung */
+        }
+
+        .nav-item.dropdown .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            /* Các thuộc tính khác giữ nguyên */
+        }
+
+        .nav-item.dropdown.show .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            margin-left: -180px;
+        }
+
+
+        .dropdown-item {
+            display: block;
+            width: 100%;
+            padding: 0.4rem 1rem; /* Thu nhỏ padding và căn trái */
+            font-size: 15px; /* Giảm kích thước font */
+            color: var(--text-color);
+            background-color: transparent;
+            border: 0;
+            transition: background-color 0.2s ease;
+            text-align: left;
+        }
+
+
+        .dropdown-item:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        /* Responsive styles */
+        @media (min-width: 1200px) {
+            container-fluid {
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+        }
+
+
+        @media (max-width: 992px) {
+            .navbar-toggler {
+                order: 3;
+            }
+            #ftco-nav {
+                order: 4;
+                flex-basis: 100%;
+            }
+            .navbar-nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .nav-item {
+                margin: 0.25rem 0;
+                width: 100%;
+            }
+
+            /* Adjust dropdown for mobile */
+            .nav-item.dropdown .dropdown-menu {
+                position: static;
+                transform: none;
+                box-shadow: none;
+                border: none;
+                display: none;
+                opacity: 1;
+                visibility: visible;
+                width: 100%;
+            }
+
+            .nav-item.dropdown.show .dropdown-menu {
+                display: block;
+            }
+        }
+
+        .ftco-navbar-light .navbar-nav > .nav-item > .nav-link:hover {
+            color: #ffffff;
+        }
+        .pagination-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .pagination-container button {
+            background-color: #f0f0f0;
+            border: none;
+            margin: 4px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .pagination-container button:hover:not(:disabled) {
+            background-color: #007bff;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .pagination-container .active {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+        }
+
+        .pagination-container button:disabled {
+            background-color: #ccc;
+            color: #666;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        .btn-success{
+            background: #0078d4 !important;
+        }
+        /* Nâng cấp các style cho dropdown thông báo */
+        .notification-dropdown .dropdown-menu {
+            width: 380px;
+            max-height: 500px;
+            overflow: hidden;
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            padding: 0;
+            right: -10px !important;
+            left: auto !important;
+            transform: none !important;
+        }
+
+        /* Header của dropdown thông báo */
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #fff;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            font-size: 16px;
+            margin: 0;
+            color: #333;
+        }
+
+        .btn-mark-all {
+            background: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-mark-all:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Body của dropdown thông báo */
+        .notification-body {
+            max-height: 350px;
+            overflow-y: auto;
+            background-color: #fff;
+            padding: 0;
+        }
+
+        /* Tùy chỉnh thanh cuộn */
+        .notification-body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .notification-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .notification-body::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 10px;
+        }
+
+        .notification-body::-webkit-scrollbar-thumb:hover {
+            background: #a1a1a1;
+        }
+
+        /* Mục thông báo */
+        .notification-item {
+            display: flex;
+            padding: 15px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .notification-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .notification-item.unread {
+            background-color: #edf7ff;
+        }
+
+        .notification-item.unread:hover {
+            background-color: #e5f2ff;
+        }
+
+        /* Animation khi có thông báo mới */
+        .notification-item.new {
+            animation: fadeInDown 0.5s ease forwards;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Icon thông báo */
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .icon-info {
+            background-color: rgba(33, 150, 243, 0.1);
+            color: #2196f3;
+        }
+
+        .icon-success {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: #4caf50;
+        }
+
+        .icon-warning {
+            background-color: rgba(255, 152, 0, 0.1);
+            color: #ff9800;
+        }
+
+        .icon-danger {
+            background-color: rgba(244, 67, 54, 0.1);
+            color: #f44336;
+        }
+
+        /* Nội dung thông báo */
+        .notification-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .notification-item-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 4px;
+            line-height: 1.4;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .notification-item-text {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            line-height: 1.4;
+        }
+
+        /* Meta thông báo */
+        .notification-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: #888;
+        }
+
+        .notification-time, .notification-sender {
+            display: flex;
+            align-items: center;
+        }
+
+        .notification-time i, .notification-sender i {
+            font-size: 11px;
+            margin-right: 4px;
+        }
+
+        /* Footer của dropdown */
+        .notification-footer {
+            padding: 12px 0;
+            text-align: center;
+            background-color: #fff;
+            border-top: 1px solid #eaeaea;
+        }
+
+        .notification-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .notification-footer a:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            text-decoration: none;
+        }
+
+        /* Trạng thái rỗng */
+        .empty-notification {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            color: #aaa;
+        }
+
+        .empty-notification i {
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: #ddd;
+        }
+
+        .empty-text {
+            font-size: 14px;
+        }
+
+        /* Toast thông báo khi có thông báo mới */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+
+        .toast {
+            width: 300px;
+            overflow: hidden;
+            font-size: 0.875rem;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 0;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            border-radius: 8px;
+            animation: toastFadeIn 0.3s ease forwards;
+        }
+
+        @keyframes toastFadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .toast-header {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0.75rem;
+            color: white;
+            background-color: var(--primary-color);
+            background-clip: padding-box;
+            border-bottom: 0;
+        }
+
+        .toast-body {
+            padding: 0.75rem;
+        }
+        /* Notification styles */
+        .notification-bell {
+            position: relative;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #dc3545;
+            color: white;
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 50%;
+            display: none;
+        }
+
+        .notification-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Notification Bell */
+        .notification-bell {
+            position: relative;
+            padding: 8px 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notification-bell:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+
+        .notification-bell i {
+            font-size: 1.3rem;
+            color: #555;
+        }
+
+        /* Badge styling */
+        .notification-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 18px;
+            height: 18px;
+            border-radius: 10px;
+            background-color: #f44336;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 5px;
+            border: 2px solid white;
+            transform: translate(25%, -25%);
+            z-index: 1;
+        }
+
+        /* Bell animation */
+        @keyframes bell-shake {
+            0% { transform: rotate(0); }
+            10% { transform: rotate(10deg); }
+            20% { transform: rotate(-10deg); }
+            30% { transform: rotate(6deg); }
+            40% { transform: rotate(-6deg); }
+            50% { transform: rotate(3deg); }
+            60% { transform: rotate(-3deg); }
+            70% { transform: rotate(1deg); }
+            80% { transform: rotate(-1deg); }
+            90% { transform: rotate(0); }
+            100% { transform: rotate(0); }
+        }
+
+        .notification-bell.shake i {
+            animation: bell-shake 1s;
+        }
+
+        .dropdown-menu.notification-dropdown.show {
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            z-index: 1050 !important;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="navbar-container">
+        <a class="navbar-brand" href="/users/home">Request Management System</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a href="/users/home" class="nav-link">Home</a></li>
+                <li class="nav-item" id="request"><a href="/requests" class="nav-link">Request</a></li>
+                <li class="nav-item" id="office"><a href="#" class="nav-link">Office</a></li>
+                <li class="nav-item" id="meeting"><a href="/meeting-room" class="nav-link">Meeting</a></li>
+                <li class="nav-item" id="account"><a href="/users" class="nav-link">Account</a></li>
+                <li class="nav-item" id="dpment"><a href="/departments" class="nav-link">Department</a></li>
+                <div class="dropdown notification-dropdown me-3">
+                    <div class="notification-bell" id="notificationBell" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge" id="notificationCount">0</span>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end notification-dropdown" aria-labelledby="notificationBell">
+                        <li>
+                            <div class="notification-header">
+                                <span class="notification-title">Thông báo</span>
+                                <button class="btn btn-mark-all" id="markAllRead">
+                                    <i class="fas fa-check-double me-1"></i> Đánh dấu đã đọc
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="notification-body" id="notificationList">
+                                <!-- Danh sách thông báo -->
+                                <div class="empty-notification">
+                                    <i class="fas fa-bell-slash"></i>
+                                    <p class="empty-text">Không có thông báo nào</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="notification-footer">
+                                <a href="/notification" id="viewAllNotifications">Xem tất cả thông báo</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <li class="nav-item cta mr-md-2" id="loginBtn"><a href="/users/login" class="nav-link">Login</a></li>
+                <li class="nav-item dropdown" id="userInfo" style="display:none;">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="/images/person_1.jpg" class="rounded-circle me-2" alt="User Avatar" width="32" height="32">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end p-2 shadow" style="width: 250px; right: -20px !important;
+                                                                                                left: auto !important;
+                                                                                                transform: none !important;" aria-labelledby="userMenu">
+                        <!-- User Info -->
+                        <li class="d-flex align-items-center mb-2 px-2">
+                            <img src="/images/person_1.jpg" class="rounded-circle me-2" alt="User Avatar" width="40" height="40">
+                            <div>
+                                <div id="dropdownUsername" class="fw-semibold"></div>
+                                <small id="dropdownRole" class="text-muted"></small>
+                            </div>
+                        </li>
+                        <li><hr class="dropdown-divider my-1"></li>
+                        <!-- Menu items -->
+                        <li><a class="dropdown-item d-flex align-items-center" href="/users/profile"><i class="fas fa-user me-2"></i> Profile</a></li>
+                        <li><a class="dropdown-item d-flex align-items-center" href="/users/change-password"><i class="fas fa-gear me-2"></i> Change Password</a></li>
+                        <li><hr class="dropdown-divider my-1"></li>
+                        <!-- Logout -->
+                        <li><a class="dropdown-item d-flex align-items-center text-danger" href="#" onclick="logout()"><i class="fas fa-right-from-bracket me-2"></i> Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container fade-in">
+    <div class="filter-container">
+        <div class="filter-box">
+            <div class="filter-group">
+                <label for="startDate">From Date</label>
+                <input type="date" id="startDate">
+            </div>
+
+            <div class="filter-group">
+                <label for="endDate">To Date</label>
+                <input type="date" id="endDate">
+            </div>
+
+            <div class="filter-group">
+                <label for="requestType">Request Type</label>
+                <select id="requestType">
+
+                    <option value="">All</option>
+                    <option value="PAID_LEAVE">Paid leave</option>
+                    <option value="UNPAID_LEAVE">Unpaid leave</option>
+                    <option value="SICK_LEAVE">Sick leave with social insurance benefits</option>
+                    <option value="MATERNITY_LEAVE">Maternity leave – caring for child after birth</option>
+                    <option value="PATERNITY_LEAVE">Paternity leave - caring for wife after birth</option>
+                    <option value="COMPENSATORY_LEAVE">Compensatory leave</option>
+                    <option value="PREGNANCY_EXAM_LEAVE">Pregnancy examination leave</option>
+                    <option value="CONTRACEPTIVE_MEASURE_LEAVE">Contraceptive measure leave</option>
+                    <option value="MISCARRIAGE_LEAVE">Miscarriage leave, stillbirth</option>
+                    <option value="FAMILY_WEDDING_FUNERAL_LEAVE">Unpaid leave – family member's wedding/funeral</option>
+                    <option value="EMPLOYEE_WEDDING_LEAVE">Paid leave - employee's wedding</option>
+                    <option value="CHILD_WEDDING_LEAVE">Paid leave – child's wedding</option>
+                    <option value="FAMILY_DEATH_LEAVE">Paid leave – family member's death</option>
+                    <option value="PERSONAL_LEAVE">Personal leave</option>
+                    <option value="BEREAVEMENT_LEAVE">Bereavement leave</option>
+
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="requestStatus">Condition</label>
+                <select id="requestStatus">
+                    <option value="">All</option>
+                    <option value="APPROVED">Approved</option>
+                    <option value="REJECTED">Rejected</option>
+                    <option value="PENDING">Pending</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="requestReason">Reason</label>
+                <input type="text" id="requestReason" placeholder="Nhập lý do...">
+            </div>
+
+            <div class="filter-actions">
+                <button class="btn btn-primary" onclick="filterRequests()">
+                    <i class="fas fa-filter"></i> Filter
+                </button>
+                <button class="btn btn-outline" onclick="resetFilters()">
+                    <i class="fas fa-sync-alt"></i> Reset
+                </button>
+                <button class="btn btn-success" onclick="exportToExcel()">
+                    <i class="fas fa-file-excel"></i> Excel Export
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th>Request Type</th>
+                <th>Requester</th>
+                <th>Creation Date</th>
+                <th>Leave Duration</th>
+                <th>Reason</th>
+                <th>Approver</th>
+                <th>Status</th>
+                <th>Rejection Reason</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody id="requestsTableBody">
+            <!-- Dữ liệu sẽ được tải vào đây -->
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="pagination-container" id="pagination"></div>
+<!-- Modal xem chi tiết yêu cầu -->
+<div id="editRequestModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Leave Request Details</h2>
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+        </div>
+
+        <div class="modal-body">
+            <div class="detail-row">
+                <div class="detail-label">Requester</div>
+                <div class="detail-value" id="viewUsername">-</div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Request Type</div>
+                <div class="detail-value" id="viewPaidLeave">-</div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Leave Date</div>
+                <div class="detail-value" id="viewLeaveDate">-</div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Approval Date</div>
+                <div class="detail-value" id="viewApprovalDate">-</div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Creation Date</div>
+                <div class="detail-value" id="viewCreatedAt">-</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Reason</div>
+                <div class="detail-value" id="viewRequestReason">-</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Approver</div>
+                <div class="detail-value" id="viewApproverUsername">None</div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-label">Status</div>
+                <div class="detail-value" id="viewRequestStatus">-</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Rejection Reason</div>
+                <div class="detail-value" id="viewRejectionReason">-</div>
+            </div>
+            <div class="modal-nav">
+                <button id="prevRequestBtn" class="modal-nav-btn" onclick="navigateRequest(-1)">
+                    <i class="fas fa-chevron-left"></i> Previous
+                </button>
+                <button id="nextRequestBtn" class="modal-nav-btn" onclick="navigateRequest(1)">
+                    Next <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="modal-footer" style="display: flex; flex-direction: column; gap: 10px;">
+            <div id="actionSection" style="display: none; width: 100%;">
+                <div style="margin-bottom: 10px;">
+                    <label for="actionReason" style="font-weight: 500;">Rejection Reason:</label>
+                    <input type="text" id="actionReason" class="form-control" placeholder="Enter rejection reason..." style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #ccc; margin-top: 5px;">
+                    <div id="error-message" style="color: red; font-size: 14px; display: none;">Please enter a rejection reason.</div>
+                </div>
+                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px;">
+                    <button onclick="handleRequestAction('REJECTED')" class="btn btn-danger">Reject</button>
+                    <button onclick="handleRequestAction('APPROVED')" class="btn btn-approve">Approve</button>
+                    <button class="btn btn-outline" onclick="closeModal()">
+                        <i class="fas fa-times"></i> Close
+                    </button>
+                </div>
+            </div>
+            <div id="viewOnlyFooter" style="display: none; text-align: right;">
+                <button class="btn btn-outline" onclick="closeModal()">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="confirmationPopup" class="popup">
+    <div class="popup-content">
+        <h2>Thông báo</h2>
+        <p id="popupMessage"></p>
+        <button class="btn btn-primary" onclick="closePopup()">OK</button>
+    </div>
+</div>
+</div>
+<section class="overlay">
+    <div class="modal">
+        <h2 id="modal-title"></h2>
+        <p id="modal-message"></p>
+        <button class="close-btn">Đóng</button>
+    </div></section>
+<!-- Toast container -->
+<div class="toast-container" id="toastContainer"></div>
+<!-- Modal xem chi tiết thông báo -->
+<div class="modal fade" id="notificationDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Chi tiết thông báo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="notification-icon me-3" id="modalIcon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <h5 id="modalNotificationTitle" class="mb-0"></h5>
+                    </div>
+                    <div class="alert alert-light border p-3">
+                        <p id="modalNotificationContent" class="mb-0"></p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between text-muted">
+                    <small><i class="fas fa-user me-1"></i> Người gửi: <span id="modalSender"></span></small>
+                    <small><i class="far fa-clock me-1"></i> <span id="modalTime"></span></small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" id="markReadBtn">Đánh dấu đã đọc</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-success text-white">
+            <strong class="me-auto">Success</strong>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <span id="toastMessage"></span>
+        </div>
+    </div>
+</div>
+<!-- Notification sound -->
+<audio id="notificationSound" preload="auto">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-software-interface-alert-217.mp3" type="audio/mpeg">
+</audio>
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="/js/notification.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Xử lý click chuông thông báo
+        $('#notificationBell').on('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('.dropdown-menu.notification-dropdown').toggleClass('show');
+
+            // Tải thông báo khi mở dropdown
+            if ($('.dropdown-menu.notification-dropdown').hasClass('show')) {
+                // Gọi hàm tải thông báo nếu có
+                if (typeof loadNotifications === 'function') {
+                    loadNotifications();
+                }
+            }
+        });
+
+        // Đóng dropdown khi click bên ngoài
+        $(document).on('click', function(e) {
+            if (!$(e.target).closest('.notification-dropdown').length) {
+                $('.dropdown-menu.notification-dropdown').removeClass('show');
+            }
+        });
+    });
+    const rowsPerPage = 8;
+    let currentPage = 1;
+
+    function displayTablePage(page) {
+        const table = document.getElementById("requestsTableBody");
+        const rows = table.querySelectorAll("tr");
+        const totalPages = Math.ceil(rows.length / rowsPerPage);
+
+        if (page < 1) page = 1;
+        if (page > totalPages) page = totalPages;
+
+        currentPage = page;
+
+        // Ẩn tất cả các dòng
+        rows.forEach((row, index) => {
+            row.style.display = "none";
+            if (index >= (page - 1) * rowsPerPage && index < page * rowsPerPage) {
+                row.style.display = "";
+            }
+        });
+
+        // Cập nhật nút phân trang
+        const pagination = document.getElementById("pagination");
+        pagination.innerHTML = "";
+
+        // Nút lùi lại
+        const prevBtn = document.createElement("button");
+        prevBtn.innerText = "<<";
+        prevBtn.disabled = currentPage === 1;
+        prevBtn.onclick = () => displayTablePage(currentPage - 1);
+        pagination.appendChild(prevBtn);
+
+        // Các nút số trang
+        for (let i = 1; i <= totalPages; i++) {
+            const btn = document.createElement("button");
+            btn.innerText = i;
+            btn.className = (i === page) ? "active" : "";
+            btn.onclick = () => displayTablePage(i);
+            pagination.appendChild(btn);
+        }
+
+        // Nút tiến lên
+        const nextBtn = document.createElement("button");
+        nextBtn.innerText = ">>";
+        nextBtn.disabled = currentPage === totalPages;
+        nextBtn.onclick = () => displayTablePage(currentPage + 1);
+        pagination.appendChild(nextBtn);
+    }
+
+    function initializePagination() {
+        displayTablePage(currentPage);
+    }
+
+    setTimeout(initializePagination, 500);
+    document.addEventListener('DOMContentLoaded', function () {
+        const username = localStorage.getItem('Username');
+        const role = localStorage.getItem('Role');
+// Toggle dropdown on click
+        userMenu.addEventListener('click', function (event) {
+            event.preventDefault(); // Ngừng sự kiện mặc định
+            userInfo.classList.toggle('show'); // Thêm hoặc bỏ class "show"
+        });
+
+        // Đảm bảo khi click ra ngoài thì dropdown sẽ đóng
+        document.addEventListener('click', function (event) {
+            if (!userInfo.contains(event.target)) {
+                userInfo.classList.remove('show');
+            }
+        });
+        if (username && role) {
+            document.getElementById('userInfo').style.display = 'block';
+            document.getElementById('loginBtn').style.display = 'none';
+            document.getElementById('dropdownUsername').textContent = username;
+            document.getElementById('dropdownRole').textContent = role.charAt(0) + role.slice(1).toLowerCase();
+
+            if (role === 'ADMIN') {
+                document.getElementById('meeting').style.display = 'none';
+            } else if (role === 'EMPLOYEE') {
+                document.getElementById('office').style.display = 'none';
+                document.getElementById('account').style.display = 'none';
+                document.getElementById('dpment').style.display = 'none';
+            } else if (role === 'SUPERVISOR') {
+                document.getElementById('office').style.display = 'none';
+                document.getElementById('meeting').style.display = 'none';
+                document.getElementById('dpment').style.display = 'none';
+            }
+        }
+    });
+
+    function logout() {
+        fetch('/api/v1/users/logout', {
+            method: 'POST',
+            credentials: 'include',
+        })
+        .then(response => {
+            if (response.ok) {
+                localStorage.clear();
+                document.cookie.split(";").forEach(function(c) {
+                    document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+                });
+                window.location.href = "/users/login";
+            } else {
+                alert("Đăng xuất không thành công. Vui lòng thử lại.");
+            }
+        })
+        .catch(error => {
+            console.error("Logout error:", error);
+            alert("Lỗi trong quá trình đăng xuất.");
+        });
+    }
+
+    const API_BASE_URL = "http://localhost:8080/api/v1/requests";
+    let data = []; // Khai báo biến data toàn cục
+    let currentRequestIndex = -1; // Theo dõi yêu cầu hiện tại đang xem
+    let filteredData = []; // Dữ liệu đã được lọc
+
+    async function fetchRequests() {
+        try {
+            const response = await fetch(API_BASE_URL);
+            if (!response.ok) throw new Error(`Lỗi HTTP! Mã lỗi: ${response.status}`);
+            const result = await response.json();
+            if (!result || !result.data || !Array.isArray(result.data)) throw new Error("Dữ liệu API không hợp lệ");
+            data = result.data; // Gán dữ liệu vào biến toàn cục
+            filteredData = [...data]; // Khởi tạo filteredData với tất cả dữ liệu
+            populateTable(data);
+        } catch (error) {
+            console.error("Lỗi:", error);
+            document.getElementById("requestsTableBody").innerHTML = `
+        <tr>
+          <td colspan="8" style="text-align:center; color: var(--danger-color); padding: 20px;">
+            <i class="fas fa-exclamation-circle"></i> Lỗi khi tải dữ liệu. Vui lòng thử lại sau.
+          </td>
+        </tr>`;
+        }
+    }
+
+    function populateTable(data) {
+        const tableBody = document.getElementById("requestsTableBody");
+        tableBody.innerHTML = "";
+
+        if (data.length === 0) {
+            tableBody.innerHTML = `
+        <tr>
+          <td colspan="8" class="no-data">
+            <i class="far fa-folder-open"></i> Không có dữ liệu yêu cầu nào
+          </td>
+        </tr>`;
+            return;
+        }
+
+        data.forEach((request, index) => {
+            const row = tableBody.insertRow();
+
+            // Loại yêu cầu
+            row.insertCell(0).textContent = formatRequestType(request.requestType);
+
+            // Người yêu cầu
+            row.insertCell(1).textContent = request.username || "-";
+
+            // Ngày tạo
+            row.insertCell(2).textContent = formatDate(request.createdAt);
+
+            // Thời gian nghỉ
+            row.insertCell(3).textContent = formatDuration(request.startTime, request.endTime);
+
+            // Lý do
+            const reasonCell = row.insertCell(4);
+            reasonCell.textContent = request.requestReason || "-";
+            reasonCell.style.maxWidth = "200px";
+            reasonCell.style.whiteSpace = "nowrap";
+            reasonCell.style.overflow = "hidden";
+            reasonCell.style.textOverflow = "ellipsis";
+
+            // Người duyệt
+            row.insertCell(5).textContent = request.approverUsername || "Chưa có";
+
+            // Trạng thái
+            const statusCell = row.insertCell(6);
+            const statusBadge = document.createElement("span");
+            statusBadge.className = `status-badge status-${request.requestStatus.toLowerCase()}`;
+            statusBadge.textContent = formatRequestStatus(request.requestStatus);
+            statusCell.appendChild(statusBadge);
+
+            // Lý do từ chối
+            const rejectReasonCell = row.insertCell(7);
+            rejectReasonCell.textContent = request.rejectionReason && request.requestStatus === "REJECTED"
+                ? request.rejectionReason
+                : "-";
+            rejectReasonCell.style.maxWidth = "200px";
+            rejectReasonCell.style.whiteSpace = "nowrap";
+            rejectReasonCell.style.overflow = "hidden";
+            rejectReasonCell.style.textOverflow = "ellipsis";
+
+            // Hành động
+            const actionCell = row.insertCell(8);
+            const viewButton = document.createElement("button");
+            viewButton.className = "action-btn";
+            viewButton.innerHTML = '<i class="fas fa-edit"></i>';
+            viewButton.title = "Xem chi tiết";
+            viewButton.onclick = () => {
+                currentRequestIndex = index;
+                viewRequest(request.requestId);
+            };
+            actionCell.appendChild(viewButton);
+
+            row.setAttribute('data-department', formatDepartmentName(request.departmentId));
+        });
+    }
+
+    function formatDate(dateString) {
+        if (!dateString) return "-";
+        const date = new Date(dateString);
+        return date.toLocaleDateString('vi-VN'); // Định dạng ngày tháng theo Việt Nam
+    }
+
+    function formatDuration(start, end) {
+        if (!start || !end) return "-";
+        const startDate = new Date(start).toLocaleDateString('vi-VN');
+        const endDate = new Date(end).toLocaleDateString('vi-VN');
+        return startDate === endDate ? startDate : `${startDate} → ${endDate}`;
+    }
+
+    function formatRequestType(type) {
+        const typeMap = {
+            "PAID_LEAVE": "Paid Leave",
+            "UNPAID_LEAVE": "Unpaid Leave",
+            "SICK_LEAVE": "Sick Leave (Social Insurance)",
+            "MATERNITY_LEAVE": "Maternity Leave – Childcare after Birth",
+            "PATERNITY_LEAVE": "Paternity Leave – Wife Care after Birth",
+            "COMPENSATORY_LEAVE": "Compensatory Leave",
+            "PREGNANCY_EXAM_LEAVE": "Pregnancy Exam Leave",
+            "CONTRACEPTIVE_MEASURE_LEAVE": "Contraceptive Measure Leave",
+            "MISCARRIAGE_LEAVE": "Miscarriage Leave",
+            "FAMILY_WEDDING_FUNERAL_LEAVE": "Unpaid Leave – Family Wedding/Funeral",
+            "EMPLOYEE_WEDDING_LEAVE": "Paid Leave – Employee Wedding",
+            "CHILD_WEDDING_LEAVE": "Paid Leave – Child Wedding",
+            "FAMILY_DEATH_LEAVE": "Paid Leave – Family Death"
+        };
+        return typeMap[type] || "-";
+
+    }
+    function formatRequestStatus(status) {
+        return {
+            "APPROVED": "Approved",
+            "REJECTED": "Rejected",
+            "PENDING": "Pending"
+
+        }[status] || "-";
+    }
+
+    function formatDepartmentName(departmentId) {
+        return {
+            1: "IT",
+            2: "HR",
+            3: "Finance",
+        }[departmentId] || "-";
+    }
+
+    function filterRequests() {
+        const startDate = document.getElementById("startDate").value;
+        const endDate = document.getElementById("endDate").value;
+        const requestType = document.getElementById("requestType").value;
+        const requestStatus = document.getElementById("requestStatus").value;
+        const requestReason = document.getElementById("requestReason").value.toLowerCase();
+
+        filteredData = data.filter(request => {
+            const requestDate = new Date(request.createdAt).toISOString().split('T')[0];
+            const typeMatch = !requestType || request.requestType === requestType;
+            const statusMatch = !requestStatus || request.requestStatus === requestStatus;
+            const reasonMatch = !requestReason ||
+                (request.requestReason && request.requestReason.toLowerCase().includes(requestReason));
+            const startDateMatch = !startDate || requestDate >= startDate;
+            const endDateMatch = !endDate || requestDate <= endDate;
+
+            return typeMatch && statusMatch && reasonMatch &&
+                startDateMatch && endDateMatch;
+        });
+
+        populateTable(filteredData);
+    }
+
+    function resetFilters() {
+        document.getElementById("startDate").value = "";
+        document.getElementById("endDate").value = "";
+        document.getElementById("requestType").value = "";
+        document.getElementById("requestStatus").value = "";
+        document.getElementById("requestReason").value = "";
+        filteredData = [...data];
+        populateTable(filteredData);
+    }
+
+    function viewRequest(requestId) {
+        // Tìm request trong filteredData nếu có, nếu không thì tìm trong data gốc
+        let request = filteredData.find(req => req.requestId === requestId);
+        if (!request) {
+            request = data.find(req => req.requestId === requestId);
+        }
+
+        if (!request) return;
+
+        // Gán requestId hiện tại để xử lý duyệt/từ chối
+        currentRequestId = request.requestId;
+
+        // Cập nhật chỉ số hiện tại dựa vào danh sách lọc
+        currentRequestIndex = filteredData.findIndex(req => req.requestId === requestId);
+        if (currentRequestIndex === -1) {
+            currentRequestIndex = data.findIndex(req => req.requestId === requestId);
+        }
+
+        // Cập nhật nút điều hướng
+        updateNavigationButtons();
+
+        // Gán dữ liệu vào các phần tử trong modal
+        document.getElementById("viewUsername").textContent = request.username || "-";
+        document.getElementById("viewPaidLeave").textContent = formatRequestType(request.requestType);
+        document.getElementById("viewLeaveDate").textContent = formatDuration(request.startTime, request.endTime);
+        document.getElementById("viewApprovalDate").textContent = request.approverUsername ? formatDate(request.updatedAt) : "-";
+        document.getElementById("viewCreatedAt").textContent = formatDate(request.createdAt);
+        document.getElementById("viewApproverUsername").textContent = request.approverUsername || "Chưa có";
+        document.getElementById("viewRequestStatus").textContent = formatRequestStatus(request.requestStatus);
+        document.getElementById("viewRejectionReason").textContent = request.rejectionReason || "-";
+        document.getElementById("viewRequestReason").textContent = request.requestReason || "-";
+
+        const statusElement = document.getElementById("viewRequestStatus");
+        statusElement.textContent = formatRequestStatus(request.requestStatus);
+        statusElement.className = `status-badge status-${request.requestStatus.toLowerCase()}`;
+
+        document.getElementById("viewRequestReason").textContent = request.requestReason || "-";
+
+        // Hiển thị phần hành động nếu trạng thái là "PENDING"
+        const actionSection = document.getElementById("actionSection");
+        const viewOnlyFooter = document.getElementById("viewOnlyFooter");
+        if (request.requestStatus === "PENDING") {
+            actionSection.style.display = "block";
+            viewOnlyFooter.style.display = "none";
+        } else {
+            actionSection.style.display = "none";
+            viewOnlyFooter.style.display = "block";
+        }
+
+
+        // Hiển thị modal
+        const modal = document.getElementById("editRequestModal");
+        modal.style.display = "flex";
+        setTimeout(() => {
+            modal.classList.add("show");
+        }, 10);
+    }
+
+    function updateNavigationButtons() {
+        const prevBtn = document.getElementById("prevRequestBtn");
+        const nextBtn = document.getElementById("nextRequestBtn");
+
+        prevBtn.disabled = currentRequestIndex <= 0;
+        nextBtn.disabled = currentRequestIndex >= filteredData.length - 1;
+    }
+
+    function navigateRequest(direction) {
+        const newIndex = currentRequestIndex + direction;
+        if (newIndex >= 0 && newIndex < filteredData.length) {
+            currentRequestIndex = newIndex;
+            const request = filteredData[currentRequestIndex];
+            viewRequest(request.requestId);
+        }
+    }
+    let currentRequestId = null;
+
+    function showPopup(message) {
+        document.getElementById("popupMessage").textContent = message;
+        const popup = document.getElementById("confirmationPopup");
+        popup.style.display = "flex";
+        setTimeout(() => {
+            popup.classList.add("show");
+        }, 10);
+    }
+
+    function closePopup() {
+        const popup = document.getElementById("confirmationPopup");
+        popup.classList.remove("show");
+        setTimeout(() => {
+            popup.style.display = "none";
+        }, 300);
+    }
+
+    function handleRequestAction(status) {
+        const reason = document.getElementById("actionReason").value.trim();
+        const errorMessage = document.getElementById("error-message");
+
+        if (status === 'REJECTED' && !reason) {
+            errorMessage.style.display = 'block';  // Show the error message
+            return; // Don't proceed if there's no reason
+        }
+
+        errorMessage.style.display = 'none';  // Hide the error message if a reason is entered
+
+        const url = `/api/v1/requests/${currentRequestId}/approve-reject?requestStatus=${status}&rejectionReason=${encodeURIComponent(reason)}`;
+
+        fetch(url, {
+            method: 'POST'
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Error server.");
+            return response.json();
+        })
+        .then(data => {
+            showToast(data.message || "Pended.");
+            closeModal();
+            fetchRequests(); // Reload the request list
+        })
+        .catch(error => {
+            showToast("Error: " + error.message);
+        });
+    }
+
+    function closeModal() {
+        const modal = document.getElementById("editRequestModal");
+        modal.classList.remove("show");
+        setTimeout(() => {
+            modal.style.display = "none";
+        }, 300);
+    }
+
+    // Xử lý sự kiện khi trang tải xong
+    document.addEventListener('DOMContentLoaded', function() {
+        fetchRequests();
+
+        // Thêm hiệu ứng khi nhấn nút
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.style.transform = 'translateY(1px)';
+            });
+            button.addEventListener('mouseup', () => {
+                button.style.transform = '';
+            });
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = '';
+            });
+        });
+
+        // Đóng modal khi click bên ngoài
+        document.getElementById("editRequestModal").addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Thêm sự kiện phím tắt
+        document.addEventListener('keydown', function(e) {
+            const modal = document.getElementById("editRequestModal");
+            if (modal.classList.contains('show')) {
+                if (e.key === 'ArrowLeft' && currentRequestIndex > 0) {
+                    navigateRequest(-1);
+                } else if (e.key === 'ArrowRight' && currentRequestIndex < filteredData.length - 1) {
+                    navigateRequest(1);
+                } else if (e.key === 'Escape') {
+                    closeModal();
+                }
+            }
+        });
+    });
+    function exportToExcel() {
+        const table = document.querySelector("table");
+        const rows = table.querySelectorAll("tr");
+
+        const data = [];
+
+        rows.forEach(row => {
+            const cells = Array.from(row.querySelectorAll("th, td"));
+            const rowData = cells.slice(0, -1).map(cell => cell.innerText.trim());
+            data.push(rowData);
+        });
+
+        const worksheet = XLSX.utils.aoa_to_sheet(data);
+
+        // Tô màu xanh lá cho dòng tiêu đề (dòng đầu tiên)
+        const headerRow = data[0];
+        headerRow.forEach((_, colIndex) => {
+            const cellAddress = XLSX.utils.encode_cell({ r: 0, c: colIndex }); // ô hàng 0, cột colIndex
+            if (!worksheet[cellAddress]) return;
+
+            worksheet[cellAddress].s = {
+                fill: {
+                    fgColor: { rgb: "90EE90" } // xanh lá nhạt – mã màu LightGreen
+                },
+                font: {
+                    bold: true
+                },
+                alignment: {
+                    horizontal: "center"
+                }
+            };
+        });
+
+        // Căn độ rộng cột phù hợp
+        const colWidths = data[0].map((_, colIndex) => {
+            const maxLen = Math.max(...data.map(row => (row[colIndex] ? row[colIndex].length : 0)));
+            return { wch: maxLen + 2 };
+        });
+        worksheet['!cols'] = colWidths;
+
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Leave Requests");
+
+        const now = new Date();
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const year = now.getFullYear();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+
+        const timestamp = `${day}-${month}-${year}_${hours}-${minutes}-${seconds}`;
+
+        XLSX.writeFile(workbook, `Danh_sach_don_nghi_phep_${timestamp}.xlsx`);
+    }
+    function showToast(message, isSuccess = true, delay = 8000) {
+        const toastEl = document.getElementById('successToast');
+        const header = toastEl.querySelector('.toast-header');
+        const title = header.querySelector('strong');
+
+        document.getElementById('toastMessage').textContent = message;
+
+        // Reset màu
+        header.classList.remove('bg-success', 'bg-danger');
+        header.classList.add(isSuccess ? 'bg-success' : 'bg-danger');
+        title.textContent = isSuccess ? 'Success' : 'Error';
+
+        const toast = new bootstrap.Toast(toastEl, { delay: delay });
+        toast.show();
+    }
+</script>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery-migrate-3.0.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.easing.1.3.js"></script>
+<script src="/js/jquery.waypoints.min.js"></script>
+<script src="/js/jquery.stellar.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/aos.js"></script>
+<script src="/js/jquery.animateNumber.min.js"></script>
+<script src="/js/scrollax.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+</body>
+</html>

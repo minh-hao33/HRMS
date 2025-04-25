@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HRMS - Hệ thống quản lý nhân sự</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <!-- Các thẻ khác... -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+  <style>
+    :root {
+      --primary-color: #3f51b5;
+      --primary-light: #e8eaf6;
+      --danger-color: #f44336;
+      --success-color: #4caf50;
+      --warning-color: #ff9800;
+      --text-primary: #333;
+      --text-secondary: #666;
+      --text-light: #888;
+      --border-color: #e0e0e0;
+      --hover-bg: #f5f5f5;
+      --unread-bg: #edf6ff;
+      --animation-time: 0.3s;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text-primary);
+      background-color: #f9f9f9;
+    }
+
+    /* Navbar styling */
+    .navbar {
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      background-color: #fff !important;
+      padding: 10px 0;
+    }
+
+    .navbar-brand {
+      font-weight: 600;
+      color: var(--primary-color) !important;
+    }
+
+    /* Notification Bell */
+    .notification-bell {
+      position: relative;
+      padding: 8px 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color var(--animation-time);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .notification-bell:hover {
+      background-color: rgba(0,0,0,0.05);
+    }
+
+    .notification-bell i {
+      font-size: 1.3rem;
+      color: #555;
+    }
+
+    /* Badge styling */
+    .notification-badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      min-width: 18px;
+      height: 18px;
+      border-radius: 10px;
+      background-color: var(--danger-color);
+      color: white;
+      font-size: 10px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 5px;
+      border: 2px solid white;
+      transform: translate(25%, -25%);
+      z-index: 1;
+    }
+
+    /* Bell animation */
+    @keyframes bell-shake {
+      0% { transform: rotate(0); }
+      10% { transform: rotate(10deg); }
+      20% { transform: rotate(-10deg); }
+      30% { transform: rotate(6deg); }
+      40% { transform: rotate(-6deg); }
+      50% { transform: rotate(3deg); }
+      60% { transform: rotate(-3deg); }
+      70% { transform: rotate(1deg); }
+      80% { transform: rotate(-1deg); }
+      90% { transform: rotate(0); }
+      100% { transform: rotate(0); }
+    }
+
+    .notification-bell.shake i {
+      animation: bell-shake 1s;
+    }
+
+    /* Dropdown styling */
+    .notification-dropdown {
+      width: 380px;
+      max-height: 500px;
+      padding: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      border: none;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+
+    .notification-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      background-color: #fff;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .notification-title {
+      font-weight: 600;
+      font-size: 16px;
+      margin-bottom: 0;
+      color: var(--text-primary);
+    }
+
+    /* Scrollable notification list */
+    .notification-body {
+      max-height: 400px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      background-color: #fff;
+    }
+
+    /* Individual notification */
+    .notification-item {
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border-color);
+      cursor: pointer;
+      transition: background-color var(--animation-time);
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .notification-item:hover {
+      background-color: var(--hover-bg);
+    }
+
+    .notification-item.unread {
+      background-color: var(--unread-bg);
+    }
+
+    .notification-item.unread:hover {
+      background-color: #e6f0fa;
+    }
+
+    /* Unread indicator */
+    .notification-status {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+      position: absolute;
+      top: 16px;
+      left: 6px;
+      display: none;
+    }
+
+    .notification-item.unread .notification-status {
+      display: block;
+    }
+
+    /* Notification icon */
+    .notification-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--primary-light);
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+
+    .notification-icon i {
+      font-size: 18px;
+    }
+
+    /* Notification content */
+    .notification-content {
+      flex-grow: 1;
+    }
+
+    .notification-item-title {
+      font-weight: 600;
+      font-size: 15px;
+      margin-bottom: 5px;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+
+    .notification-item-text {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    /* Notification metadata */
+    .notification-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-light);
+    }
+
+    .notification-sender {
+      display: flex;
+      align-items: center;
+    }
+
+    .notification-sender i {
+      margin-right: 5px;
+    }
+
+    .notification-time i {
+      margin-right: 5px;
+    }
+
+    /* Dropdown footer */
+    .notification-footer {
+      padding: 12px 16px;
+      text-align: center;
+      background-color: #fff;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .notification-footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .notification-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Button styling */
+    .btn-mark-all {
+      font-size: 12px;
+      padding: 4px 10px;
+      font-weight: 500;
+      border-radius: 4px;
+      background-color: #fff;
+      color: var(--primary-color);
+      border: 1px solid var(--primary-color);
+      transition: all var(--animation-time);
+    }
+
+    .btn-mark-all:hover {
+      background-color: var(--primary-color);
+      color: #fff;
+    }
+
+    /* New notification animation */
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .notification-item.new {
+      animation: fadeInDown 0.5s;
+    }
+
+    /* Empty state */
+    .empty-notification {
+      padding: 40px 20px;
+      text-align: center;
+      color: var(--text-light);
+    }
+
+    .empty-notification i {
+      font-size: 48px;
+      color: #ddd;
+      margin-bottom: 15px;
+    }
+
+    .empty-text {
+      font-size: 15px;
+    }
+
+    /* Toast notification */
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1060;
+    }
+
+    .toast {
+      width: 320px;
+      background-color: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      overflow: hidden;
+      border: none;
+      border-radius: 8px;
+      opacity: 1;
+    }
+
+    .toast-header {
+      background-color: var(--primary-color);
+      color: white;
+      border-bottom: none;
+      padding: 12px 16px;
+    }
+
+    .toast-header strong {
+      font-weight: 600;
+    }
+
+    .toast-body {
+      padding: 12px 16px;
+      color: var(--text-primary);
+    }
+
+    /* Notification table */
+    .notification-table th {
+      font-weight: 600;
+      border-top: none;
+      background-color: #f9f9f9;
+    }
+
+    .notification-table .status-badge {
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: 15px;
+    }
+
+    .status-badge.unread {
+      background-color: var(--primary-light);
+      color: var(--primary-color);
+    }
+
+    .status-badge.read {
+      background-color: #f5f5f5;
+      color: var(--text-secondary);
+    }
+
+    /* Action buttons */
+    .btn-action {
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      margin-right: 5px;
+    }
+
+    /* Card styling */
+    .card {
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    .card-header {
+      background-color: #fff;
+      border-bottom: 1px solid #eee;
+      padding: 16px 20px;
+    }
+
+    .card-header h5 {
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    /* Form styling */
+    .form-label {
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .form-control {
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.25rem rgba(63, 81, 181, 0.15);
+    }
+
+    /* Primary button */
+    .btn-primary {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+      padding: 8px 16px;
+      font-weight: 500;
+    }
+
+    .btn-primary:hover, .btn-primary:focus {
+      background-color: #303f9f;
+      border-color: #303f9f;
+    }
+
+    /* Notification icon colors */
+    .icon-info {
+      background-color: #e3f2fd;
+      color: #2196f3;
+    }
+
+    .icon-success {
+      background-color: #e8f5e9;
+      color: #4caf50;
+    }
+
+    .icon-warning {
+      background-color: #fff8e1;
+      color: #ff9800;
+    }
+
+    .icon-danger {
+      background-color: #ffebee;
+      color: #f44336;
+    }
+
+    /* Modal styling */
+    .modal-content {
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .modal-header {
+      border-bottom: 1px solid #eee;
+      padding: 16px 20px;
+    }
+
+    .modal-body {
+      padding: 20px;
+    }
+
+    .modal-title {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    /* Animation utilities */
+    .animate-fade-in {
+      animation: fadeIn 0.3s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* User dropdown */
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+      margin-right: 10px;
+    }
+
+    .user-info {
+      font-weight: 500;
+    }
+
+    /* Custom scrollbar */
+    .notification-body::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .notification-body::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    .notification-body::-webkit-scrollbar-thumb {
+      background: #ddd;
+      border-radius: 4px;
+    }
+
+    .notification-body::-webkit-scrollbar-thumb:hover {
+      background: #ccc;
+    }
+  </style>
+</head>
+<body>
+<!-- Toast container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <i class="fas fa-users-gear me-2"></i>
+      <span>HRMS</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">
+            <i class="fas fa-tachometer-alt me-1"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="fas fa-user-tie me-1"></i> Nhân viên
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="fas fa-building me-1"></i> Phòng ban
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="fas fa-file-alt me-1"></i> Yêu cầu
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="fas fa-calendar-check me-1"></i> Đặt phòng
+          </a>
+        </li>
+      </ul>
+      <div class="d-flex align-items-center">
+        <div class="dropdown me-3">
+          <div class="notification-bell" id="notificationDropdown" data-bs-toggle="dropdown"
+               aria-expanded="false" title="Thông báo">
+            <i class="fas fa-bell"></i>
+            <span class="notification-badge" id="notificationCount">0</span>
+          </div>
+          <div class="dropdown-menu dropdown-menu-end notification-dropdown"
+               aria-labelledby="notificationDropdown">
+            <div class="notification-header">
+              <span class="notification-title">Thông báo</span>
+              <button class="btn btn-mark-all" id="markAllRead">
+                <i class="fas fa-check-double me-1"></i> Đánh dấu đã đọc
+              </button>
+            </div>
+            <div class="notification-body" id="notificationList">
+              <!-- Danh sách thông báo sẽ được thêm vào đây bằng JavaScript -->
+            </div>
+            <div class="notification-footer">
+              <a href="#" id="viewAllNotifications">Xem tất cả thông báo</a>
+            </div>
+          </div>
+        </div>
+        <div class="dropdown">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#"
+             id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="user-avatar">A</div>
+            <span class="user-info" id="currentUser">admin</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle me-2"></i>Hồ sơ</a></li>
+            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Cài đặt</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Đăng xuất</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Main content -->
+<div class="container py-4">
+  <h4 class="mb-4">Quản lý thông báo</h4>
+
+  <div class="row mb-4">
+    <!-- Form tạo thông báo -->
+    <div class="col-md-6 mb-4">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Tạo thông báo mới</h5>
+        </div>
+        <div class="card-body">
+          <form id="createNotificationForm">
+            <div class="mb-3">
+              <label for="title" class="form-label">Tiêu đề</label>
+              <input type="text" class="form-control" id="title" placeholder="Nhập tiêu đề thông báo" required>
+            </div>
+            <div class="mb-3">
+              <label for="content" class="form-label">Nội dung</label>
+              <textarea class="form-control" id="content" rows="3" placeholder="Nhập nội dung thông báo" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="notificationType" class="form-label">Loại thông báo</label>
+              <select class="form-select" id="notificationType">
+                <option value="info" selected>Thông tin</option>
+                <option value="success">Thành công</option>
+                <option value="warning">Cảnh báo</option>
+                <option value="danger">Quan trọng</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="receiver" class="form-label">Người nhận</label>
+              <select class="form-select" id="receiver" required>
+                <option value="" selected disabled>Chọn người nhận</option>
+                <option value="user1">Nguyễn Văn A (user1)</option>
+                <option value="user2">Trần Thị B (user2)</option>
+                <option value="user3">Lê Văn C (user3)</option>
+                <option value="manager1">Phạm Văn D (manager1)</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-paper-plane me-1"></i> Gửi thông báo
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form thông báo cho phòng ban -->
+    <div class="col-md-6 mb-4">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0"><i class="fas fa-bullhorn me-2"></i>Thông báo cho phòng ban</h5>
+        </div>
+        <div class="card-body">
+          <form id="createDepartmentNotificationForm">
+            <div class="mb-3">
+              <label for="deptTitle" class="form-label">Tiêu đề</label>
+              <input type="text" class="form-control" id="deptTitle" placeholder="Nhập tiêu đề thông báo" required>
+            </div>
+            <div class="mb-3">
+              <label for="deptContent" class="form-label">Nội dung</label>
+              <textarea class="form-control" id="deptContent" rows="3" placeholder="Nhập nội dung thông báo" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="deptNotificationType" class="form-label">Loại thông báo</label>
+              <select class="form-select" id="deptNotificationType">
+                <option value="info" selected>Thông tin</option>
+                <option value="success">Thành công</option>
+                <option value="warning">Cảnh báo</option>
+                <option value="danger">Quan trọng</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="department" class="form-label">Phòng ban</label>
+              <select class="form-select" id="department" required>
+                <option value="" selected disabled>Chọn phòng ban</option>
+                <option value="1">Phòng Nhân sự</option>
+                <option value="2">Phòng Kế toán</option>
+                <option value="3">Phòng IT</option>
+                <option value="4">Phòng Kinh doanh</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-paper-plane me-1"></i> Gửi thông báo
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bảng danh sách thông báo -->
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5 class="mb-0"><i class="fas fa-list me-2"></i>Danh sách thông báo</h5>
+      <div>
+        <select class="form-select form-select-sm" id="notificationFilter" style="width: auto; display: inline-block;">
+          <option value="all" selected>Tất cả thông báo</option>
+          <option value="unread">Chưa đọc</option>
+          <option value="read">Đã đọc</option>
+        </select>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover notification-table">
+          <thead>
+          <tr>
+            <th width="5%">#</th>
+            <th width="25%">Tiêu đề</th>
+            <th width="30%">Nội dung</th>
+            <th width="15%">Người gửi</th>
+            <th width="10%">Thời gian</th>
+            <th width="5%">Trạng thái</th>
+            <th width="10%">Thao tác</th>
+          </tr>
+          </thead>
+          <tbody id="notificationsTable">
+          <!-- Dữ liệu sẽ được thêm từ JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal xem chi tiết thông báo -->
+<div class="modal fade" id="notificationDetailModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle">Chi tiết thông báo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <div class="d-flex align-items-center mb-3">
+            <div class="notification-icon me-3" id="modalIcon">
+              <i class="fas fa-bell"></i>
+            </div>
+            <h5 id="modalNotificationTitle" class="mb-0"></h5>
+          </div>
+          <div class="alert alert-light border p-3">
+            <p id="modalNotificationContent" class="mb-0"></p>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between text-muted">
+          <small><i class="fas fa-user me-1"></i> Người gửi: <span id="modalSender"></span></small>
+          <small><i class="far fa-clock me-1"></i> <span id="modalTime"></span></small>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-primary" id="markReadBtn">Đánh dấu đã đọc</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Notification sound -->
+<audio id="notificationSound" preload="auto">
+  <source src="https://assets.mixkit.co/sfx/preview/mixkit-software-interface-alert-217.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="/js/notification.js"></script>
+</body>
+</html>
