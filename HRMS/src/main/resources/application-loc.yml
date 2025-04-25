@@ -53,3 +53,6 @@ mybatis:
         com.example.hrms.biz.request.model,
         com.example.hrms.biz.role.model,
         com.example.hrms.biz.user.model
+
+app:
+  domain-url: https://localhost:8080

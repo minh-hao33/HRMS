@@ -15,7 +15,7 @@ $(document).ready(function() {
   $('.user-avatar').text(currentUser.avatar);
 
   // API Base URL
-  const API_BASE_URL = 'http://localhost:8080/api/v1/notifications';
+  const API_BASE_URL = '/api/v1/notifications';
 
   // WebSocket connection
   let stompClient = null;

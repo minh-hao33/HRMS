@@ -1424,7 +1424,6 @@
 
 <script>
     // Biến URL cơ sở để sử dụng trong toàn bộ ứng dụng
-    const BASE_URL = "http://localhost:8080";
 
     // Thêm mã xử lý thông báo
     let notifications = [
@@ -1571,7 +1570,7 @@
     }
 
     function logout() {
-        fetch(BASE_URL + '/api/v1/users/logout', {
+        fetch('/api/v1/users/logout', {
             method: 'POST',
             credentials: 'include',
         })
@@ -1663,10 +1662,10 @@
 
     $(document).ready(function() {
         // API URL - Sửa đường dẫn API để khớp với backend
-        const API_URL = BASE_URL + '/api/v1/meeting-room';
+        const API_URL = '/api/v1/meeting-room';
 
         // URL dự phòng nếu API chính gặp lỗi
-        const FALLBACK_API_URL = BASE_URL + '/api/v1/meeting-room';
+        const FALLBACK_API_URL = '/api/v1/meeting-room';
 
         // Thêm hàm để khởi tạo cache ban đầu
         function initializeRoomCache() {
