@@ -15,10 +15,7 @@ public class UserController {
         model.addAttribute("user", new Booking());
         return "user";
     }
-    @GetMapping("/")
-    public String showLoginPage() {
-        return "login";  // Return the name of your login view
-    }
+
     @RequestMapping("/users/login")
     public String loginPage() {
         return "login"; // Trả về trang login.html
