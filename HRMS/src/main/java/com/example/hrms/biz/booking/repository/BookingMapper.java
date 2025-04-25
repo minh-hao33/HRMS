@@ -9,7 +9,12 @@ import java.util.List;
 
 @Mapper
 public interface BookingMapper {
-
+    @Select("SELECT * FROM Bookings " +
+        "WHERE start_time BETWEEN #{start} AND #{end}")
+    List<Booking> findBookingsInTimeRange(
+        @Param("start") LocalDateTime start,
+        @Param("end") LocalDateTime end
+    );
     @Insert("INSERT INTO bookings (username, room_id, title, attendees, content, start_time, end_time, status, booking_type, weekdays) VALUES (#{username}, #{roomId}, #{title}, #{attendees}, #{content}, #{startTime}, #{endTime}, #{status}, #{bookingType}, #{weekdays})")
     void insert(Booking booking);
 

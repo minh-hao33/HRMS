@@ -14,12 +14,7 @@ public class UserController {
         model.addAttribute("user", new Booking());
         return "user";
     }
-<<<<<<< HEAD
-
-    @RequestMapping("/users/login")
-=======
     @RequestMapping("/login")
->>>>>>> parent of c24801d (fix bug edit delete nav meeting and func send email create booking, request,...)
     public String loginPage() {
         return "login"; // Trả về trang login.html
     }

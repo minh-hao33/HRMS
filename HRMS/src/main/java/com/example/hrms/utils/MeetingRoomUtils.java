@@ -39,6 +39,7 @@ public class MeetingRoomUtils {
         resp.setContent(meetingRoom.getContent());
         resp.setBookingType(meetingRoom.getBookingType());
         resp.setWeekdays(meetingRoom.getWeekdays());
+        resp.setBookingId(meetingRoom.getBookingId());
         return resp;
     }
 
@@ -57,6 +58,7 @@ public class MeetingRoomUtils {
         private String content;
         private BookingType bookingType;
         private String weekdays;
+        private Long bookingId;
 
         public Builder roomId(Long roomId) {
             this.roomId = roomId;
@@ -123,6 +125,11 @@ public class MeetingRoomUtils {
             return this;
         }
 
+        public Builder bookingId(Long bookingId) {
+            this.bookingId = bookingId;
+            return this;
+        }
+
         public MeetingRoom buildMeetingRoom() {
             MeetingRoom meetingRoom = new MeetingRoom();
             meetingRoom.setRoomId(this.roomId);
@@ -138,6 +145,7 @@ public class MeetingRoomUtils {
             meetingRoom.setContent(this.content);
             meetingRoom.setBookingType(this.bookingType);
             meetingRoom.setWeekdays(this.weekdays);
+            meetingRoom.setBookingId(this.bookingId);
             return meetingRoom;
         }
 
@@ -156,6 +164,7 @@ public class MeetingRoomUtils {
             resp.setContent(this.content);
             resp.setBookingType(this.bookingType);
             resp.setWeekdays(this.weekdays);
+            resp.setBookingId(this.bookingId);
             return resp;
         }
     }
