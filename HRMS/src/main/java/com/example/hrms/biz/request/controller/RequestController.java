@@ -1,7 +1,6 @@
 package com.example.hrms.biz.request.controller;
 
 import com.example.hrms.biz.request.model.Request;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -12,13 +11,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/requests")
 public class RequestController {
 
-    @Value("${app.domain-url}")
-    private String domainUrl;
 
     @RequestMapping("")
     @PreAuthorize("hasAnyRole('EMPLOYEE', 'ADMIN', 'SUPERVISOR')")
     public String openRequestView(Model model, Authentication authentication) {
-        model.addAttribute("apiUrl", domainUrl == null ? "http://localhost:8080" : domainUrl);
         if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
             model.addAttribute("requests", new Request());
             return "requests";
