@@ -37,10 +37,8 @@ public class SecurityConfig {
                                         "/css/**", "/js/**", "/images/**", "/fonts/**",
                                         "/webjars/**", "/favicon.ico", "/resources/**", "/static/**",
                                         "/api/v1/users/login","/users/login",
-                                .requestMatchers(
-                                        "/api/v1/users/login","/users/login", "/users/home",
                                         "/css/**", "/js/**", "/images/**", "/fonts/**",
-                                        "/v3/api-docs/**", "/swagger-ui/**", "/swagger-resources/", "/"
+                                        "/v3/api-docs/**", "/swagger-ui/**", "/swagger-resources/"
                                 ).permitAll()
                                 .requestMatchers("/api/v1/meeting-room/**", "/meeting-room/**").hasRole("EMPLOYEE")
                                 .requestMatchers("/api/v1/notifications/**","/notification/*").hasAnyAuthority("ADMIN", "SUPERVISOR", "EMPLOYEE")
