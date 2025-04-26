@@ -83,11 +83,11 @@ public class DepartmentService {
                 .anyMatch(auth -> auth.getAuthority().equals("ADMIN"));
         boolean isSupervisor = authentication.getAuthorities().stream()
                 .anyMatch(auth -> auth.getAuthority().equals("SUPERVISOR"));
-        if (!isAdmin) {
+        if (isAdmin) {
             return departmentMapper.listDepartments(criteria);
-        }else if(isSupervisor){
+        } else if (isSupervisor) {
             return departmentMapper.findByUserDepartment(username);
-        }else{
+        } else {
             return Collections.emptyList();
         }
     }
