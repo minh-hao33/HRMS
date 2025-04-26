@@ -1,7 +1,5 @@
 package com.example.hrms.biz.commoncode.email;
 
-import com.example.hrms.biz.commoncode.notification.model.Notification;
-import com.example.hrms.biz.user.repository.UserMapper;
 import java.util.concurrent.CompletableFuture;
 import java.util.regex.Pattern;
 
@@ -18,14 +16,12 @@ public class EmailService {
 
   private final JavaMailSender mailSender;
   private final String defaultFromEmail;
-  private final UserMapper userMapper;
 
   private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
 
-  public EmailService(JavaMailSender mailSender, String fromEmail, UserMapper userMapper) {
+  public EmailService(JavaMailSender mailSender, String fromEmail) {
     this.mailSender = mailSender;
     this.defaultFromEmail = fromEmail;
-    this.userMapper = userMapper;
   }
 
   /**
@@ -157,24 +153,6 @@ public class EmailService {
     } catch (IllegalArgumentException e) {
       log.error("Failed to send email to {}: {}", email.getTo(), e.getMessage());
       return false;
-    }
-  }
-  public void sendNotificationEmail(Notification notification) {
-    try {
-      // Tìm email của người nhận
-      String recipientEmail = userMapper.findEmailByUsername(notification.getReceiver());
-
-      if (recipientEmail != null) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(recipientEmail);
-        message.setSubject(notification.getTitle());
-        message.setText(notification.getContent());
-
-        mailSender.send(message);
-        log.info("Email notification sent to: {}", recipientEmail);
-      }
-    } catch (Exception e) {
-      log.error("Failed to send email notification", e);
     }
   }
 

@@ -27,5 +27,4 @@ public class MeetingRoomCriteria extends Page {
     private String content;
     private BookingType bookingType;
     private String weekdays;
-    private Long bookingId;
 }

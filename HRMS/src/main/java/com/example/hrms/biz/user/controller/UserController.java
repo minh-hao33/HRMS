@@ -3,11 +3,10 @@ package com.example.hrms.biz.user.controller;
 import com.example.hrms.biz.booking.model.Booking;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/users")
 public class UserController {
 
     @RequestMapping("")
@@ -15,20 +14,24 @@ public class UserController {
         model.addAttribute("user", new Booking());
         return "user";
     }
+<<<<<<< HEAD
 
     @RequestMapping("/users/login")
+=======
+    @RequestMapping("/login")
+>>>>>>> parent of c24801d (fix bug edit delete nav meeting and func send email create booking, request,...)
     public String loginPage() {
         return "login"; // Trả về trang login.html
     }
-    @RequestMapping("/users/home")
+    @RequestMapping("/home")
     public String homePage(Model model) {
         return "index";
     }
-    @RequestMapping("/users/profile")
+    @RequestMapping("/profile")
     public String profilePage() {
         return "profile";
     }
-    @RequestMapping("/users/change-password")
+    @RequestMapping("/change-password")
     public String change() {
         return "change-password";
     }

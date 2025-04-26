@@ -10,8 +10,6 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-    @Select("SELECT email FROM Users WHERE username = #{username}")
-    String findEmailByUsername(String username);
     // Lấy tất cả người dùng với thông tin phòng ban
     @Select("SELECT u.username, u.employee_name, u.password, u.department_id, " +
             "u.role_name, u.is_supervisor, u.status, u.email, d.department_name " +

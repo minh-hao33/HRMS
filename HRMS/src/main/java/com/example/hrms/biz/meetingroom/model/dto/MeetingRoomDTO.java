@@ -50,7 +50,6 @@ public class MeetingRoomDTO {
         private String content;
         private BookingType bookingType;
         private String weekdays;
-        private Long bookingId;
 
         // Convert from MeetingRoom using Utils
         public static Resp toResponse(MeetingRoom meetingRoom) {
