@@ -1312,8 +1312,6 @@
         const username = localStorage.getItem('Username');
         const role = localStorage.getItem('Role');
 
-        const dashboardContainer = document.querySelector('.dashboard-container');
-
         if (username && role) {
             const loginBtn = document.getElementById('loginBtn');
             const userInfo = document.getElementById('userInfo');
@@ -1339,82 +1337,92 @@
                 }
             }
 
-            if (role === 'SUPERVISOR') {
-                const departmentBox = document.getElementById('departmentBox');
-                if (departmentBox) {
-                    departmentBox.href = '#'; // remove link temporarily
-                    departmentBox.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        window.location.href = '/users';
-                    });
-                }
 
-                // Fetch requests data
-                fetch('/api/v1/requests')
-                    .then(response => response.json())
-                    .then(data => {
-                        const requests = data.data || [];
+        }
+        if (role === 'SUPERVISOR') {
+            const departmentBox = document.getElementById('departmentBox');
+            if (departmentBox) {
+                departmentBox.href = '#'; // tạm gỡ link chính
+                departmentBox.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    window.location.href = '/users';
+                });
+            }
+        }
+        fetch('/api/v1/departments')
+            .then(res => res.json())
+            .then(data => {
+                document.querySelector('#departmentBox .count').textContent = data.total || data.length || 0;
+            });
 
-                        const Pending = requests.filter(r => r.requestStatus === 'PENDING').length;
-                        const Approved = requests.filter(r => r.requestStatus === 'APPROVED').length;
-                        const Rejected = requests.filter(r => r.requestStatus === 'REJECTED').length;
-                        const total = requests.length;
+        fetch('/api/v1/users')
+            .then(res => res.json())
+            .then(data => {
+                document.querySelector('#employeeBox .count').textContent = data.total || data.length || 0;
+            });
 
-                        // Tính phần trăm
-                        const pendingPercent = total > 0 ? Math.round((Pending / total) * 100) : 0;
-                        const rejectedPercent = total > 0 ? Math.round((Rejected / total) * 100) : 0;
-                        const approvedPercent = total > 0 ? Math.round((Approved / total) * 100) : 0;
+        fetch('/api/v1/requests')
+            .then(response => response.json())
+            .then(data => {
+                const requests = data.data || [];
 
-                        // Cập nhật số liệu trong legend
-                        document.getElementById('pendingPercent').textContent = `${Pending} (${pendingPercent}%)`;
-                        document.getElementById('rejectedPercent').textContent = `${Rejected} (${rejectedPercent}%)`;
-                        document.getElementById('approvedPercent').textContent = `${Approved} (${approvedPercent}%)`;
-                        document.getElementById('totalRequests').textContent = total;
+                const Pending = requests.filter(r => r.requestStatus === 'PENDING').length;
+                const Approved = requests.filter(r => r.requestStatus === 'APPROVED').length;
+                const Rejected = requests.filter(r => r.requestStatus === 'REJECTED').length;
+                const total = requests.length;
 
-                        // Tạo biểu đồ tròn
-                        const ctx = document.getElementById('requestsChart').getContext('2d');
-                        const chartData = total > 0 ? [Pending, Rejected, Approved] : [1]; // Default to 1 for empty data
-                        const chartLabels = total > 0 ? ['Pending', 'Rejected', 'Approved'] : ['Total'];
-                        const backgroundColors = total > 0 ? ['#ff8c00', '#d32f2f', '#388e3c'] : ['#0078d4']; // Blue for no data
+                // Tính phần trăm
+                const pendingPercent = total > 0 ? Math.round((Pending / total) * 100) : 0;
+                const rejectedPercent = total > 0 ? Math.round((Rejected / total) * 100) : 0;
+                const approvedPercent = total > 0 ? Math.round((Approved / total) * 100) : 0;
 
-                        new Chart(ctx, {
-                            type: 'pie',
-                            data: {
-                                labels: chartLabels,
-                                datasets: [{
-                                    data: chartData,
-                                    backgroundColor: backgroundColors,
-                                    borderColor: ['#ffffff'],
-                                    borderWidth: 2
-                                }]
+                // Cập nhật số liệu trong legend
+                document.getElementById('pendingPercent').textContent = `${Pending} (${pendingPercent}%)`;
+                document.getElementById('rejectedPercent').textContent = `${Rejected} (${rejectedPercent}%)`;
+                document.getElementById('approvedPercent').textContent = `${Approved} (${approvedPercent}%)`;
+                document.getElementById('totalRequests').textContent = total;
+
+                // Tạo biểu đồ tròn
+                const ctx = document.getElementById('requestsChart').getContext('2d');
+                const chartData = total > 0 ? [Pending, Rejected, Approved] : [1]; // Default to 1 for empty data
+                const chartLabels = total > 0 ? ['Pending', 'Rejected', 'Approved'] : ['Total'];
+                const backgroundColors = total > 0 ? ['#ff8c00', '#d32f2f', '#388e3c'] : ['#0078d4']; // Blue for no data
+
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: chartLabels,
+                        datasets: [{
+                            data: chartData,
+                            backgroundColor: backgroundColors,
+                            borderColor: ['#ffffff'],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                display: true
                             },
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: true,
-                                plugins: {
-                                    legend: {
-                                        display: true
-                                    },
-                                    tooltip: {
-                                        callbacks: {
-                                            label: function (context) {
-                                                const label = context.label || '';
-                                                const value = context.raw || 0;
-                                                const totalValue = context.dataset.data.reduce((a, b) => a + b, 0);
-                                                const percentage = totalValue > 0 ? Math.round((value / totalValue) * 100) : 100; // 100% for "No Data"
-                                                return `${label}: ${value} (${percentage}%)`;
-                                            }
-                                        }
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        const label = context.label || '';
+                                        const value = context.raw || 0;
+                                        const totalValue = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        const percentage = totalValue > 0 ? Math.round((value / totalValue) * 100) : 100; // 100% for "No Data"
+                                        return `${label}: ${value} (${percentage}%)`;
                                     }
                                 }
                             }
-                        });
-                    })
-                    .catch(error => console.error('Error fetching data:', error));
-            }
-        }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
     });
-
     async function fetchOngoingMeetings() {
         const Username = localStorage.getItem('Username');
         if (!Username) {

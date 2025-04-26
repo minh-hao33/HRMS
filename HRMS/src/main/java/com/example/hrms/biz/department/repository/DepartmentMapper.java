@@ -24,7 +24,16 @@ public interface DepartmentMapper {
     ORDER BY d.department_name ASC
 """)
     List<Department> listDepartments(@Param("criteria") DepartmentCriteria criteria);
-
+    @Select("""
+    SELECT 
+        d.department_id AS departmentId,
+        d.department_name AS departmentName,
+        d.status AS status
+    FROM Users u
+    JOIN Departments d ON u.department_id = d.department_id
+    WHERE u.username = #{username}
+""")
+    List<Department> findByUserDepartment(@Param("username") String username);
     @Update("UPDATE Departments SET status = #{status} WHERE department_id = #{departmentId}")
     void updateDepartmentStatus(@Param("departmentId") Long departmentId, @Param("status") String status);
 
@@ -53,13 +62,4 @@ public interface DepartmentMapper {
     @Update("UPDATE Departments SET department_name = #{departmentName} WHERE department_id = #{departmentId}")
     void updateDepartment(Department department);
 
-    @Select("""
-    SELECT 
-        d.department_id AS departmentId, 
-        d.department_name AS departmentName, 
-        d.status AS status
-    FROM Users u JOIN Departments d ON u.department_id = d.department_id
-    WHERE u.username = #{username}
-    """)
-    List<Department> findByUserDepartment(@Param("username") String username);
 }
