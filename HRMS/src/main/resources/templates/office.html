@@ -1323,6 +1323,40 @@
             }
         });
     });
+    document.addEventListener('DOMContentLoaded', function () {
+        const username = localStorage.getItem('Username');
+        const role = localStorage.getItem('Role');
+        // Toggle dropdown on click
+        userMenu.addEventListener('click', function (event) {
+            event.preventDefault(); // Ngừng sự kiện mặc định
+            userInfo.classList.toggle('show'); // Thêm hoặc bỏ class "show"
+        });
+
+        // Đảm bảo khi click ra ngoài thì dropdown sẽ đóng
+        document.addEventListener('click', function (event) {
+            if (!userInfo.contains(event.target)) {
+                userInfo.classList.remove('show');
+            }
+        });
+        if (username && role) {
+            document.getElementById('userInfo').style.display = 'block';
+            document.getElementById('loginBtn').style.display = 'none';
+            document.getElementById('dropdownUsername').textContent = username;
+            document.getElementById('dropdownRole').textContent = role.charAt(0) + role.slice(1).toLowerCase();
+
+            if (role === 'ADMIN') {
+                document.getElementById('meeting').style.display = 'none';
+            } else if (role === 'EMPLOYEE') {
+                document.getElementById('office').style.display = 'none';
+                document.getElementById('account').style.display = 'none';
+                document.getElementById('dpment').style.display = 'none';
+            } else if (role === 'SUPERVISOR') {
+                document.getElementById('office').style.display = 'none';
+                document.getElementById('meeting').style.display = 'none';
+                document.getElementById('dpment').style.display = 'none';
+            }
+        }
+    });
     function logout() {
         fetch('/api/v1/users/logout', {
             method: 'POST',

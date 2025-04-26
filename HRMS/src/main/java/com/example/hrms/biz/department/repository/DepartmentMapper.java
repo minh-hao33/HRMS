@@ -52,4 +52,14 @@ public interface DepartmentMapper {
 
     @Update("UPDATE Departments SET department_name = #{departmentName} WHERE department_id = #{departmentId}")
     void updateDepartment(Department department);
+
+    @Select("""
+    SELECT 
+        d.department_id AS departmentId, 
+        d.department_name AS departmentName, 
+        d.status AS status
+    FROM Users u JOIN Departments d ON u.department_id = d.department_id
+    WHERE u.username = #{username}
+    """)
+    List<Department> findByUserDepartment(@Param("username") String username);
 }
