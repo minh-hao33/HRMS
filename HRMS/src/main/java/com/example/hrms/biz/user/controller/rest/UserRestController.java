@@ -267,7 +267,7 @@ public class UserRestController {
 
     @GetMapping("/check")
     public Result checkUsernameExists(@RequestParam String username) {
-        int count = userService.checkUsernameExists(username);
+        int count = userService.checkUsernameExists(username); // Kiểm tra xem username có tồn tại trong DB không
         return new Result("Success", count > 0 ? "Username is already taken" : "Username is available");
     }
 
