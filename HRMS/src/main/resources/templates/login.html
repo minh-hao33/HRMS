@@ -69,10 +69,11 @@
         togglePassword.addEventListener("click", function () {
             passwordField.type = passwordField.type === "password" ? "text" : "password";
         });
+
         document.getElementById("loginForm").addEventListener("keydown", function (event) {
             if (event.key === "Enter") {
-                event.preventDefault(); // Ngăn form reload trang
-                document.getElementById("loginBtn").click(); // Giả lập click
+                event.preventDefault(); // Prevent form from reloading the page
+                document.getElementById("loginBtn").click(); // Simulate a button click
             }
         });
 
@@ -82,13 +83,13 @@
             const usernameError = document.getElementById("usernameError");
             const passwordError = document.getElementById("passwordError");
 
-            // Clear errors
+            // Clear previous error messages
             usernameError.textContent = "";
             passwordError.textContent = "";
 
             if (!username || !password) {
-                if (!username) usernameError.textContent = "Vui lòng nhập tên đăng nhập.";
-                if (!password) passwordError.textContent = "Vui lòng nhập mật khẩu.";
+                if (!username) usernameError.textContent = "Please enter your username.";
+                if (!password) passwordError.textContent = "Please enter your password.";
                 return;
             }
 
@@ -109,21 +110,22 @@
                     localStorage.setItem("Role", data.data.role);
                     window.location.href = "/users/home";
                 } else {
-                    const message = data?.retMsg || "Đăng nhập thất bại.";
+                    const message = data?.retMsg || "Login failed.";
                     if (message.toLowerCase().includes("username")) {
-                        usernameError.textContent = "Tên đăng nhập không đúng.";
+                        usernameError.textContent = "Incorrect username.";
                     } else if (message.toLowerCase().includes("password")) {
-                        passwordError.textContent = "Mật khẩu không đúng.";
+                        passwordError.textContent = "Incorrect password.";
                     } else {
                         passwordError.textContent = message;
                     }
                 }
             } catch (error) {
-                console.error("Lỗi:", error);
-                passwordError.textContent = "Không thể kết nối đến server.";
+                console.error("Error:", error);
+                passwordError.textContent = "The account has been locked.";
             }
         });
     });
+
 </script>
 
 
