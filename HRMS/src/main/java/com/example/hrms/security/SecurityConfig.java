@@ -50,9 +50,9 @@ public class SecurityConfig {
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .formLogin(AbstractHttpConfigurer::disable); // disable luôn form login mặc định
-            http.headers(headers -> headers
-                    .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)
-            );
+        http.headers(headers -> headers
+                .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)
+        );
 
         return http.build();
     }
