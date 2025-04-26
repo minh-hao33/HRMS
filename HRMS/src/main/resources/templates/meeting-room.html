@@ -1466,6 +1466,15 @@
             font-weight: bold;
             font-size: 1.5rem;
         }
+
+        .nav-item.active > .nav-link {
+            background-color: #3399ff;
+            color: white !important;
+            border-radius: 30px;
+            padding: 15px 20px; /* Rất gọn */
+            display: inline-block;
+            height: auto;
+        }
     </style>
 </head>
 <body>
@@ -1481,7 +1490,7 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active"><a href="/users/home" class="nav-link">Home</a></li>
                 <li class="nav-item" id="request"><a href="/requests" class="nav-link">Request</a></li>
-                <li class="nav-item" id="office"><a href="#" class="nav-link">Office</a></li>
+                <li class="nav-item" id="office"><a href="/users/office" class="nav-link">Office</a></li>
                 <li class="nav-item" id="meeting"><a href="/meeting-room" class="nav-link">Meeting</a></li>
                 <li class="nav-item" id="account"><a href="/users" class="nav-link">Account</a></li>
                 <li class="nav-item" id="dpment"><a href="/departments" class="nav-link">Department</a></li>
@@ -1940,6 +1949,14 @@
 <script src="/js/main.js"></script>
 <script src="/js/sessionTimeout.js"></script>
 <script>
+    document.querySelectorAll('.nav-item').forEach(function(item) {
+        const link = item.querySelector('a');
+        if (link && link.getAttribute('href') === window.location.pathname) {
+            item.classList.add('active');
+        } else {
+            item.classList.remove('active');
+        }
+    });
     $(document).ready(function() {
         // Xử lý click chuông thông báo
         $('#notificationBell').on('click', function(e) {

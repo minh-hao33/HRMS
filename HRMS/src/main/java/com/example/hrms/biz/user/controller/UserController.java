@@ -30,4 +30,9 @@ public class UserController {
     public String change() {
         return "change-password";
     }
+
+    @RequestMapping("/office")
+    public String officePage() {
+        return "office";
+    }
 }

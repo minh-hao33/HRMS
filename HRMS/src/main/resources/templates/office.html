@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Meeting CMC Global</title>
+    <title>Office</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/magnific-popup.css">
+    <link rel="stylesheet" href="/css/aos.css">
+    <link rel="stylesheet" href="/css/ionicons.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/css/jquery.timepicker.css">
+    <link rel="stylesheet" href="/css/flaticon.css">
+    <link rel="stylesheet" href="/css/icomoon.css">
+    <link rel="stylesheet" href="/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <style>
         :root {
             --primary-color: #1b7cb3;
@@ -895,93 +905,32 @@
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
-        .meeting-calendar {
-            font-family: Arial, sans-serif;
-            max-width: 100%;
-            margin: 0 auto;
-        }
 
-        .calendar-header {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .calendar-header h3 {
-            color: #333;
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-        }
-
-        .calendar-header h4 {
-            color: #666;
-            font-size: 1.2rem;
-            margin-top: 0;
-        }
-
-        .calendar-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .calendar-table th {
-            background-color: #f8f9fa;
-            color: #333;
-            text-align: center;
-            padding: 8px;
-            border: 1px solid #dee2e6;
+        .room-label {
+            margin-top: 10px;
             font-weight: 600;
+            font-size: 20px;
+            color: #2c3e50;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 8px 20px;
+            background-color: #f8f9fa;
+            border-radius: 30px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .calendar-table td {
-            height: 80px;
-            vertical-align: top;
-            padding: 5px;
-            border: 1px solid #dee2e6;
-            position: relative;
+        .room-label:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
-        .calendar-table td .day-number {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            font-weight: bold;
+        .room-label:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         }
-
-        .calendar-table td.today {
-            background-color: #e6f7ff;
-        }
-
-        .calendar-table td.has-meeting {
-            background-color: #f0f8ff;
-            cursor: pointer;
-        }
-
-        .calendar-table td.has-meeting:hover {
-            background-color: #d4e6f7;
-        }
-
-        .meeting-info {
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: #333;
-            word-break: break-word;
-        }
-
-        .meeting-time {
-            font-weight: bold;
-            color: #007bff;
-        }
-
-        .meeting-title {
-            font-weight: bold;
-            margin-top: 3px;
-        }
-
-        .meeting-location {
-            font-style: italic;
-            color: #666;
-        }
-
         .nav-item.active > .nav-link {
             background-color: #3399ff;
             color: white !important;
@@ -990,6 +939,7 @@
             display: inline-block;
             height: auto;
         }
+
     </style>
 </head>
 <body>
@@ -1045,8 +995,8 @@
                         <img src="/images/person_1.jpg" class="rounded-circle me-2" alt="User Avatar" width="32" height="32">
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end p-2 shadow" style="width: 250px; right: -20px !important;
-                                                                                                left: auto !important;
-                                                                                                transform: none !important;" aria-labelledby="userMenu">
+                                                                                                  left: auto !important;
+                                                                                                  transform: none !important;" aria-labelledby="userMenu">
                         <!-- User Info -->
                         <li class="d-flex align-items-center mb-2 px-2">
                             <img src="/images/person_1.jpg" class="rounded-circle me-2" alt="User Avatar" width="40" height="40">
@@ -1069,178 +1019,287 @@
     </div>
 </nav>
 
-<main class="main-content">
-    <div class="container-fluid" style="display: flex;">
-        <div class="dashboard-wrapper">
-            <div class="dashboard-container">
-                <a href="/departments" class="dashboard-card" id="departmentBox">
-                    <div class="label">Departments</div>
-                    <div class="value count">0</div>
-                </a>
-                <a href="/users" class="dashboard-card" id="employeeBox">
-                    <div class="label">Employees</div>
-                    <div class="value count">0</div>
-                </a>
+<section class="ftco-section ftco-no-pt ftco-no-pb">
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-md-5 p-md-5 img img-2 d-flex justify-content-center align-items-center" style="background-image: url(/images/about.jpg);">
             </div>
-            <div class="chart-container">
-                <div class="pie-chart">
-                    <canvas id="requestsChart"></canvas>
-                </div>
-                <div class="chart-legend">
-                    <a href="/requests" class="legend-item" id="pendingLegend">
-                        <div class="legend-color" style="background-color: #ff8c00;"></div>
-                        <span class="legend-text">Pending Requests</span>
-                        <span class="legend-value" id="pendingPercent">0 (0%)</span>
-                    </a>
-                    <a href="/requests" class="legend-item" id="rejectedLegend">
-                        <div class="legend-color" style="background-color: #d32f2f;"></div>
-                        <span class="legend-text">Rejected Requests</span>
-                        <span class="legend-value" id="rejectedPercent">0 (0%)</span>
-                    </a>
-                    <a href="/requests" class="legend-item" id="approvedLegend">
-                        <div class="legend-color" style="background-color: #388e3c;"></div>
-                        <span class="legend-text">Approved Requests</span>
-                        <span class="legend-value" id="approvedPercent">0 (0%)</span>
-                    </a>
-                    <div class="total-requests">
-                        Total Requests: <span id="totalRequests">0</span>
+            <div class="col-md-7 wrap-about py-md-5 ftco-animate">
+                <div class="heading-section mb-5 pt-5 pl-md-5">
+                    <div class="pr-md-5 mr-md-5">
+                        <h2 class="mb-4">What is all about us?</h2>
                     </div>
+
+                    <p>VISION AND MISSION:</p>
+                    <p>With aspiration and passion, CMC strives to become the world's leading Information Technology and Telecommunications Group.</p>
+                    <p>Leading new technology waves, striving to develop world-class technology products - services - solutions, bringing outstanding values ​​to customers, contributing to enhancing Vietnam's position in the digital age, building a powerful country.</p>
+                    <p>CORE VALUES:</p>
+                    <p>4C (Creativity, C-Speed, Commitment, Customer Centricity). Every action of CMC people comes from the heart of Customer Orientation. With the desire and passion for endless Creativity, CMC people are determined to reach the fastest speed, the Speed ​​of Light, in both thinking and action to inspire and fulfill their Commitments.</p>
                 </div>
             </div>
         </div>
-
-        <div class="right-side">
-            <iframe src="https://thoitiet247.vn/widget/embed/ha-noi?style=3&day=3&td=%23ffffff&ntd=%234f7ffa&mvb=%23e5eeff&mv=%23335fd1&mdk=%23e5eeff&htd=true"
-                    id="widget-hn" width="100%" height="450px" scrolling="no" frameborder="0"
-                    allowtransparency="true" style="border:none;overflow:hidden;"></iframe>
-            <iframe src="https://thoitiet247.vn/widget/embed/da-nang?style=3&day=3&td=%23ffffff&ntd=%234f7ffa&mvb=%23e5eeff&mv=%23335fd1&mdk=%23e5eeff&htd=true"
-                    id="widge-dn" width="100%" height="450px" scrolling="no" frameborder="0"
-                    allowtransparency="true" style="border:none;overflow:hidden;"></iframe>
-            <iframe src="https://thoitiet247.vn/widget/embed/ho-chi-minh?style=3&day=3&td=%23ffffff&ntd=%234f7ffa&mvb=%23e5eeff&mv=%23335fd1&mdk=%23e5eeff&htd=true"
-                    id="widget-hcm" width="100%" height="450px" scrolling="no" frameborder="0"
-                    allowtransparency="true" style="border:none;overflow:hidden;"></iframe>
-        </div>
-    </div>
-</main>
-<div class="container py-4">
-    <div class="row g-4">
-        <!-- Cuộc Họp Sắp Diễn Ra -->
-        <!--        <div class="col-md-6 mb-4">-->
-        <!--            <div class="card shadow-lg border-light rounded">-->
-        <!--                <div class="card-header bg-primary text-white">-->
-        <!--                    <h5 class="card-title">Upcoming Meeting</h5>-->
-        <!--                </div>-->
-        <!--                <div class="card-body">-->
-        <!--                    <div class="table-responsive">-->
-        <!--                        <table class="table table-striped table-bordered table-hover">-->
-        <!--                            <tbody id="upcoming-meetings">-->
-        <!--                            &lt;!&ndash; Dynamic content will be inserted here &ndash;&gt;-->
-        <!--                            </tbody>-->
-        <!--                        </table>-->
-        <!--                    </div>-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
-        <div class="col-12">
-            <div class="card shadow border-light rounded flex-fill">
-                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <button id="prev-month" class="btn btn-sm btn-light">&lt;</button>
-                    <h5 class="card-title mb-0" id="calendar-title">Meeting Schedule</h5>
-                    <button id="next-month" class="btn btn-sm btn-light">&gt;</button>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered text-center calendar-table mb-0">
-                            <thead class="table-light">
-                            <tr>
-                                <th>Mon</th>
-                                <th>Tue</th>
-                                <th>Wed</th>
-                                <th>Thu</th>
-                                <th>Fri</th>
-                                <th>Sat</th>
-                                <th>Sun</th>
-                            </tr>
-                            </thead>
-                            <tbody id="calendar-body"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal to show meeting details -->
-        <div class="modal fade" id="meetingModal" tabindex="-1" aria-labelledby="meetingModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-scrollable">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="meetingModalLabel">Meeting Details</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" id="meeting-details">
-                        <!-- Meeting info will go here -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-    </div>
-</div>
-
-<section class="overlay">
-    <div class="modal">
-        <h2 id="modal-title"></h2>
-        <p id="modal-message"></p>
-        <button class="close-btn">Đóng</button>
     </div>
 </section>
-<!-- Toast container -->
-<div class="toast-container" id="toastContainer"></div>
-<!-- Modal xem chi tiết thông báo -->
-<div class="modal fade" id="notificationDetailModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalTitle">Chi tiết thông báo</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <div class="d-flex align-items-center mb-3">
-                        <div class="notification-icon me-3" id="modalIcon">
-                            <i class="fas fa-bell"></i>
+
+<section class="ftco-counter img" id="section-counter">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 justify-content-center counter-wrap ftco-animate">
+                <div class="block-18 text-center py-4 bg-primary mb-4">
+                    <div class="text">
+                        <div class="icon d-flex justify-content-center align-items-center">
+                            <span class="flaticon-guest"></span>
                         </div>
-                        <h5 id="modalNotificationTitle" class="mb-0"></h5>
+                        <strong class="number" data-number="5500">0</strong>
+                        <span>Employee</span>
                     </div>
-                    <div class="alert alert-light border p-3">
-                        <p id="modalNotificationContent" class="mb-0"></p>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between text-muted">
-                    <small><i class="fas fa-user me-1"></i> Người gửi: <span id="modalSender"></span></small>
-                    <small><i class="far fa-clock me-1"></i> <span id="modalTime"></span></small>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary" id="markReadBtn">Đánh dấu đã đọc</button>
+            <div class="col-md-3 justify-content-center counter-wrap ftco-animate">
+                <div class="block-18 text-center py-4 bg-primary mb-4">
+                    <div class="text">
+                        <div class="icon d-flex justify-content-center align-items-center">
+                            <span class="flaticon-handshake"></span>
+                        </div>
+                        <strong class="number" data-number="50">0</strong>
+                        <span>Partner</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 justify-content-center counter-wrap ftco-animate">
+                <div class="block-18 text-center py-4 bg-primary mb-4">
+                    <div class="text">
+                        <div class="icon d-flex justify-content-center align-items-center">
+                            <span class="flaticon-chair"></span>
+                        </div>
+                        <strong class="number" data-number="240">0</strong>
+                        <span>Total number of seats Room</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 justify-content-center counter-wrap ftco-animate">
+                <div class="block-18 text-center py-4 bg-primary mb-4">
+                    <div class="text">
+                        <div class="icon d-flex justify-content-center align-items-center">
+                            <span class="flaticon-idea"></span>
+                        </div>
+                        <strong class="number" data-number="12">0</strong>
+                        <span>Rooms</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Notification sound -->
-<audio id="notificationSound" preload="auto">
-    <source src="https://assets.mixkit.co/sfx/preview/mixkit-software-interface-alert-217.mp3" type="audio/mpeg">
-</audio>
-<!-- Scripts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</section>
+
+<section class="ftco-section ftco-gallery">
+    <div class="container-fluid px-4">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-7 text-center heading-section ftco-animate">
+                <h2 class="mb-3">Meeting Room</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 ftco-animate">
+                <p class="room-label">Sky Room</p>
+                <a href="/images/1.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(/images/1.jpg);">
+                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
+                        <span class="icon-instagram"></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 ftco-animate">
+                <p class="room-label">Star Room</p>
+                <a href="/images/2.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(/images/2.jpg);">
+                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
+                        <span class="icon-instagram"></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 ftco-animate">
+                <p class="room-label">Admin Room</p>
+                <a href="/images/3.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(/images/3.jpg);">
+                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
+                        <span class="icon-instagram"></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 ftco-animate">
+                <p class="room-label">Ocean Room</p>
+                <a href="/images/4.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(/images/4.jpg);">
+                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
+                        <span class="icon-instagram"></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 ftco-animate">
+                <p class="room-label">Sun Room</p>
+                <a href="/images/5.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(/images/5.jpg);">
+                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
+                        <span class="icon-instagram"></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 ftco-animate">
+                <p class="room-label">Moon Room</p>
+                <a href="/images/6.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(/images/6.jpg);">
+                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
+                        <span class="icon-instagram"></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 ftco-animate">
+                <p class="room-label">Cloud Room</p>
+                <a href="/images/7.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(/images/7.jpg);">
+                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
+                        <span class="icon-instagram"></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 ftco-animate">
+                <p class="room-label">Galaxy Room</p>
+                <a href="/images/8.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(/images/8.jpg);">
+                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
+                        <span class="icon-instagram"></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 ftco-animate">
+                <p class="room-label">Wind Room</p>
+                <a href="/images/9.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(/images/9.jpg);">
+                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
+                        <span class="icon-instagram"></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 ftco-animate">
+                <p class="room-label">Rain Room</p>
+                <a href="/images/10.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(/images/10.jpg);">
+                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
+                        <span class="icon-instagram"></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 ftco-animate">
+                <p class="room-label">Fire Room</p>
+                <a href="/images/11.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(/images/11.jpg);">
+                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
+                        <span class="icon-instagram"></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3 ftco-animate">
+                <p class="room-label">Earth Room</p>
+                <a href="/images/12.jpg" class="gallery image-popup img d-flex align-items-center" style="background-image: url(/images/12.jpg);">
+                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
+                        <span class="icon-instagram"></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section testimony-section ftco-no-pt">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-7 text-center heading-section ftco-animate">
+                <h2 class="mb-3">Meeting Evaluation</h2>
+            </div>
+        </div>
+        <div class="row ftco-animate">
+            <div class="col-md-12">
+                <div class="carousel-testimony owl-carousel ftco-owl">
+                    <div class="item">
+                        <div class="testimony-wrap text-center py-4 pb-5">
+                            <div class="user-img mb-4" style="background-image: url(/images/person_1.jpg)">
+                            </div>
+                            <div class="text pt-4">
+                                <p class="mb-4">The meeting room is clean, fully equipped, and very convenient for work discussions.</p>
+                                <p class="name">ntdu</p>
+                                <span class="position">Employee</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap text-center py-4 pb-5">
+                            <div class="user-img mb-4" style="background-image: url(/images/person_2.jpg)">
+                            </div>
+                            <div class="text pt-4">
+                                <p class="mb-4">Good sound and lighting, quiet space help meetings run effectively.</p>
+                                <p class="name">pnminh</p>
+                                <span class="position">Employee</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap text-center py-4 pb-5">
+                            <div class="user-img mb-4" style="background-image: url(/images/person_3.jpg)">
+                            </div>
+                            <div class="text pt-4">
+                                <p class="mb-4">Projector and stable wifi available, great for group presentations.</p>
+                                <p class="name">pmhao</p>
+                                <span class="position">Supervisor</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap text-center py-4 pb-5">
+                            <div class="user-img mb-4" style="background-image: url(/images/person_1.jpg)">
+                            </div>
+                            <div class="text pt-4">
+                                <p class="mb-4">The meeting room has good air conditioning, creating a comfortable feeling throughout the meeting.</p>
+                                <p class="name">bkkhanh</p>
+                                <span class="position">Admin</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap text-center py-4 pb-5">
+                            <div class="user-img mb-4" style="background-image: url(/images/person_2.jpg)">
+                            </div>
+                            <div class="text pt-4">
+                                <p class="mb-4">Modern space, inspiring work and good idea exchange. Equipment meets all needs.</p>
+                                <p></p>
+                                <p class="name">nhtien1</p>
+                                <span class="position">Supervisor</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery-migrate-3.0.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.easing.1.3.js"></script>
+<script src="/js/jquery.waypoints.min.js"></script>
+<script src="/js/jquery.stellar.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/aos.js"></script>
+<script src="/js/jquery.animateNumber.min.js"></script>
+<script src="/js/scrollax.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+<script src="/js/google-map.js"></script>
+<script src="/js/main.js"></script>
 <script src="/js/notification.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    document.querySelectorAll('.nav-item').forEach(function(item) {
+        const link = item.querySelector('a');
+        if (link && link.getAttribute('href') === window.location.pathname) {
+            item.classList.add('active');
+        } else {
+            item.classList.remove('active');
+        }
+    });
     $(document).ready(function() {
         // Xử lý click chuông thông báo
         $('#notificationBell').on('click', function(e) {
@@ -1264,49 +1323,6 @@
             }
         });
     });
-    document.querySelectorAll('.nav-item').forEach(function(item) {
-        const link = item.querySelector('a');
-        if (link && link.getAttribute('href') === window.location.pathname) {
-            item.classList.add('active');
-        } else {
-            item.classList.remove('active');
-        }
-    });
-    document.addEventListener('DOMContentLoaded', function () {
-        const username = localStorage.getItem('Username');
-        const role = localStorage.getItem('Role');
-        // Toggle dropdown on click
-        userMenu.addEventListener('click', function (event) {
-            event.preventDefault(); // Ngừng sự kiện mặc định
-            userInfo.classList.toggle('show'); // Thêm hoặc bỏ class "show"
-        });
-
-        // Đảm bảo khi click ra ngoài thì dropdown sẽ đóng
-        document.addEventListener('click', function (event) {
-            if (!userInfo.contains(event.target)) {
-                userInfo.classList.remove('show');
-            }
-        });
-        if (username && role) {
-            document.getElementById('userInfo').style.display = 'block';
-            document.getElementById('loginBtn').style.display = 'none';
-            document.getElementById('dropdownUsername').textContent = username;
-            document.getElementById('dropdownRole').textContent = role.charAt(0) + role.slice(1).toLowerCase();
-
-            if (role === 'ADMIN') {
-                document.getElementById('meeting').style.display = 'none';
-            } else if (role === 'EMPLOYEE') {
-                document.getElementById('office').style.display = 'none';
-                document.getElementById('account').style.display = 'none';
-                document.getElementById('dpment').style.display = 'none';
-            } else if (role === 'SUPERVISOR') {
-                document.getElementById('office').style.display = 'none';
-                document.getElementById('meeting').style.display = 'none';
-                document.getElementById('dpment').style.display = 'none';
-            }
-        }
-    });
-
     function logout() {
         fetch('/api/v1/users/logout', {
             method: 'POST',
@@ -1327,408 +1343,6 @@
                 console.error("Logout error:", error);
                 alert("Lỗi trong quá trình đăng xuất.");
             });
-    }
-</script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const username = localStorage.getItem('Username');
-        const role = localStorage.getItem('Role');
-
-        if (username && role) {
-            const loginBtn = document.getElementById('loginBtn');
-            const userInfo = document.getElementById('userInfo');
-            const usernameDisplay = document.getElementById('usernameDisplay');
-
-            if (loginBtn && userInfo && usernameDisplay) {
-                loginBtn.style.display = 'none';
-                userInfo.style.display = 'block';
-                usernameDisplay.textContent = username;
-            }
-
-            if (role === 'EMPLOYEE') {
-                document.querySelectorAll('.dashboard-container a').forEach(link => {
-                    link.removeAttribute('href');
-                    link.style.cursor = 'default';
-                });
-            }
-        }
-        if (role === 'SUPERVISOR') {
-            const departmentBox = document.getElementById('departmentBox');
-            if (departmentBox) {
-                departmentBox.href = '#'; // tạm gỡ link chính
-                departmentBox.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    window.location.href = '/users';
-                });
-            }
-        }
-        fetch('/api/v1/departments')
-            .then(res => res.json())
-            .then(data => {
-                document.querySelector('#departmentBox .count').textContent = data.total || data.length || 0;
-            });
-
-        fetch('/api/v1/users')
-            .then(res => res.json())
-            .then(data => {
-                document.querySelector('#employeeBox .count').textContent = data.total || data.length || 0;
-            });
-
-        fetch('/api/v1/requests')
-            .then(response => response.json())
-            .then(data => {
-                const requests = data.data || [];
-
-                const Pending = requests.filter(r => r.requestStatus === 'PENDING').length;
-                const Approved = requests.filter(r => r.requestStatus === 'APPROVED').length;
-                const Rejected = requests.filter(r => r.requestStatus === 'REJECTED').length;
-                const total = requests.length;
-
-                // Tính phần trăm
-                const pendingPercent = total > 0 ? Math.round((Pending / total) * 100) : 0;
-                const rejectedPercent = total > 0 ? Math.round((Rejected / total) * 100) : 0;
-                const approvedPercent = total > 0 ? Math.round((Approved / total) * 100) : 0;
-
-                // Cập nhật số liệu trong legend
-                document.getElementById('pendingPercent').textContent = `${Pending} (${pendingPercent}%)`;
-                document.getElementById('rejectedPercent').textContent = `${Rejected} (${rejectedPercent}%)`;
-                document.getElementById('approvedPercent').textContent = `${Approved} (${approvedPercent}%)`;
-                document.getElementById('totalRequests').textContent = total;
-
-                // Tạo biểu đồ tròn
-                const ctx = document.getElementById('requestsChart').getContext('2d');
-                const chartData = total > 0 ? [Pending, Rejected, Approved] : [1]; // Default to 1 for empty data
-                const chartLabels = total > 0 ? ['Pending', 'Rejected', 'Approved'] : ['Total'];
-                const backgroundColors = total > 0 ? ['#ff8c00', '#d32f2f', '#388e3c'] : ['#0078d4']; // Blue for no data
-
-                new Chart(ctx, {
-                    type: 'pie',
-                    data: {
-                        labels: chartLabels,
-                        datasets: [{
-                            data: chartData,
-                            backgroundColor: backgroundColors,
-                            borderColor: ['#ffffff'],
-                            borderWidth: 2
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: true,
-                        plugins: {
-                            legend: {
-                                display: true
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function (context) {
-                                        const label = context.label || '';
-                                        const value = context.raw || 0;
-                                        const totalValue = context.dataset.data.reduce((a, b) => a + b, 0);
-                                        const percentage = totalValue > 0 ? Math.round((value / totalValue) * 100) : 100; // 100% for "No Data"
-                                        return `${label}: ${value} (${percentage}%)`;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
-            })
-            .catch(error => console.error('Error fetching data:', error));
-    });
-
-    async function fetchOngoingMeetings() {
-        const Username = localStorage.getItem('Username');
-        if (!Username) {
-            console.error('User is not logged in.');
-            return;
-        }
-
-        try {
-            const response = await fetch(`/api/v1/bookings/ongoing?username=${Username}`);
-            if (response.status === 404) {
-                console.error('API endpoint not found');
-                return;
-            }
-            const data = await response.json();
-
-            if (Array.isArray(data)) {
-                const ongoingMeetings = data.filter(booking => {
-                    const now = new Date();
-                    const startTime = new Date(booking.startTime);
-                    const endTime = new Date(booking.endTime);
-                    const isOngoing = startTime <= now && endTime >= now;
-                    const attendeesArray = booking.attendees
-                        ? booking.attendees.split(',').map(name => name.trim().toLowerCase())
-                        : [];
-                    const isAttendee = attendeesArray.includes(Username.toLowerCase());
-                    const isOrganizer = booking.username.toLowerCase() === Username.toLowerCase();
-                    return isOngoing && (isAttendee || isOrganizer);
-                });
-                displayMeetings(ongoingMeetings, 'ongoing');
-            } else {
-                console.error('Expected an array, got:', data);
-            }
-        } catch (error) {
-            console.error('Error fetching ongoing meetings:', error);
-        }
-    }
-
-    async function fetchUpcomingMeetings() {
-        const Username = localStorage.getItem('Username');
-        if (!Username) {
-            console.error('User is not logged in.');
-            return;
-        }
-
-        try {
-            const response = await fetch(`/api/v1/bookings/upcoming?username=${Username}`);
-            if (response.status === 404) {
-                console.error('API endpoint not found');
-                return;
-            }
-            const data = await response.json();
-
-            if (Array.isArray(data)) {
-                const upcomingMeetings = data.filter(booking => {
-                    const now = new Date();
-                    const startTime = new Date(booking.startTime);
-                    const isUpcoming = startTime > now;
-                    const attendeesArray = booking.attendees
-                        ? booking.attendees.split(',').map(name => name.trim().toLowerCase())
-                        : [];
-                    const isAttendee = attendeesArray.includes(Username.toLowerCase());
-                    const isOrganizer = booking.username.toLowerCase() === Username.toLowerCase();
-                    return isUpcoming && (isAttendee || isOrganizer);
-                });
-                displayMeetings(upcomingMeetings, 'upcoming');
-            } else {
-                console.error('Expected an array, got:', data);
-            }
-        } catch (error) {
-            console.error('Error fetching upcoming meetings:', error);
-        }
-    }
-
-    function displayMeetings(bookings, type) {
-        const tbody = document.getElementById(type === 'ongoing' ? 'ongoing-meetings' : 'upcoming-meetings');
-        if (!tbody) {
-            console.error('Table body not found for', type);
-            return;
-        }
-        tbody.innerHTML = '';
-
-        bookings.forEach(booking => {
-            const row = document.createElement('tr');
-            const startTime = new Date(booking.startTime);
-            const endTime = new Date(booking.endTime);
-            const startDisplay = startTime.toLocaleString();
-            const endDisplay = endTime.toLocaleString();
-
-            row.innerHTML = `
-            <td>${booking.roomId}</td>
-            <td>${booking.title}</td>
-            <td>${booking.attendees}</td>
-            <td>${startDisplay}</td>
-            <td>${endDisplay}</td>
-        `;
-            tbody.appendChild(row);
-        });
-
-        // Add empty rows if needed
-        const rowCount = tbody.rows.length;
-        const maxRows = 5;
-        for (let i = rowCount; i < maxRows; i++) {
-            const emptyRow = tbody.insertRow();
-            for (let j = 0; j < 5; j++) {
-                const cell = emptyRow.insertCell();
-                cell.innerHTML = "&nbsp;";
-            }
-        }
-    }
-
-    window.onload = () => {
-
-    };
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const currentDate = new Date();
-        let currentMonth = currentDate.getMonth() + 1;
-        let currentYear = currentDate.getFullYear();
-
-        updateCalendarTitle(currentMonth, currentYear);
-        fetchAndRenderCalendar(currentMonth, currentYear);
-
-        document.getElementById('prev-month').addEventListener('click', function() {
-            currentMonth--;
-            if (currentMonth < 1) {
-                currentMonth = 12;
-                currentYear--;
-            }
-            updateCalendarTitle(currentMonth, currentYear);
-            fetchAndRenderCalendar(currentMonth, currentYear);
-        });
-
-        document.getElementById('next-month').addEventListener('click', function() {
-            currentMonth++;
-            if (currentMonth > 12) {
-                currentMonth = 1;
-                currentYear++;
-            }
-            updateCalendarTitle(currentMonth, currentYear);
-            fetchAndRenderCalendar(currentMonth, currentYear);
-        });
-    });
-
-    function updateCalendarTitle(month, year) {
-        const monthNames = [
-            "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
-        ];
-        const calendarTitle = document.getElementById('calendar-title');
-        if (calendarTitle) {
-            calendarTitle.textContent = `Meeting Schedule ${monthNames[month - 1]} ${year}`;
-        }
-    }
-
-    async function fetchAndRenderCalendar(month, year) {
-        const Username = localStorage.getItem('Username');
-        const Role = localStorage.getItem('Role');
-
-        if (!Username) {
-            console.error('User is not logged in.');
-            return;
-        }
-
-        let apiUrl = '/api/v1/bookings/upcoming';
-        if (Role !== 'admin' && Role !== 'supervisor') {
-            apiUrl += `?username=${Username}`;
-        }
-
-        try {
-            const response = await fetch(apiUrl);
-            if (response.status === 404) {
-                console.error('API endpoint not found');
-                return;
-            }
-
-            const data = await response.json();
-
-            if (Array.isArray(data)) {
-                const upcomingMeetings = data.filter(booking => {
-                    const startTime = new Date(booking.startTime);
-                    return startTime.getMonth() + 1 === month && startTime.getFullYear() === year;
-                });
-
-                // Sắp xếp các cuộc họp theo thời gian bắt đầu
-                upcomingMeetings.sort((a, b) => {
-                    const startA = new Date(a.startTime);
-                    const startB = new Date(b.startTime);
-                    return startA - startB;  // Sắp xếp theo thời gian tăng dần
-                });
-
-                const calendarMeetings = upcomingMeetings.map(booking => {
-                    const startTime = new Date(booking.startTime);
-                    const endTime = new Date(booking.endTime);
-
-                    return {
-                        date: `${startTime.getFullYear()}-${(startTime.getMonth() + 1).toString().padStart(2, '0')}-${startTime.getDate().toString().padStart(2, '0')}`,
-                        time: `${startTime.getHours().toString().padStart(2, '0')}:${startTime.getMinutes().toString().padStart(2, '0')} - ${endTime.getHours().toString().padStart(2, '0')}:${endTime.getMinutes().toString().padStart(2, '0')}`,
-                        title: booking.title,
-                        location: `Room ${booking.roomId}`,
-                        description: booking.description || '',
-                        attendees: booking.attendees || 'N/A',
-                        organizer: booking.username || 'N/A'
-                    };
-                });
-
-                renderCalendar(month, year, calendarMeetings);
-            } else {
-                console.error('Expected an array, got:', data);
-            }
-        } catch (error) {
-            console.error('Error fetching upcoming meetings:', error);
-        }
-    }
-
-    function renderCalendar(month, year, meetings) {
-        const calendarBody = document.getElementById('calendar-body');
-        calendarBody.innerHTML = '';
-
-        const firstDay = new Date(year, month - 1, 1);
-        const lastDay = new Date(year, month, 0);
-        const daysInMonth = lastDay.getDate();
-        const startingDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
-
-        let date = 1;
-        let today = new Date();
-
-        for (let i = 0; i < 6; i++) {
-            if (date > daysInMonth) break;
-
-            const row = document.createElement('tr');
-
-            for (let j = 0; j < 7; j++) {
-                const cell = document.createElement('td');
-
-                if (i === 0 && j < startingDay) {
-                    cell.innerHTML = '&nbsp;';
-                } else if (date > daysInMonth) {
-                    cell.innerHTML = '&nbsp;';
-                } else {
-                    const dayNumber = document.createElement('div');
-                    dayNumber.className = 'day-number';
-                    dayNumber.textContent = date;
-                    cell.appendChild(dayNumber);
-
-                    if (date === today.getDate() && month === today.getMonth() + 1 && year === today.getFullYear()) {
-                        cell.classList.add('today');
-                    }
-
-                    const meetingDate = `${year}-${month.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`;
-                    const dayMeetings = meetings.filter(m => m.date === meetingDate);
-
-                    if (dayMeetings.length > 0) {
-                        cell.classList.add('has-meeting');
-
-                        const meetingInfo = document.createElement('div');
-                        meetingInfo.className = 'meeting-info';
-
-                        dayMeetings.forEach(meeting => {
-                            const meetingDiv = document.createElement('div');
-                            meetingDiv.innerHTML = `
-              <div class="meeting-time">${meeting.time}</div>
-              <div class="meeting-title">${meeting.title}</div>
-              <div class="meeting-location">${meeting.location}</div>
-            `;
-                            meetingInfo.appendChild(meetingDiv);
-                        });
-
-                        cell.appendChild(meetingInfo);
-
-                        cell.addEventListener('click', function () {
-                            const detailHTML = dayMeetings.map(m => `
-              <strong>Title:</strong> ${m.title}<br>
-              <strong>Time:</strong> ${m.time}<br>
-              <strong>Location:</strong> ${m.location}<br>
-              <strong>Organizer:</strong> ${m.organizer}<br>
-              <strong>Attendees:</strong> ${m.attendees}<br>
-              <strong>Description:</strong> ${m.description}<br>
-              <hr>
-            `).join('');
-                            document.getElementById('meeting-details').innerHTML = `<h5>Meetings on ${date}/${month}/${year}</h5><br>` + detailHTML;
-                            new bootstrap.Modal(document.getElementById('meetingModal')).show();
-                        });
-                    }
-
-                    date++;
-                }
-
-                row.appendChild(cell);
-            }
-
-            calendarBody.appendChild(row);
-        }
     }
 </script>
 </body>
