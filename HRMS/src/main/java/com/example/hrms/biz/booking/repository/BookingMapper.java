@@ -77,7 +77,7 @@ public interface BookingMapper {
     })
     List<Booking> selectAll();
     @Select("SELECT booking_id, username, room_id, title, attendees, content, start_time, end_time, status, booking_type, weekdays " +
-            "FROM bookings WHERE username = #{username} AND start_time <= #{now} AND end_time >= #{now}")
+            "FROM bookings WHERE username = #{username} AND start_time <= #{now} AND end_time >= #{now} OR attendees LIKE CONCAT('%', #{username}, '%')")
     @Results({
             @Result(property = "bookingId", column = "booking_id"),
             @Result(property = "username", column = "username"),
@@ -94,7 +94,7 @@ public interface BookingMapper {
     List<Booking> findOngoingBookingsByUsername(@Param("username") String username, @Param("now") LocalDateTime now);
 
     @Select("SELECT booking_id, username, room_id, title, attendees, content, start_time, end_time, status, booking_type, weekdays " +
-            "FROM bookings WHERE username = #{username} AND start_time > #{currentTime}")
+            "FROM bookings WHERE start_time > #{currentTime} AND (attendees LIKE CONCAT('%', #{username}, '%') OR username = #{username})")
     @Results({
             @Result(property = "bookingId", column = "booking_id"),
             @Result(property = "username", column = "username"),
@@ -108,5 +108,6 @@ public interface BookingMapper {
             @Result(property = "bookingType", column = "booking_type"),
             @Result(property = "weekdays", column = "weekdays")
     })
-    List<Booking> findUpcomingBookingsByUsername(@Param("username") String username, @Param("currentTime") LocalDateTime currentTime);
+    List<Booking> findUpcomingBookingsByAttendee(@Param("username") String username, @Param("currentTime") LocalDateTime currentTime);
+
 }

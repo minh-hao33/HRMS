@@ -38,8 +38,23 @@ public class BookingService {
 
     public List<BookingDTO.Resp> getOngoingBookings(String username) {
         LocalDateTime now = LocalDateTime.now();
+
+        // Get the list of ongoing bookings for the user (including bookings where they are creator)
         List<Booking> ongoingBookings = bookingMapper.findOngoingBookingsByUsername(username, now);
-        return ongoingBookings.stream().map(BookingDTO.Resp::toResponse).collect(Collectors.toList());
+
+        // Get the list of ongoing bookings where user is an attendee
+        List<Booking> attendeeOngoingBookings = bookingMapper.findOngoingBookingsByUsername(username, now);
+
+        // Combine both lists (booking where user is the creator and where they are an attendee)
+        ongoingBookings.addAll(attendeeOngoingBookings);
+
+        // Remove duplicates (if any)
+        Set<Booking> uniqueOngoingBookings = new HashSet<>(ongoingBookings);
+
+        // Convert to DTO response and return
+        return uniqueOngoingBookings.stream()
+                .map(BookingDTO.Resp::toResponse)
+                .collect(Collectors.toList());
     }
 
     // This method returns the upcoming bookings as BookingDTO.Resp
@@ -47,14 +62,24 @@ public class BookingService {
         // Get current time
         LocalDateTime now = LocalDateTime.now();
 
-        // Get the list of upcoming bookings
-        List<Booking> bookings = bookingMapper.findUpcomingBookingsByUsername(username, now);
+        // Get the list of upcoming bookings for the user (including bookings where they are creator)
+        List<Booking> bookings = bookingMapper.findUpcomingBookingsByAttendee(username, now);
 
-        // Convert the list of Booking entities to BookingDTO.Resp and return
-        return bookings.stream()
-                .map(BookingDTO.Resp::toResponse) // Assuming there's a static method `toResponse` in `BookingDTO.Resp` class
+        // Get the list of upcoming bookings where user is an attendee
+        List<Booking> attendeeBookings = bookingMapper.findUpcomingBookingsByAttendee(username, now);
+
+        // Combine both lists (booking where user is the creator and where they are an attendee)
+        bookings.addAll(attendeeBookings);
+
+        // Remove duplicates (if any)
+        Set<Booking> uniqueBookings = new HashSet<>(bookings);
+
+        // Convert to DTO response and return
+        return uniqueBookings.stream()
+                .map(BookingDTO.Resp::toResponse)
                 .collect(Collectors.toList());
     }
+
 
     public void insert(BookingDTO.Req req) {
         Booking booking = req.toBooking();
@@ -64,11 +89,11 @@ public class BookingService {
 
             // Send notification to meeting organizer
             sendBookingNotification(b, "New Meeting Created",
-                "You have created a new meeting: " + b.getTitle(), b.getUsername());
+                    "You have created a new meeting: " + b.getTitle(), b.getUsername());
 
             // Send notifications to all attendees if available
             notifyAttendees(b, "Meeting Invitation",
-                "You have been invited to a meeting: " + b.getTitle() + " by " + b.getUsername());
+                    "You have been invited to a meeting: " + b.getTitle() + " by " + b.getUsername());
         }
     }
 
@@ -79,11 +104,11 @@ public class BookingService {
 
             // Send notification about the update
             sendBookingNotification(b, "Meeting Updated",
-                "A meeting has been updated: " + b.getTitle(), b.getUsername());
+                    "A meeting has been updated: " + b.getTitle(), b.getUsername());
 
             // Notify attendees about the update
             notifyAttendees(b, "Meeting Update",
-                "A meeting you are attending has been updated: " + b.getTitle() + " by " + b.getUsername());
+                    "A meeting you are attending has been updated: " + b.getTitle() + " by " + b.getUsername());
         }
     }
 
@@ -95,14 +120,14 @@ public class BookingService {
         String fullContent = content + "\nTime: " + formattedStartTime + " to " + formattedEndTime;
 
         notificationService.createNotification(
-            com.example.hrms.biz.commoncode.notification.model.Notification.builder()
-                .title(title)
-                .content(fullContent)
-                .sender("system")
-                .receiver(receiver)
-                .type("meeting")
-                .createdAt(LocalDateTime.now())
-                .build()
+                com.example.hrms.biz.commoncode.notification.model.Notification.builder()
+                        .title(title)
+                        .content(fullContent)
+                        .sender("system")
+                        .receiver(receiver)
+                        .type("meeting")
+                        .createdAt(LocalDateTime.now())
+                        .build()
         );
     }
 
@@ -112,10 +137,10 @@ public class BookingService {
         }
 
         List<String> attendees = Arrays.asList(booking.getAttendees().split(","))
-            .stream()
-            .map(String::trim)
-            .filter(s -> !s.isEmpty() && !s.equals(booking.getUsername())) // Don't notify the creator twice
-            .collect(Collectors.toList());
+                .stream()
+                .map(String::trim)
+                .filter(s -> !s.isEmpty() && !s.equals(booking.getUsername())) // Don't notify the creator twice
+                .collect(Collectors.toList());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String formattedTime = booking.getStartTime().format(formatter);
@@ -123,10 +148,10 @@ public class BookingService {
 
         if (!attendees.isEmpty()) {
             notificationService.createBulkNotifications(
-                title,
-                fullContent,
-                booking.getUsername(),
-                attendees
+                    title,
+                    fullContent,
+                    booking.getUsername(),
+                    attendees
             );
         }
     }
@@ -137,10 +162,10 @@ public class BookingService {
         if (booking != null) {
             // Notify owner and attendees about cancellation
             sendBookingNotification(booking, "Meeting Cancelled",
-                "Your meeting has been cancelled: " + booking.getTitle(), booking.getUsername());
+                    "Your meeting has been cancelled: " + booking.getTitle(), booking.getUsername());
 
             notifyAttendees(booking, "Meeting Cancellation",
-                "A meeting you were attending has been cancelled: " + booking.getTitle() + " by " + booking.getUsername());
+                    "A meeting you were attending has been cancelled: " + booking.getTitle() + " by " + booking.getUsername());
         }
 
         bookingMapper.deleteBooking(bookingId);
