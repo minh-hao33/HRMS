@@ -1346,10 +1346,20 @@
             }
 
             if (role === 'EMPLOYEE') {
-                document.querySelectorAll('.dashboard-container a').forEach(link => {
-                    link.removeAttribute('href');
-                    link.style.cursor = 'default';
-                });
+                const departmentBox = document.getElementById('departmentBox');
+                const employeeBox = document.getElementById('employeeBox');
+                if (departmentBox) {
+                    departmentBox.style.display = 'none';
+                }
+                if (employeeBox) {
+                    employeeBox.style.display = 'none';
+                }
+
+                const chartContainer = document.querySelector('.chart-container');
+                if (chartContainer) {
+                    chartContainer.style.margin = '0';
+                    chartContainer.style.width = '100%';
+                    chartContainer.style.height = '98%';}
             }
         }
         if (role === 'SUPERVISOR') {

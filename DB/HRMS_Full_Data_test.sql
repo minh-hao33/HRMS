@@ -134,31 +134,34 @@ INSERT INTO Departments (department_name) VALUES
 ('Operations'),
 ('Research & Development');
 
--- Cập nhật lại danh sách Users với phân bổ đều phòng ban (department_id từ 1 đến 6)
 INSERT INTO Users (username, password, email, role_name, department_id, is_supervisor, status, employee_name) VALUES
+-- Abc@123456
 -- Admin
-('bkkhanh', '$2a$10$Cx7mPooZBiruz8YjaOkhTu1dlfMlHN9T5IFM8wnOp.KQTd5xzEL4q', 'bkkhanh@cmcglobal.vn', 'ADMIN', 1, TRUE, 'Active', 'Khac Khanh Bui'),
-('ntdu', '$2a$10$Cx7mPooZBiruz8YjaOkhTu1dlfMlHN9T5IFM8wnOp.KQTd5xzEL4q', 'ntdu@cmcglobal.vn', 'ADMIN', 2, FALSE, 'Active', 'Trung Du Nguyen'),
+('bkkhanh', '$2a$10$5fuISmVJAz5MIid4zBpu6OkeIhO4I0JY5zKr2Us1AuMVvXwR.MOs6', 'bkkhanh@cmcglobal.vn', 'ADMIN', 1, TRUE, 'Active', 'Khac Khanh Bui'),
+('ntdu', '$2a$10$5fuISmVJAz5MIid4zBpu6OkeIhO4I0JY5zKr2Us1AuMVvXwR.MOs6', 'ntdu@cmcglobal.vn', 'ADMIN', 2, FALSE, 'Active', 'Trung Du Nguyen'),
+
 -- Supervisors
-('nvhoang', '$2a$10$Cx7mPooZBiruz8YjaOkhTu1dlfMlHN9T5IFM8wnOp.KQTd5xzEL4q', 'nvhoang@cmcglobal.vn', 'SUPERVISOR', 3, TRUE, 'Active', 'Van Hoang Nguyen'),
-('pttung', '$2a$10$Cx7mPooZBiruz8YjaOkhTu1dlfMlHN9T5IFM8wnOp.KQTd5xzEL4q', 'pttung@cmcglobal.vn', 'SUPERVISOR', 4, TRUE, 'Active', 'Thanh Tung Pham'),
-('nhhoa', '$2a$10$Cx7mPooZBiruz8YjaOkhTu1dlfMlHN9T5IFM8wnOp.KQTd5xzEL4q', 'nhhoa@cmcglobal.vn', 'SUPERVISOR', 5, TRUE, 'Active', 'Hong Hoa Nguyen'),
-('nhtien1', '$2a$10$Cx7mPooZBiruz8YjaOkhTu1dlfMlHN9T5IFM8wnOp.KQTd5xzEL4q', 'nhtien1@cmcglobal.vn', 'SUPERVISOR', 6, FALSE, 'Active', 'Huu Tien Pham'),
-('lqbao', '$2a$10$Cx7mPooZBiruz8YjaOkhTu1dlfMlHN9T5IFM8wnOp.KQTd5xzEL4q', 'lqbao@cmcglobal.vn', 'SUPERVISOR', 1, TRUE, 'Active', 'Quoc Bao Le'),
-('tvlinh', '$2a$10$Cx7mPooZBiruz8YjaOkhTu1dlfMlHN9T5IFM8wnOp.KQTd5xzEL4q', 'tvlinh@cmcglobal.vn', 'SUPERVISOR', 2, TRUE, 'Active', 'Viet Linh Tran'),
-('pmhao', '$2a$10$Cx7mPooZBiruz8YjaOkhTu1dlfMlHN9T5IFM8wnOp.KQTd5xzEL4q', 'pmhao@cmcglobal.vn', 'SUPERVISOR', 2, TRUE, 'Active', 'Minh Hao Pham'),
+('nvhoang', '$2a$10$5fuISmVJAz5MIid4zBpu6OkeIhO4I0JY5zKr2Us1AuMVvXwR.MOs6', 'nvhoang@cmcglobal.vn', 'SUPERVISOR', 3, TRUE, 'Active', 'Van Hoang Nguyen'),
+('pttung', '$2a$10$5fuISmVJAz5MIid4zBpu6OkeIhO4I0JY5zKr2Us1AuMVvXwR.MOs6', 'pttung@cmcglobal.vn', 'SUPERVISOR', 4, TRUE, 'Active', 'Thanh Tung Pham'),
+('nhhoa', '$2a$10$5fuISmVJAz5MIid4zBpu6OkeIhO4I0JY5zKr2Us1AuMVvXwR.MOs6', 'nhhoa@cmcglobal.vn', 'SUPERVISOR', 5, TRUE, 'Active', 'Hong Hoa Nguyen'),
+('nhtien1', '$2a$10$5fuISmVJAz5MIid4zBpu6OkeIhO4I0JY5zKr2Us1AuMVvXwR.MOs6', 'nhtien1@cmcglobal.vn', 'SUPERVISOR', 6, FALSE, 'Active', 'Huu Tien Pham'),
+('lqbao', '$2a$10$5fuISmVJAz5MIid4zBpu6OkeIhO4I0JY5zKr2Us1AuMVvXwR.MOs6', 'lqbao@cmcglobal.vn', 'SUPERVISOR', 1, TRUE, 'Active', 'Quoc Bao Le'),
+('tvlinh', '$2a$10$5fuISmVJAz5MIid4zBpu6OkeIhO4I0JY5zKr2Us1AuMVvXwR.MOs6', 'tvlinh@cmcglobal.vn', 'SUPERVISOR', 2, TRUE, 'Active', 'Viet Linh Tran'),
+('pmhao', '$2a$10$5fuISmVJAz5MIid4zBpu6OkeIhO4I0JY5zKr2Us1AuMVvXwR.MOs6', 'pmhao@cmcglobal.vn', 'SUPERVISOR', 2, TRUE, 'Active', 'Minh Hao Pham'),
+
 -- Employees
-('lthanh', '$2a$10$Cx7mPooZBiruz8YjaOkhTu1dlfMlHN9T5IFM8wnOp.KQTd5xzEL4q', 'lthanh@cmcglobal.vn', 'EMPLOYEE', 3, FALSE, 'Active', 'Thanh Le'),
-('khanhvu', '$2a$10$Cx7mPooZBiruz8YjaOkhTu1dlfMlHN9T5IFM8wnOp.KQTd5xzEL4q', 'khanhvu@cmcglobal.vn', 'EMPLOYEE', 4, FALSE, 'Active', 'Khanh Vu'),
-('ndthao', '$2a$10$Cx7mPooZBiruz8YjaOkhTu1dlfMlHN9T5IFM8wnOp.KQTd5xzEL4q', 'ndthao@cmcglobal.vn', 'EMPLOYEE', 5, FALSE, 'Inactive', 'Dieu Thao Nguyen'),
-('hxminh', '$2a$10$Cx7mPooZBiruz8YjaOkhTu1dlfMlHN9T5IFM8wnOp.KQTd5xzEL4q', 'hxminh@cmcglobal.vn', 'EMPLOYEE', 6, FALSE, 'Active', 'Xuan Minh Hoang'),
-('tdnam', '$2a$10$Cx7mPooZBiruz8YjaOkhTu1dlfMlHN9T5IFM8wnOp.KQTd5xzEL4q', 'tdnam@cmcglobal.vn', 'EMPLOYEE', 1, TRUE, 'Active', 'Duc Nam Tran'),
-('pnminh', '$2a$10$Cx7mPooZBiruz8YjaOkhTu1dlfMlHN9T5IFM8wnOp.KQTd5xzEL4q', 'pnminh@cmcglobal.vn', 'EMPLOYEE', 3, FALSE, 'Inactive', 'Nhat Minh Pham'),
-('nvhung', '$2a$10$Cx7mPooZBiruz8YjaOkhTu1dlfMlHN9T5IFM8wnOp.KQTd5xzEL4q', 'nvhung@cmcglobal.vn', 'EMPLOYEE', 4, FALSE, 'Active', 'Van Hung Nguyen'),
-('ltnga', '$2a$10$Cx7mPooZBiruz8YjaOkhTu1dlfMlHN9T5IFM8wnOp.KQTd5xzEL4q', 'ltnga@cmcglobal.vn', 'EMPLOYEE', 5, FALSE, 'Active', 'Thanh Nga Le'),
-('htbao', '$2a$10$Cx7mPooZBiruz8YjaOkhTu1dlfMlHN9T5IFM8wnOp.KQTd5xzEL4q', 'htbao@cmcglobal.vn', 'EMPLOYEE', 6, FALSE, 'Active', 'Tien Bao Ho'),
-('dtquynh', '$2a$10$Cx7mPooZBiruz8YjaOkhTu1dlfMlHN9T5IFM8wnOp.KQTd5xzEL4q', 'dtquynh@cmcglobal.vn', 'EMPLOYEE', 1, FALSE, 'Inactive', 'Thu Quynh Do'),
-('dnphuc', '$2a$10$Cx7mPooZBiruz8YjaOkhTu1dlfMlHN9T5IFM8wnOp.KQTd5xzEL4q', 'dnphuc@cmcglobal.vn', 'EMPLOYEE', 2, FALSE, 'Active', 'Ngoc Phuc Do');
+('lthanh', '$2a$10$5fuISmVJAz5MIid4zBpu6OkeIhO4I0JY5zKr2Us1AuMVvXwR.MOs6', 'lthanh@cmcglobal.vn', 'EMPLOYEE', 3, FALSE, 'Active', 'Thanh Le'),
+('khanhvu', '$2a$10$5fuISmVJAz5MIid4zBpu6OkeIhO4I0JY5zKr2Us1AuMVvXwR.MOs6', 'khanhvu@cmcglobal.vn', 'EMPLOYEE', 4, FALSE, 'Active', 'Khanh Vu'),
+('ndthao', '$2a$10$5fuISmVJAz5MIid4zBpu6OkeIhO4I0JY5zKr2Us1AuMVvXwR.MOs6', 'ndthao@cmcglobal.vn', 'EMPLOYEE', 5, FALSE, 'Inactive', 'Dieu Thao Nguyen'),
+('hxminh', '$2a$10$5fuISmVJAz5MIid4zBpu6OkeIhO4I0JY5zKr2Us1AuMVvXwR.MOs6', 'hxminh@cmcglobal.vn', 'EMPLOYEE', 6, FALSE, 'Active', 'Xuan Minh Hoang'),
+('tdnam', '$2a$10$5fuISmVJAz5MIid4zBpu6OkeIhO4I0JY5zKr2Us1AuMVvXwR.MOs6', 'tdnam@cmcglobal.vn', 'EMPLOYEE', 1, TRUE, 'Active', 'Duc Nam Tran'),
+('pnminh', '$2a$10$5fuISmVJAz5MIid4zBpu6OkeIhO4I0JY5zKr2Us1AuMVvXwR.MOs6', 'pnminh@cmcglobal.vn', 'EMPLOYEE', 3, FALSE, 'Inactive', 'Nhat Minh Pham'),
+('nvhung', '$2a$10$5fuISmVJAz5MIid4zBpu6OkeIhO4I0JY5zKr2Us1AuMVvXwR.MOs6', 'nvhung@cmcglobal.vn', 'EMPLOYEE', 4, FALSE, 'Active', 'Van Hung Nguyen'),
+('ltnga', '$2a$10$5fuISmVJAz5MIid4zBpu6OkeIhO4I0JY5zKr2Us1AuMVvXwR.MOs6', 'ltnga@cmcglobal.vn', 'EMPLOYEE', 5, FALSE, 'Active', 'Thanh Nga Le'),
+('htbao', '$2a$10$5fuISmVJAz5MIid4zBpu6OkeIhO4I0JY5zKr2Us1AuMVvXwR.MOs6', 'htbao@cmcglobal.vn', 'EMPLOYEE', 6, FALSE, 'Active', 'Tien Bao Ho'),
+('dtquynh', '$2a$10$5fuISmVJAz5MIid4zBpu6OkeIhO4I0JY5zKr2Us1AuMVvXwR.MOs6', 'dtquynh@cmcglobal.vn', 'EMPLOYEE', 1, FALSE, 'Inactive', 'Thu Quynh Do'),
+('dnphuc', '$2a$10$5fuISmVJAz5MIid4zBpu6OkeIhO4I0JY5zKr2Us1AuMVvXwR.MOs6', 'dnphuc@cmcglobal.vn', 'EMPLOYEE', 2, FALSE, 'Active', 'Ngoc Phuc Do');
+
 
 -- Chèn dữ liệu vào bảng Requests
 INSERT INTO Requests (username, department_id, request_type, request_reason, request_status, approver_username, start_time, end_time, rejection_reason) VALUES
@@ -284,7 +287,6 @@ INSERT INTO Bookings (username, room_id, title, attendees, content, start_time, 
 -- Daily từ ngày 02/05/2025 đến 03/05/2025
 ('dnphuc', 2, 'Weekly Sync', 'lqbao, tvlinh', 'Họp tuần để thống nhất công việc', '2025-05-02 10:30:00', '2025-05-02 11:30:00', 'Confirmed', 'DAILY', NULL),
 ('dnphuc', 2, 'Weekly Sync', 'lqbao, tvlinh', 'Họp tuần để thống nhất công việc', '2025-05-03 10:30:00', '2025-05-03 11:30:00', 'Confirmed', 'DAILY', NULL),
-
 
 -- Weekly từ ngày 29/05/2025 đến ngày 07/05/2025 (We, Th, Fr) đặt ngày 30, 01, 02, 07
 ('lthanh', 3, 'Weekly IT Sync', 'lthanh, ntdu, khanhvu, bkkhanh', 'Đồng bộ công việc IT hằng tuần', '2025-04-30 10:00:00', '2025-04-30 11:00:00', 'Confirmed', 'WEEKLY', 'We,Th,Fr'),
