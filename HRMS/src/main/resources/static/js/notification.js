@@ -57,39 +57,42 @@ $(document).ready(function() {
     }
   }
 
-  // Xử lý khi nhận thông báo mới qua WebSocket
+  // Sửa lại hàm xử lý WebSocket để không gọi API quá nhiều
   function onNotificationReceived(payload) {
     const message = JSON.parse(payload.body);
     console.log('Received WebSocket message:', message);
 
-    switch(message.action) { // Sửa từ message.type thành message.action để phù hợp với WebSocketNotification
+    switch(message.action) {
       case 'NEW_NOTIFICATION':
-        // Ensure timeAgo is set for new notifications
-        if (message.data && message.data.createdAt && !message.data.timeAgo) {
-          message.data.timeAgo = formatTimeAgo(new Date(message.data.createdAt));
-        }
-        // Thêm thông báo mới vào đầu danh sách và cập nhật giao diện
+        // Thêm thông báo mới vào UI trực tiếp, không cần load lại
         handleNewNotification(message.data);
         break;
 
       case 'MARK_READ':
-        // Cập nhật trạng thái đã đọc cho thông báo
+        // Cập nhật UI trực tiếp, không gọi API
         markNotificationAsReadInUI(message.data);
         break;
 
       case 'MARK_ALL_READ':
-        // Cập nhật trạng thái đã đọc cho tất cả thông báo
+        // Cập nhật UI trực tiếp, không gọi API
         markAllNotificationsAsReadInUI();
         break;
 
       case 'DELETE_NOTIFICATION':
-        // Xóa thông báo khỏi giao diện
+        // Xóa khỏi UI trực tiếp, không gọi API
         removeNotificationFromUI(message.data);
         break;
     }
 
-    // Cập nhật số lượng thông báo chưa đọc
-    updateNotificationCount();
+    // Chỉ cập nhật số lượng thông báo, không load lại tất cả
+    updateNotificationCountFromUI();
+  }
+
+  // Hàm mới để cập nhật số lượng từ UI mà không gọi API
+  function updateNotificationCountFromUI() {
+    const unreadCount = $('.notification-item.unread').length;
+    $('#notificationCount').text(unreadCount);
+    $('#notificationCount').toggle(unreadCount > 0);
   }
 
   // Xử lý khi nhận thông báo mới
@@ -254,6 +257,52 @@ $(document).ready(function() {
       $(this).remove();
     });
   }
+  $(document).on('click', '.notification-item', function(e) {
+    e.preventDefault(); // Ngăn chặn chuyển hướng
+    e.stopPropagation(); // Ngăn sự kiện lan ra ngoài
+    
+    const notificationId = $(this).data('id');
+    
+    if (!notificationId) {
+      console.error('Missing notification ID');
+      return;
+    }
+  
+    // Đánh dấu thông báo đã đọc nếu chưa đọc
+    if ($(this).hasClass('unread')) {
+      $.ajax({
+        url: `${API_BASE_URL}/${notificationId}/read`,
+        method: 'PUT',
+        success: function() {
+          // Cập nhật UI
+          markNotificationAsReadInUI(notificationId);
+          updateNotificationCount();
+        },
+        error: function(error) {
+          console.error('Error marking notification as read:', error);
+          // Vẫn cập nhật UI
+          markNotificationAsReadInUI(notificationId);
+          updateNotificationCount();
+        }
+      });
+    }
+  
+    // Hiển thị chi tiết thông báo trong modal
+    openNotificationDetail(notificationId);
+  });
+
+  $('#viewAllNotifications').on('click', function(e) {
+    e.preventDefault(); // Ngăn chặn điều hướng mặc định
+    
+    // Đảm bảo người dùng ở lại trang hiện tại và chỉ xem toàn bộ danh sách
+    // Có thể thêm logic để hiển thị tất cả hoặc làm nổi bật tab thông báo
+    
+    // Nếu bạn muốn tải lại danh sách thông báo
+    loadNotifications();
+    
+    // Đóng dropdown nếu đang mở
+    $('.dropdown-menu.notification-dropdown').removeClass('show');
+  });
 
   // Phát âm thanh thông báo
   function playNotificationSound() {
@@ -326,38 +375,55 @@ $(document).ready(function() {
     }
   }
 
-  // Tải danh sách thông báo ban đầu
+  // Thêm biến để theo dõi request đang chạy
+  let notificationRequestInProgress = false;
+
+
   function loadNotifications() {
+    // Kiểm tra nếu đã có request đang chạy
+    if (notificationRequestInProgress) {
+      console.log('Notification request already in progress, skipping');
+      return;
+    }
+    
+    notificationRequestInProgress = true;
     $.ajax({
       url: `${API_BASE_URL}/user/${currentUser.username}`,
       method: 'GET',
       success: function(response) {
-        console.log('API response:', response); // Thêm log này để kiểm tra dữ liệu
-
-        // Kiểm tra cấu trúc phản hồi và trích xuất dữ liệu
+        console.log('API response:', response);
+        
         let notifications = [];
-        if (response && response.data) {
+        // Chuẩn hóa cách trích xuất dữ liệu
+        if (response && response.data && Array.isArray(response.data)) {
           notifications = response.data;
         } else if (Array.isArray(response)) {
-          // Trường hợp API trả về mảng trực tiếp
           notifications = response;
+        } else if (response && response.retData && Array.isArray(response.retData)) {
+          notifications = response.retData;
+        } else {
+          console.warn('Unexpected response format:', response);
+          notifications = [];
         }
-
-        // Xử lý timeAgo cho mỗi thông báo
+        
+        // Đảm bảo mỗi thông báo có timeAgo
         notifications.forEach(notification => {
           if (!notification.timeAgo && notification.createdAt) {
             notification.timeAgo = formatTimeAgo(new Date(notification.createdAt));
           }
         });
-
+        
         renderNotifications(notifications);
         updateNotificationCount();
         renderNotificationsTable(notifications);
       },
       error: function(error) {
         console.error('Error loading notifications:', error);
-        // Sử dụng dữ liệu mẫu nếu API thất bại
         loadSampleNotifications();
+      },
+      complete: function() {
+        // Đánh dấu là đã hoàn thành request
+        notificationRequestInProgress = false;
       }
     });
   }
@@ -447,46 +513,53 @@ $(document).ready(function() {
     }
   }
 
+  let lastNotificationUpdate = 0;
+  const UPDATE_INTERVAL = 30000; // 30 giây
+
   // Cập nhật số lượng thông báo chưa đọc
   function updateNotificationCount() {
+        // Kiểm tra xem đã đủ thời gian để cập nhật chưa
+        const now = Date.now();
+        if (now - lastNotificationUpdate < UPDATE_INTERVAL) {
+          return; // Chưa đến thời gian cập nhật, bỏ qua
+        }
+        
+        lastNotificationUpdate = now;
     $.ajax({
       url: `${API_BASE_URL}/user/${currentUser.username}/count`,
       method: 'GET',
       success: function(response) {
-        console.log('Count response:', response); // Thêm log này để kiểm tra dữ liệu
-
-        // Xử lý nhiều cấu trúc phản hồi có thể có
+        console.log('Count response:', response);
+        
+        // Chuẩn hóa cách xử lý response
         let count = 0;
-        if (response && response.data && typeof response.data.count !== 'undefined') {
-          // Cấu trúc ResultData với Map<String, Integer>
-          count = response.data.count;
-        } else if (response && typeof response.count !== 'undefined') {
-          // Cấu trúc trực tiếp với count
-          count = response.count;
+        if (response && response.data && response.data.count !== undefined) {
+          count = parseInt(response.data.count);
+        } else if (response && response.count !== undefined) {
+          count = parseInt(response.count);
         } else if (typeof response === 'number') {
-          // Trường hợp API trả về số trực tiếp
           count = response;
         }
-
+        
+        // Cập nhật UI
         $('#notificationCount').text(count);
-
-        if (count > 0) {
-          $('#notificationCount').show();
-        } else {
-          $('#notificationCount').hide();
+        $('#notificationCount').toggle(count > 0);
+        
+        // Debug: So sánh với số lượng thực sự hiển thị trên UI
+        const uiCount = $('.notification-item.unread').length;
+        console.log(`API count: ${count}, UI count: ${uiCount}`);
+        if (count !== uiCount) {
+          console.warn('Count mismatch between API and UI!');
+          // Làm mới danh sách thông báo để đồng bộ
+          loadNotifications();
         }
       },
       error: function(error) {
         console.error('Error updating notification count:', error);
-        // Có thể đếm thủ công từ danh sách thông báo đã tải
+        // Đếm từ UI
         const unreadCount = $('.notification-item.unread').length;
         $('#notificationCount').text(unreadCount);
-
-        if (unreadCount > 0) {
-          $('#notificationCount').show();
-        } else {
-          $('#notificationCount').hide();
-        }
+        $('#notificationCount').toggle(unreadCount > 0);
       }
     });
   }

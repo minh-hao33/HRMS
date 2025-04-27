@@ -1710,6 +1710,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <form id="bookingForm">
+                                <input type="hidden" id="roomId" name="roomId">
                                 <div class="form-group">
                                     <label for="title">Title:</label>
                                     <input type="text" class="form-control" id="title">
@@ -1950,6 +1951,89 @@
 <script src="/js/main.js"></script>
 <script src="/js/sessionTimeout.js"></script>
 <script>
+    function toggleRecurrence(type) {
+        // Reset tất cả các phần
+        $('#recurrenceOnly, #recurrenceDaily, #recurrenceWeekly').hide();
+        
+        // Hiển thị phần tương ứng
+        switch(type.toLowerCase()) {
+            case 'only':
+                $('#recurrenceOnly').show();
+                break;
+            case 'daily':
+                $('#recurrenceDaily').show();
+                break;
+            case 'weekly':
+                $('#recurrenceWeekly').show();
+                break;
+        }
+        
+        // Thêm CSS trực tiếp để đảm bảo các input luôn hiển thị trong weekly
+        if (type.toLowerCase() === 'weekly') {
+            $('head').append(`
+                <style id="recurrence-fix">
+                    #recurrenceWeekly .weekly-label,
+                    #recurrenceWeekly .range-label,
+                    #recurrenceWeekly input[type="datetime-local"],
+                    #createRecurrenceWeekly .weekly-label,
+                    #createRecurrenceWeekly .range-label,
+                    #createRecurrenceWeekly input[type="datetime-local"] {
+                        display: flex !important;
+                        visibility: visible !important;
+                    }
+                </style>
+            `);
+        } else {
+            $('#recurrence-fix').remove();
+        }
+    }
+
+    // Tương tự cho toggleCreateRecurrence
+    function toggleCreateRecurrence(type) {
+        $('#createRecurrenceOnly, #createRecurrenceDaily, #createRecurrenceWeekly').hide();
+        
+        switch(type.toLowerCase()) {
+            case 'only':
+                $('#createRecurrenceOnly').show();
+                break;
+            case 'daily':
+                $('#createRecurrenceDaily').show();
+                break;
+            case 'weekly':
+                $('#createRecurrenceWeekly').show();
+                // Force fix any visibility issues
+                $('#createRecurrenceWeekly input[type="datetime-local"]').css('display', 'block');
+                $('#createRecurrenceWeekly .weekly-label, #createRecurrenceWeekly .range-label').css('display', 'flex');
+                break;
+        }
+    }
+    
+
+    function refreshCalendarData() {
+        const selectedDate = $('#date-input').val();
+        console.log("Refreshing calendar data for date:", selectedDate);
+        
+        // Xóa cache dữ liệu hiện có
+        window.meetingData = [];
+        
+        // Gọi lại API để lấy dữ liệu mới nhất
+        if (typeof window.fetchMeetingRooms === 'function') {
+            // Đảm bảo DOM đã sẵn sàng
+            if (document.readyState === 'complete') {
+                window.fetchMeetingRooms({ date: selectedDate });
+            } else {
+                // Nếu DOM chưa sẵn sàng, chờ và thực hiện lại
+                setTimeout(function() {
+                    window.fetchMeetingRooms({ date: selectedDate });
+                }, 500);
+            }
+        } else {
+            console.error("Lỗi: Hàm fetchMeetingRooms chưa được định nghĩa.");
+            // Hiển thị thông báo lỗi
+            showNotification("Không thể làm mới dữ liệu. Vui lòng tải lại trang.", "error");
+        }
+    }
+
     document.querySelectorAll('.nav-item').forEach(function(item) {
         const link = item.querySelector('a');
         if (link && link.getAttribute('href') === window.location.pathname) {
@@ -2172,6 +2256,8 @@
 
         // Fetch meeting rooms from API
         function fetchMeetingRooms(filters = {}) {
+            // Thêm dòng này ở đoạn mã nơi hàm fetchMeetingRooms được định nghĩa
+            window.fetchMeetingRooms = fetchMeetingRooms;
             // Show loading indicator if needed
             // $('.loading-indicator').show();
 
@@ -2498,7 +2584,7 @@
                 } else if (durationValue.includes("'")) {
                     // Format: "15'" or "30'"
                     durationMinutes = parseInt(durationValue.replace("'", ""));
-                } else {
+        } else {
                     // Direct number
                     durationMinutes = parseInt(durationValue);
                 }
@@ -2568,7 +2654,7 @@
                         durationText = `${durationMinutes}'`;
                     } else if (durationMinutes % 60 === 0) {
                         durationText = `${durationMinutes / 60}h`;
-                    } else {
+        } else {
                         const hours = Math.floor(durationMinutes / 60);
                         const mins = durationMinutes % 60;
                         durationText = `${hours}h ${mins}'`;
@@ -2673,14 +2759,14 @@
                     const bookingId = $('#bookingForm').data('booking-id');
                     if (bookingId) {
                         openDeletePopup(bookingId);
-                    } else {
+        } else {
                         showNotification("Cannot identify booking to delete", 'error');
-                    }
-                });
+        }
+    });
             }
         }
 
-        $(document).ready(function() {
+    $(document).ready(function() {
             enhanceBookingModal();
         });
 
@@ -3084,7 +3170,7 @@
                         const startTimeObj = new Date(meeting.startTime);
                         hours = startTimeObj.getHours();
                         minutes = startTimeObj.getMinutes();
-                    } else {
+            } else {
                         // If startTime is string format (e.g.: "09:30")
                         [hours, minutes] = meeting.startTime.split(':').map(Number);
                     }
@@ -3258,7 +3344,8 @@
                 console.log("Data attributes:", {
                     room: roomIdentifier,
                     startTime: startTime,
-                    bookingId: bookingId
+                    bookingId: bookingId,
+                    roomId: roomId
                 });
                 // Find the meeting in our data array
                 const meeting = meetingData.find(m =>
@@ -3281,6 +3368,32 @@
                 }
 
                 console.log("Setting booking ID:", finalBookingId);
+
+                // Use a hidden input for roomId
+                if ($('#roomId').length === 0) {
+                    $('#bookingForm').append(`<input type="hidden" id="roomId" name="roomId">`);
+                }
+
+                // Set roomId value - Ensure we have a valid roomId
+                let roomIdValue1 = roomId || meeting.roomId;
+                if (!roomIdValue1 && roomIdentifier) {
+                    // Try to extract from roomIdentifier (format: "room-X")
+                    const match = roomIdentifier.match(/room-(\d+)/);
+                    if (match && match[1]) {
+                        roomIdValue1 = parseInt(match[1], 10);
+                    }
+                }
+                // Default to 1 if still no valid roomId
+                roomIdValue1 = roomIdValue1 || 1;
+
+                // Actually set the value
+                $('#roomId').val(roomIdValue1);
+                
+                console.log("Final values for form:", {
+                    bookingId: finalBookingId,
+                    roomId: roomIdValue1
+                });
+
                 // Kiểm tra nếu thời gian trong quá khứ
                 const now = new Date();
                 const meetingStartTime = meeting.startDateTime || new Date(meeting.date + 'T' + meeting.startTime);
@@ -3748,6 +3861,11 @@
         }
 
         if (!bookingId) {
+            console.log("Deleting booking ID:", bookingId);
+        showNotification("Cannot identify booking to delete", 'error');
+        return;
+        }
+        if (!bookingId) {
             // One more attempt - try to find it in the current meeting data
             const roomId = $('#roomId').val();
             const title = $('#title').val();
@@ -3762,84 +3880,116 @@
             }
         }
 
-        if (!bookingId) {
-            console.error('Cannot identify booking to delete');
-            showNotification("Cannot identify booking to delete. Please refresh the page and try again.", 'error');
-            return;
-        }
-
-        console.log("Deleting booking ID:", bookingId);
-
         // Hide the edit form modal if it's open
         $('#bookingModal').modal('hide');
 
-        // Show the delete confirmation popup
-        const deleteModal = $(`
-        <div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header modal-header-custom">
-                        <h5 class="modal-title modal-title-custom">Confirm Deletion</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body modal-body-custom">
-                        <p>Are you sure you want to delete this booking? This action cannot be undone.</p>
-                    </div>
-                    <div class="modal-footer modal-footer-custom">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+        // Tạo modal xác nhận xóa hiện đại
+        const deleteModalHtml = `
+            <div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-danger text-white py-2">
+                            <h5 class="modal-title">
+                                <i class="fas fa-trash-alt me-2"></i> Delete Meeting
+                            </h5>
+                            <button type="button" class="btn-close bg-white" data-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-center p-3">
+                            <div class="my-3">
+                                <i class="fas fa-exclamation-triangle text-warning fa-3x mb-3"></i>
+                                <h5 class="mb-2">Are you sure?</h5>
+                                <p class="text-muted small mb-0">This action will permanently delete the meeting. This cannot be undone.</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-center py-2">
+                            <button type="button" class="btn btn-sm btn-secondary px-3" data-dismiss="modal">
+                                Cancel
+                            </button>
+                            <button type="button" class="btn btn-sm btn-danger px-3" id="confirmDeleteBtn">
+                                Delete
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    `);
+            `;
 
         // Add to document
-        $('body').append(deleteModal);
+        $('body').append(deleteModalHtml);
+        // Thêm CSS cho modal
+        const deleteModalCss = `
+            <style>
+                #deleteConfirmModal .modal-sm {
+                    max-width: 320px;
+                }
+                
+                #deleteConfirmModal .modal-title {
+                    font-size: 16px;
+                    margin-bottom: 0;
+                }
+                
+                #deleteConfirmModal .btn-close {
+                    padding: 0.25rem;
+                    font-size: 12px;
+                }
+                
+                #deleteConfirmModal .fas {
+                    display: block;
+                    margin: 0 auto 10px;
+                }
+                
+                #deleteConfirmModal .modal-footer {
+                    border-top: 1px solid #eee;
+                    padding-top: 8px;
+                    padding-bottom: 8px;
+                }
+                
+                #deleteConfirmModal .btn {
+                    font-size: 0.9rem;
+                }
+            </style>
+        `;
+        
+        $('head').append(deleteModalCss);
 
         // Show modal
         $('#deleteConfirmModal').modal('show');
-
+        // Ẩn modal phía sau nếu đang hiển thị
+        $('#bookingModal').modal('hide');
         // Handle delete confirmation
+         // Xử lý sự kiện xác nhận xóa
         $('#confirmDeleteBtn').on('click', function() {
-            // Close the modal
+            // Ẩn modal xác nhận
             $('#deleteConfirmModal').modal('hide');
-
-            // Show loading indicator
-            showNotification("Deleting booking...", 'info');
-
-            // Make API call to delete
+            
+            // Hiển thị thông báo đang xóa
+            showNotification("Deleting meeting...", 'info');
+            
+            // Gọi API xóa booking
             $.ajax({
                 url: `/api/v1/bookings/${bookingId}`,
                 type: 'DELETE',
                 success: function(response) {
-                    showNotification("Booking deleted successfully", 'success');
-
-                    // Update the calendar without full page reload
-                    const selectedDate = $('#date-input').val();
-                    fetchMeetingRooms({ date: selectedDate });
+                    showNotification("Meeting deleted successfully", 'success');
+                    // Đảm bảo reload trang tại ngày hiện đang chọn
+                    const currentDate = $('#date-input').val();
+                    setTimeout(function() {
+                        fetchMeetingRooms({ date: currentDate });
+                    }, 300);
                 },
                 error: function(xhr) {
-                    console.error('Error deleting booking:', xhr.responseText);
-                    showNotification(`Failed to delete booking: ${xhr.responseJSON?.retMsg || xhr.statusText}`, 'error');
-                },
-                complete: function() {
-                    // Remove the modal from DOM
-                    setTimeout(() => {
-                        $('#deleteConfirmModal').remove();
-                    }, 500);
+                    console.error('Error deleting booking:', xhr);
+                    showNotification(`Failed to delete meeting: ${xhr.responseJSON?.retMsg || xhr.statusText}`, 'error');
                 }
             });
         });
-
-        // Remove modal when hidden
+        
+        // Xóa modal khỏi DOM khi ẩn
         $('#deleteConfirmModal').on('hidden.bs.modal', function() {
             $(this).remove();
         });
-    }
-
+}
+    let originalBookingData = null;
     function openEditForm(bookingId) {
         fetchBookingDetails(bookingId, true); // Mở form chỉnh sửa
     }
@@ -3848,8 +3998,9 @@
         jQuery.ajax({
             url: `/api/v1/bookings/${bookingId}`, // Updated URL to use the REST API
             type: 'GET',
-            success: function(response) {
+                        success: function(response) {
                 const booking = response;
+                originalBookingData = {...booking};
                 $('#bookingForm').data('booking-id', booking.bookingId); // Gán ID vào form
                 // Gán giá trị vào input
                 $('#title').val(booking.title);
@@ -3865,14 +4016,15 @@
                 $('#dateEndWeekly').val(booking.endTime);
                 $('#username').val(booking.username); // Ensure username is populated
 
-                // Set the roomId value correctly, ensuring it's a number
-                if (booking.roomId) {
+                // Xử lý chính xác roomId
+                if (booking.roomId !== undefined && booking.roomId !== null) {
                     $('#roomId').val(booking.roomId);
+                    console.log('Setting roomId to:', booking.roomId);
                 } else {
-                    // If no roomId, use default (1 for Sky Room)
+                    // Mặc định nếu không có roomId
                     $('#roomId').val(1);
+                    console.log('No roomId found, using default: 1');
                 }
-                console.log('Setting roomId to:', booking.roomId || 1);
 
                 // Cập nhật radio button Link MS Teams
                 $('#linkYes').prop('checked', booking.linkMS === "yes");
@@ -3902,9 +4054,9 @@
             error: function(xhr, textStatus, errorThrown) {
                 console.error('Lỗi lấy dữ liệu cuộc họp:', xhr.status, textStatus, errorThrown);
                 showNotification(`Failed to fetch booking details: ${xhr.status} ${textStatus}`, false);
-            }
-        });
-    }
+                }
+            });
+        }
 
     let initialFormData = {};
 
@@ -3935,34 +4087,37 @@
         const editButton = document.getElementById('editButton');
         const isEditing = editButton.textContent === 'Edit';
 
-        // Nếu đang ở chế độ xem và chuyển sang chế độ chỉnh sửa
         if (isEditing) {
-            // Bật chế độ chỉnh sửa cho tất cả các trường (trừ username)
+            // Kích hoạt tất cả các trường để chỉnh sửa (ngoại trừ username)
             $('#bookingForm input:not(#username), #bookingForm textarea').prop('readonly', false);
+            $('#bookingForm input:not(#username), #bookingForm textarea').prop('disabled', false);
 
-            // Bật các nút radio và checkbox (trừ các checkbox weekday nếu cần)
-            $('#bookingForm input[type="radio"]').prop('disabled', false);
+            // Kích hoạt các nút radio và checkbox
+            $('#bookingForm input[type="radio"], #bookingForm input[type="checkbox"]').prop('disabled', false);
 
+            // Kích hoạt trình soạn thảo TinyMCE
+            if (tinymce && tinymce.get('content')) {
+                // Phiên bản mới của TinyMCE sử dụng hai phương thức này
+                tinymce.get('content').getBody().contentEditable = true;
+                tinymce.get('content').getDoc().designMode = 'on';
+            }
 
-            // Đổi nhãn nút thành "Save"
             editButton.textContent = 'Save';
-
-            // Hiển thị thông báo
             showNotification("Editing mode enabled", 'info');
-        }
-        // Nếu đang ở chế độ chỉnh sửa và lưu thay đổi
-        else {
-            // Lưu các thay đổi ở đây (có thể gọi API để cập nhật dữ liệu)
+        } else {
             saveBookingChanges();
 
-            // Đặt lại tất cả các trường thành readonly
+            // Sau khi lưu, vô hiệu hóa tất cả các trường
             $('#bookingForm input, #bookingForm textarea').prop('readonly', true);
-
-            // Vô hiệu hóa các nút radio và checkbox
             $('#bookingForm input[type="radio"], #bookingForm input[type="checkbox"]').prop('disabled', true);
 
+            // Vô hiệu hóa trình soạn thảo TinyMCE
+            if (tinymce && tinymce.get('content')) {
+                // Phiên bản mới của TinyMCE sử dụng hai phương thức này
+                tinymce.get('content').getBody().contentEditable = false;
+                tinymce.get('content').getDoc().designMode = 'off';
+            }
 
-            // Đổi nhãn nút thành "Edit"
             editButton.textContent = 'Edit';
         }
     }
@@ -3976,20 +4131,39 @@
                 return;
             }
 
-            // Collect form data
-            const bookingType = $('input[name="recurrence"]:checked').attr('id').toUpperCase();
+            // Get roomId from hidden input
+            const roomId = parseInt($('#roomId').val());
+            if (isNaN(roomId) || roomId <= 0) {
+                console.error("Invalid roomId detected:", $('#roomId').val());
+                // Default to room 1 if invalid
+                roomId = 1;
+            }
 
-            // Base booking data
+            console.log("Preparing to update booking with ID:", bookingId, "in room:", roomId);
+
+            // Lấy loại booking mới
+            const newBookingType = $('input[name="recurrence"]:checked').attr('id').toUpperCase();
+
+            // Dữ liệu cập nhật
             const updatedData = {
                 bookingId: bookingId,
                 title: $('#title').val().trim(),
                 attendees: $('#attendees').val().trim(),
                 content: tinymce && tinymce.get('content') ? tinymce.get('content').getContent() : $('#content').val().trim(),
                 linkMS: $('#linkYes').prop('checked') ? 'yes' : 'no',
-                bookingType: bookingType,
+                bookingType: newBookingType,
                 username: $('#username').val().trim(),
-                roomId: parseInt($('#roomId').val()) || 1
+                roomId: roomId
             };
+
+            // Kiểm tra loại booking có thay đổi không
+            const hasBookingTypeChanged = originalBookingData && originalBookingData.bookingType !== newBookingType;
+
+            if (hasBookingTypeChanged) {
+                if (!confirm("Changing booking type may affect recurring meetings. Are you sure?")) {
+                    return;
+                }
+            }
 
             // Validate required fields
             if (!updatedData.title) {
@@ -3998,8 +4172,9 @@
             }
 
             // Format dates based on booking type
+            // Format dates based on booking type
             try {
-                if (bookingType === 'ONLY') {
+                if (newBookingType === 'ONLY') {
                     const startDateTime = new Date($('#dateOnly').val());
                     const timeStr = $('#timeOnly').val();
 
@@ -4009,37 +4184,19 @@
                     const endDateTime = new Date(startDateTime);
                     endDateTime.setHours(parseInt(endHours), parseInt(endMinutes), 0, 0);
 
-                    if (isNaN(startDateTime.getTime()) || isNaN(endDateTime.getTime()))
-                        throw new Error("Invalid date/time format");
-
-                    if (endDateTime <= startDateTime)
-                        throw new Error("End time must be after start time");
-
                     updatedData.startTime = formatLocalDateTime(startDateTime);
                     updatedData.endTime = formatLocalDateTime(endDateTime);
                 }
-                else if (bookingType === 'DAILY') {
+                else if (newBookingType === 'DAILY') {
                     const startDateTime = new Date($('#dateStartDaily').val());
                     const endDateTime = new Date($('#dateEndDaily').val());
 
-                    if (!startDateTime || !endDateTime) throw new Error("Missing start or end date/time");
-                    if (isNaN(startDateTime.getTime()) || isNaN(endDateTime.getTime()))
-                        throw new Error("Invalid date/time format");
-                    if (endDateTime <= startDateTime)
-                        throw new Error("End date/time must be after start date/time");
-
                     updatedData.startTime = formatLocalDateTime(startDateTime);
                     updatedData.endTime = formatLocalDateTime(endDateTime);
                 }
-                else if (bookingType === 'WEEKLY') {
+                else if (newBookingType === 'WEEKLY') {
                     const startDateTime = new Date($('#dateStartWeekly').val());
                     const endDateTime = new Date($('#dateEndWeekly').val());
-
-                    if (!startDateTime || !endDateTime) throw new Error("Missing start or end date/time");
-                    if (isNaN(startDateTime.getTime()) || isNaN(endDateTime.getTime()))
-                        throw new Error("Invalid date/time format");
-                    if (endDateTime <= startDateTime)
-                        throw new Error("End date/time must be after start date/time");
 
                     updatedData.startTime = formatLocalDateTime(startDateTime);
                     updatedData.endTime = formatLocalDateTime(endDateTime);
@@ -4052,7 +4209,6 @@
                     if ($('#th').prop('checked')) weekdays.push('Th');
                     if ($('#fr').prop('checked')) weekdays.push('Fr');
 
-                    if (weekdays.length === 0) throw new Error("Please select at least one weekday");
                     updatedData.weekdays = weekdays.join(',');
                 }
             } catch (error) {
@@ -4060,8 +4216,7 @@
                 return;
             }
 
-            // Show loading indicator
-            showNotification("Saving changes...", 'info');
+            console.log("Data being sent to update booking:", updatedData);
 
             // Make the API call
             $.ajax({
@@ -4070,15 +4225,21 @@
                 contentType: 'application/json',
                 data: JSON.stringify(updatedData),
                 success: function(response) {
+                    console.log("Update success:", response);
                     showNotification("Changes saved successfully", 'success');
-                    // Update the calendar view
-                    setTimeout(() => {
-                        fetchMeetingRooms({ date: $('#date-input').val() });
-                        $('#bookingModal').modal('hide');
-                    }, 1000);
+                    $('#bookingModal').modal('hide');
+                    
+                    // Refresh sau khi đóng modal
+                    setTimeout(function() {
+                        refreshCalendarData();
+                    }, 300);
                 },
                 error: function(xhr) {
                     console.error("Error updating booking:", xhr);
+                    // Log more detailed error information
+                    console.error("Request data:", updatedData);
+                    console.error("Error response:", xhr.responseText);
+                    
                     showNotification(`Failed to save changes: ${xhr.responseJSON?.retMsg || xhr.status + ' ' + xhr.statusText}`, 'error');
                 }
             });
@@ -4089,6 +4250,8 @@
 
             $('#bookingModal').on('hidden.bs.modal', function (event) {
                 resetFormData();
+                
+                // Đặt lại tất cả các phần tử biểu mẫu về trạng thái vô hiệu hóa mặc định
                 const formElements = document.querySelectorAll('#bookingForm input, #bookingForm textarea');
                 formElements.forEach(element => {
                     if (element.type !== 'radio' && element.type !== 'checkbox') {
@@ -4096,22 +4259,11 @@
                     }
                     element.disabled = true;
                 });
+                
+                // Đặt lại nút chỉnh sửa
                 document.getElementById('editButton').textContent = 'Edit';
             });
         });
-
-        function toggleRecurrence(type) {
-            document.getElementById('recurrenceOnly').style.display = 'none';
-            document.getElementById('recurrenceDaily').style.display = 'none';
-            document.getElementById('recurrenceWeekly').style.display = 'none';
-            if (type === 'only') {
-                document.getElementById('recurrenceOnly').style.display = 'block';
-            } else if (type === 'daily') {
-                document.getElementById('recurrenceDaily').style.display = 'block';
-            } else if (type === 'weekly') {
-                document.getElementById('recurrenceWeekly').style.display = 'block';
-            }
-        }
 
         tinymce.init({
             selector: '#content',
@@ -4142,13 +4294,6 @@
             // Hiển thị modal form tạo booking
             $('#createBookingModal').modal('show');
             $('#createBookingModalLabel').text('Create Booking');
-        }
-
-        function toggleCreateRecurrence(type) {
-            // Điều chỉnh hiển thị các phần của recurrence dựa trên lựa chọn
-            document.getElementById('createRecurrenceOnly').style.display = type === 'only' ? 'block' : 'none';
-            document.getElementById('createRecurrenceDaily').style.display = type === 'daily' ? 'block' : 'none';
-            document.getElementById('createRecurrenceWeekly').style.display = type === 'weekly' ? 'block' : 'none';
         }
 
         // 8. Enhanced booking creation function with better validation
@@ -4186,11 +4331,11 @@
                 const match = roomIdValue.match(/room-(\d+)/);
                 if (match && match[1]) {
                     bookingData.roomId = parseInt(match[1], 10);
-                } else {
+                    } else {
                     // Default to Sky Room (ID 1)
                     bookingData.roomId = 1;
-                }
-            } else {
+                    }
+                } else {
                 bookingData.roomId = 1; // Default to Sky Room ID if no room info found
             }
 
@@ -4290,13 +4435,38 @@
                 success: function(response) {
                     showNotification("Meeting created successfully!", 'success');
                     $('#createBookingModal').modal('hide');
-
-                    // Update the calendar view instead of reloading
-                    setTimeout(() => {
-                        fetchMeetingRooms({ date: $('#date-input').val() });
-                    }, 1000);
+                    // Cập nhật hiển thị với ngày đã chọn từ form, không phụ thuộc vào API
+                    let selectedDate;
+                    
+                    if (selectedType === 'createOnly') {
+                        const dateInput = $('#createDateOnly').val();
+                        if (dateInput) {
+                            selectedDate = dateInput.split('T')[0]; // Lấy phần yyyy-MM-dd
+                        }
+                    } else if (selectedType === 'createDaily') {
+                        const dateInput = $('#createDateStartDaily').val();
+                        if (dateInput) {
+                            selectedDate = dateInput.split('T')[0];
+                        }
+                    } else if (selectedType === 'createWeekly') {
+                        const dateInput = $('#createDateStartWeekly').val();
+                        if (dateInput) {
+                            selectedDate = dateInput.split('T')[0];
+                        }
+                    }
+                    
+                    if (selectedDate) {
+                        console.log("Setting calendar date to:", selectedDate);
+                        // Set form date
+                        $('#date-input').val(selectedDate);
+                        // Fetch data with this date
+                        fetchMeetingRooms({ date: selectedDate });
+            } else {
+                        // Fallback to refresh with current date
+                        refreshCalendarData();
+                    }
                 },
-                error: function(xhr) {
+                            error: function(xhr) {
                     if (xhr.status === 400 && xhr.responseJSON && xhr.responseJSON.retMsg) {
                         showNotification(`Failed to create booking: ${xhr.responseJSON.retMsg}`, 'error');
                     } else if (xhr.status === 409 && xhr.responseJSON && xhr.responseJSON.retMsg) {
