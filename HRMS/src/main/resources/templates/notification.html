@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HRMS - Hệ thống quản lý nhân sự</title>
+  <title>HRMS - Chi tiết thông báo</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <!-- Các thẻ khác... -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
   <style>
@@ -43,388 +42,162 @@
       color: var(--primary-color) !important;
     }
 
-    /* Notification Bell */
-    .notification-bell {
-      position: relative;
-      padding: 8px 10px;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: background-color var(--animation-time);
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .notification-bell:hover {
-      background-color: rgba(0,0,0,0.05);
-    }
-
-    .notification-bell i {
-      font-size: 1.3rem;
-      color: #555;
-    }
-
-    /* Badge styling */
-    .notification-badge {
-      position: absolute;
-      top: 0;
-      right: 0;
-      min-width: 18px;
-      height: 18px;
+    /* Notification detail card */
+    .notification-detail-card {
+      background-color: #fff;
       border-radius: 10px;
-      background-color: var(--danger-color);
-      color: white;
-      font-size: 10px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 5px;
-      border: 2px solid white;
-      transform: translate(25%, -25%);
-      z-index: 1;
-    }
-
-    /* Bell animation */
-    @keyframes bell-shake {
-      0% { transform: rotate(0); }
-      10% { transform: rotate(10deg); }
-      20% { transform: rotate(-10deg); }
-      30% { transform: rotate(6deg); }
-      40% { transform: rotate(-6deg); }
-      50% { transform: rotate(3deg); }
-      60% { transform: rotate(-3deg); }
-      70% { transform: rotate(1deg); }
-      80% { transform: rotate(-1deg); }
-      90% { transform: rotate(0); }
-      100% { transform: rotate(0); }
-    }
-
-    .notification-bell.shake i {
-      animation: bell-shake 1s;
-    }
-
-    /* Dropdown styling */
-    .notification-dropdown {
-      width: 380px;
-      max-height: 500px;
-      padding: 0;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
       overflow: hidden;
-      border-radius: 8px;
-      border: none;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
     }
 
     .notification-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 20px;
-      background-color: #fff;
+      padding: 20px;
       border-bottom: 1px solid var(--border-color);
     }
 
     .notification-title {
+      font-size: 20px;
       font-weight: 600;
-      font-size: 16px;
-      margin-bottom: 0;
       color: var(--text-primary);
-    }
-
-    /* Scrollable notification list */
-    .notification-body {
-      max-height: 400px;
-      overflow-y: auto;
-      overflow-x: hidden;
-      background-color: #fff;
-    }
-
-    /* Individual notification */
-    .notification-item {
-      padding: 12px 20px;
-      border-bottom: 1px solid var(--border-color);
-      cursor: pointer;
-      transition: background-color var(--animation-time);
-      position: relative;
-      display: flex;
-      align-items: flex-start;
-    }
-
-    .notification-item:hover {
-      background-color: var(--hover-bg);
-    }
-
-    .notification-item.unread {
-      background-color: var(--unread-bg);
-    }
-
-    .notification-item.unread:hover {
-      background-color: #e6f0fa;
-    }
-
-    /* Unread indicator */
-    .notification-status {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background-color: var(--primary-color);
-      position: absolute;
-      top: 16px;
-      left: 6px;
-      display: none;
-    }
-
-    .notification-item.unread .notification-status {
-      display: block;
-    }
-
-    /* Notification icon */
-    .notification-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background-color: var(--primary-light);
-      color: var(--primary-color);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 15px;
-      flex-shrink: 0;
-    }
-
-    .notification-icon i {
-      font-size: 18px;
-    }
-
-    /* Notification content */
-    .notification-content {
-      flex-grow: 1;
-    }
-
-    .notification-item-title {
-      font-weight: 600;
-      font-size: 15px;
       margin-bottom: 5px;
-      color: var(--text-primary);
-      line-height: 1.3;
     }
 
-    .notification-item-text {
-      font-size: 14px;
-      color: var(--text-secondary);
-      margin-bottom: 8px;
-      line-height: 1.4;
-    }
-
-    /* Notification metadata */
     .notification-meta {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
       color: var(--text-light);
-    }
-
-    .notification-sender {
-      display: flex;
-      align-items: center;
-    }
-
-    .notification-sender i {
-      margin-right: 5px;
-    }
-
-    .notification-time i {
-      margin-right: 5px;
-    }
-
-    /* Dropdown footer */
-    .notification-footer {
-      padding: 12px 16px;
-      text-align: center;
-      background-color: #fff;
-      border-top: 1px solid var(--border-color);
-    }
-
-    .notification-footer a {
-      color: var(--primary-color);
-      text-decoration: none;
-      font-weight: 500;
       font-size: 14px;
     }
 
-    .notification-footer a:hover {
-      text-decoration: underline;
+    .notification-body {
+      padding: 20px;
     }
 
-    /* Button styling */
-    .btn-mark-all {
-      font-size: 12px;
-      padding: 4px 10px;
-      font-weight: 500;
-      border-radius: 4px;
-      background-color: #fff;
-      color: var(--primary-color);
-      border: 1px solid var(--primary-color);
-      transition: all var(--animation-time);
+    .notification-content {
+      margin-bottom: 20px;
+      line-height: 1.6;
+      color: var(--text-secondary);
     }
 
-    .btn-mark-all:hover {
-      background-color: var(--primary-color);
-      color: #fff;
+    .notification-icons {
+      margin-top: 20px;
+      display: flex;
+      gap: 15px;
     }
 
-    /* New notification animation */
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .notification-item.new {
-      animation: fadeInDown 0.5s;
-    }
-
-    /* Empty state */
-    .empty-notification {
-      padding: 40px 20px;
-      text-align: center;
+    .notification-icon-item {
+      display: flex;
+      align-items: center;
       color: var(--text-light);
+      font-size: 14px;
     }
 
-    .empty-notification i {
-      font-size: 48px;
-      color: #ddd;
-      margin-bottom: 15px;
+    .notification-icon-item i {
+      margin-right: 8px;
+      font-size: 16px;
     }
 
-    .empty-text {
-      font-size: 15px;
-    }
-
-    /* Toast notification */
-    .toast-container {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 1060;
-    }
-
-    .toast {
-      width: 320px;
-      background-color: #fff;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      overflow: hidden;
-      border: none;
-      border-radius: 8px;
-      opacity: 1;
-    }
-
-    .toast-header {
-      background-color: var(--primary-color);
-      color: white;
-      border-bottom: none;
-      padding: 12px 16px;
-    }
-
-    .toast-header strong {
-      font-weight: 600;
-    }
-
-    .toast-body {
-      padding: 12px 16px;
-      color: var(--text-primary);
-    }
-
-    /* Notification table */
-    .notification-table th {
-      font-weight: 600;
-      border-top: none;
-      background-color: #f9f9f9;
-    }
-
-    .notification-table .status-badge {
-      font-weight: 500;
-      padding: 5px 10px;
+    /* Status badges */
+    .badge-status {
+      padding: 5px 12px;
       border-radius: 15px;
+      font-weight: 500;
     }
 
-    .status-badge.unread {
+    .badge-unread {
       background-color: var(--primary-light);
       color: var(--primary-color);
     }
 
-    .status-badge.read {
+    .badge-read {
       background-color: #f5f5f5;
       color: var(--text-secondary);
     }
 
+    /* Icons for notification type */
+    .icon-info {
+      color: #2196f3;
+    }
+
+    .icon-success {
+      color: #4caf50;
+    }
+
+    .icon-warning {
+      color: #ff9800;
+    }
+
+    .icon-danger {
+      color: #f44336;
+    }
+
+    /* Related notifications */
+    .related-notifications {
+      margin-top: 30px;
+    }
+
+    .related-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: var(--text-primary);
+    }
+
+    .notification-item {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: transform var(--animation-time);
+    }
+
+    .notification-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+
+    .notification-item.unread {
+      border-left: 4px solid var(--primary-color);
+    }
+
+    .item-title {
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: var(--text-primary);
+    }
+
+    .item-content {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .item-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-light);
+    }
+
     /* Action buttons */
     .btn-action {
-      width: 32px;
-      height: 32px;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 4px;
-      margin-right: 5px;
-    }
-
-    /* Card styling */
-    .card {
-      border: none;
-      border-radius: 10px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-      overflow: hidden;
-    }
-
-    .card-header {
-      background-color: #fff;
-      border-bottom: 1px solid #eee;
-      padding: 16px 20px;
-    }
-
-    .card-header h5 {
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 0;
-    }
-
-    .card-body {
-      padding: 20px;
-    }
-
-    /* Form styling */
-    .form-label {
-      font-weight: 500;
-      color: var(--text-primary);
-    }
-
-    .form-control {
-      padding: 10px 12px;
+      padding: 8px 16px;
       border-radius: 6px;
-      border: 1px solid #ddd;
+      font-weight: 500;
+      font-size: 14px;
     }
 
-    .form-control:focus {
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 0.25rem rgba(63, 81, 181, 0.15);
-    }
-
-    /* Primary button */
     .btn-primary {
       background-color: var(--primary-color);
       border-color: var(--primary-color);
-      padding: 8px 16px;
-      font-weight: 500;
+    }
+
+    .btn-outline-primary {
+      color: var(--primary-color);
+      border-color: var(--primary-color);
     }
 
     .btn-primary:hover, .btn-primary:focus {
@@ -432,99 +205,29 @@
       border-color: #303f9f;
     }
 
-    /* Notification icon colors */
-    .icon-info {
-      background-color: #e3f2fd;
-      color: #2196f3;
+    .btn-outline-primary:hover, .btn-outline-primary:focus {
+      background-color: var(--primary-light);
+      color: var(--primary-color);
     }
-
-    .icon-success {
-      background-color: #e8f5e9;
-      color: #4caf50;
+    
+    /* Breadcrumb styling */
+    .breadcrumb {
+      background-color: transparent;
+      padding: 0;
+      margin-bottom: 20px;
     }
-
-    .icon-warning {
-      background-color: #fff8e1;
-      color: #ff9800;
+    
+    .breadcrumb-item a {
+      color: var(--primary-color);
+      text-decoration: none;
     }
-
-    .icon-danger {
-      background-color: #ffebee;
-      color: #f44336;
-    }
-
-    /* Modal styling */
-    .modal-content {
-      border: none;
-      border-radius: 10px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    }
-
-    .modal-header {
-      border-bottom: 1px solid #eee;
-      padding: 16px 20px;
-    }
-
-    .modal-body {
-      padding: 20px;
-    }
-
-    .modal-title {
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    /* Animation utilities */
-    .animate-fade-in {
-      animation: fadeIn 0.3s;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    /* User dropdown */
-    .user-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background-color: var(--primary-color);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 500;
-      margin-right: 10px;
-    }
-
-    .user-info {
-      font-weight: 500;
-    }
-
-    /* Custom scrollbar */
-    .notification-body::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    .notification-body::-webkit-scrollbar-track {
-      background: #f1f1f1;
-    }
-
-    .notification-body::-webkit-scrollbar-thumb {
-      background: #ddd;
-      border-radius: 4px;
-    }
-
-    .notification-body::-webkit-scrollbar-thumb:hover {
-      background: #ccc;
+    
+    .breadcrumb-item.active {
+      color: var(--text-secondary);
     }
   </style>
 </head>
 <body>
-<!-- Toast container -->
-<div class="toast-container" id="toastContainer"></div>
-
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light">
   <div class="container">
@@ -538,7 +241,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link active" href="#">
+          <a class="nav-link" href="#">
             <i class="fas fa-tachometer-alt me-1"></i> Dashboard
           </a>
         </li>
@@ -558,34 +261,12 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">
-            <i class="fas fa-calendar-check me-1"></i> Đặt phòng
+          <a class="nav-link active" href="#">
+            <i class="fas fa-bell me-1"></i> Thông báo
           </a>
         </li>
       </ul>
       <div class="d-flex align-items-center">
-        <div class="dropdown me-3">
-          <div class="notification-bell" id="notificationDropdown" data-bs-toggle="dropdown"
-               aria-expanded="false" title="Thông báo">
-            <i class="fas fa-bell"></i>
-            <span class="notification-badge" id="notificationCount">0</span>
-          </div>
-          <div class="dropdown-menu dropdown-menu-end notification-dropdown"
-               aria-labelledby="notificationDropdown">
-            <div class="notification-header">
-              <span class="notification-title">Thông báo</span>
-              <button class="btn btn-mark-all" id="markAllRead">
-                <i class="fas fa-check-double me-1"></i> Đánh dấu đã đọc
-              </button>
-            </div>
-            <div class="notification-body" id="notificationList">
-              <!-- Danh sách thông báo sẽ được thêm vào đây bằng JavaScript -->
-            </div>
-            <div class="notification-footer">
-              <a href="#" id="viewAllNotifications">Xem tất cả thông báo</a>
-            </div>
-          </div>
-        </div>
         <div class="dropdown">
           <a class="nav-link dropdown-toggle d-flex align-items-center" href="#"
              id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -606,174 +287,418 @@
 
 <!-- Main content -->
 <div class="container py-4">
-  <h4 class="mb-4">Quản lý thông báo</h4>
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/"><i class="fas fa-home"></i> Trang chủ</a></li>
+      <li class="breadcrumb-item"><a href="/notifications">Thông báo</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Chi tiết thông báo</li>
+    </ol>
+  </nav>
 
-  <div class="row mb-4">
-    <!-- Form tạo thông báo -->
-    <div class="col-md-6 mb-4">
-      <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-          <h5 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Tạo thông báo mới</h5>
+  <div class="row">
+    <!-- Chi tiết thông báo -->
+    <div class="col-lg-8">
+      <div class="notification-detail-card">
+        <div class="notification-header">
+          <h2 class="notification-title" id="notificationTitle">Phê duyệt đơn nghỉ phép</h2>
+          <div class="notification-meta">
+            <span class="sender"><i class="fas fa-user me-1"></i> <span id="notificationSender">Admin</span></span>
+            <span class="time"><i class="far fa-clock me-1"></i> <span id="notificationTime">20 phút trước</span></span>
+          </div>
+        </div>
+        <div class="notification-body">
+          <div class="badge badge-status badge-unread mb-3" id="notificationStatus">Chưa đọc</div>
+          
+          <div class="notification-content" id="notificationContent">
+            Đơn xin nghỉ phép của bạn đã được phê duyệt từ ngày 25/04 đến 27/04. Bạn có thể xem chi tiết trong 
+            mục Yêu cầu của mình.
+          </div>
+          
+          <div class="notification-icons">
+            <div class="notification-icon-item">
+              <i class="fas fa-calendar-check icon-success"></i>
+              <span>Được gửi ngày: <span id="sentDate">25/04/2025</span></span>
+            </div>
+            <div class="notification-icon-item">
+              <i class="fas fa-tag icon-info"></i>
+              <span>Loại: <span id="notificationType">Thông báo phê duyệt</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Các hành động -->
+      <div class="d-flex justify-content-between mb-4">
+        <div>
+          <button class="btn btn-outline-primary btn-action me-2" id="prevNotification">
+            <i class="fas fa-arrow-left me-1"></i> Thông báo trước
+          </button>
+          <button class="btn btn-outline-primary btn-action" id="nextNotification">
+            Thông báo sau <i class="fas fa-arrow-right ms-1"></i>
+          </button>
+        </div>
+        <div>
+          <button class="btn btn-primary btn-action" id="markAsReadBtn">
+            <i class="fas fa-check-double me-1"></i> Đánh dấu đã đọc
+          </button>
+          <button class="btn btn-outline-danger btn-action ms-2" id="deleteNotificationBtn">
+            <i class="fas fa-trash me-1"></i> Xóa
+          </button>
+        </div>
+      </div>
+      
+      <!-- Các thông báo liên quan -->
+      <div class="related-notifications" id="relatedNotifications">
+        <h4 class="related-title">Thông báo liên quan</h4>
+        
+        <div class="notification-item unread">
+          <div class="item-title">Cập nhật chính sách nghỉ phép</div>
+          <div class="item-content">
+            Hệ thống vừa được cập nhật chính sách nghỉ phép mới. Vui lòng xem chi tiết tại mục Quy định công ty.
+          </div>
+          <div class="item-meta">
+            <span><i class="fas fa-user me-1"></i> Admin</span>
+            <span><i class="far fa-clock me-1"></i> 2 giờ trước</span>
+          </div>
+        </div>
+        
+        <div class="notification-item">
+          <div class="item-title">Lịch nghỉ lễ 30/4 - 1/5</div>
+          <div class="item-content">
+            Thông báo về lịch nghỉ lễ 30/4 và 1/5. Công ty sẽ nghỉ từ ngày 29/4 đến hết ngày 3/5.
+          </div>
+          <div class="item-meta">
+            <span><i class="fas fa-user me-1"></i> Admin</span>
+            <span><i class="far fa-clock me-1"></i> 3 ngày trước</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Sidebar - Thông tin bổ sung -->
+    <div class="col-lg-4">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Thông tin thông báo</h5>
         </div>
         <div class="card-body">
-          <form id="createNotificationForm">
-            <div class="mb-3">
-              <label for="title" class="form-label">Tiêu đề</label>
-              <input type="text" class="form-control" id="title" placeholder="Nhập tiêu đề thông báo" required>
-            </div>
-            <div class="mb-3">
-              <label for="content" class="form-label">Nội dung</label>
-              <textarea class="form-control" id="content" rows="3" placeholder="Nhập nội dung thông báo" required></textarea>
-            </div>
-            <div class="mb-3">
-              <label for="notificationType" class="form-label">Loại thông báo</label>
-              <select class="form-select" id="notificationType">
-                <option value="info" selected>Thông tin</option>
-                <option value="success">Thành công</option>
-                <option value="warning">Cảnh báo</option>
-                <option value="danger">Quan trọng</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label for="receiver" class="form-label">Người nhận</label>
-              <select class="form-select" id="receiver" required>
-                <option value="" selected disabled>Chọn người nhận</option>
-                <option value="user1">Nguyễn Văn A (user1)</option>
-                <option value="user2">Trần Thị B (user2)</option>
-                <option value="user3">Lê Văn C (user3)</option>
-                <option value="manager1">Phạm Văn D (manager1)</option>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-primary">
-              <i class="fas fa-paper-plane me-1"></i> Gửi thông báo
-            </button>
-          </form>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between">
+              <span>ID thông báo:</span>
+              <span class="text-muted" id="notificationId">12345</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Ngày tạo:</span>
+              <span class="text-muted" id="createdDate">25/04/2025 14:30</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Phân loại:</span>
+              <span class="badge bg-success">Success</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Gửi đến:</span>
+              <span class="text-muted" id="recipientName">Nguyễn Văn A</span>
+            </li>
+          </ul>
         </div>
       </div>
-    </div>
-
-    <!-- Form thông báo cho phòng ban -->
-    <div class="col-md-6 mb-4">
-      <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-          <h5 class="mb-0"><i class="fas fa-bullhorn me-2"></i>Thông báo cho phòng ban</h5>
+      
+      <!-- Các hành động nhanh -->
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5 class="mb-0"><i class="fas fa-bolt me-2"></i>Hành động nhanh</h5>
         </div>
         <div class="card-body">
-          <form id="createDepartmentNotificationForm">
-            <div class="mb-3">
-              <label for="deptTitle" class="form-label">Tiêu đề</label>
-              <input type="text" class="form-control" id="deptTitle" placeholder="Nhập tiêu đề thông báo" required>
-            </div>
-            <div class="mb-3">
-              <label for="deptContent" class="form-label">Nội dung</label>
-              <textarea class="form-control" id="deptContent" rows="3" placeholder="Nhập nội dung thông báo" required></textarea>
-            </div>
-            <div class="mb-3">
-              <label for="deptNotificationType" class="form-label">Loại thông báo</label>
-              <select class="form-select" id="deptNotificationType">
-                <option value="info" selected>Thông tin</option>
-                <option value="success">Thành công</option>
-                <option value="warning">Cảnh báo</option>
-                <option value="danger">Quan trọng</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label for="department" class="form-label">Phòng ban</label>
-              <select class="form-select" id="department" required>
-                <option value="" selected disabled>Chọn phòng ban</option>
-                <option value="1">Phòng Nhân sự</option>
-                <option value="2">Phòng Kế toán</option>
-                <option value="3">Phòng IT</option>
-                <option value="4">Phòng Kinh doanh</option>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-primary">
-              <i class="fas fa-paper-plane me-1"></i> Gửi thông báo
+          <div class="d-grid gap-2">
+            <a href="/requests" class="btn btn-outline-primary">
+              <i class="fas fa-list me-2"></i>Xem đơn xin phép
+            </a>
+            <a href="/notifications" class="btn btn-outline-secondary">
+              <i class="fas fa-bell me-2"></i>Tất cả thông báo
+            </a>
+            <button class="btn btn-outline-success" id="replyBtn">
+              <i class="fas fa-reply me-2"></i>Phản hồi
             </button>
-          </form>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- Bảng danh sách thông báo -->
-  <div class="card">
-    <div class="card-header d-flex justify-content-between align-items-center">
-      <h5 class="mb-0"><i class="fas fa-list me-2"></i>Danh sách thông báo</h5>
-      <div>
-        <select class="form-select form-select-sm" id="notificationFilter" style="width: auto; display: inline-block;">
-          <option value="all" selected>Tất cả thông báo</option>
-          <option value="unread">Chưa đọc</option>
-          <option value="read">Đã đọc</option>
-        </select>
-      </div>
-    </div>
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table table-hover notification-table">
-          <thead>
-          <tr>
-            <th width="5%">#</th>
-            <th width="25%">Tiêu đề</th>
-            <th width="30%">Nội dung</th>
-            <th width="15%">Người gửi</th>
-            <th width="10%">Thời gian</th>
-            <th width="5%">Trạng thái</th>
-            <th width="10%">Thao tác</th>
-          </tr>
-          </thead>
-          <tbody id="notificationsTable">
-          <!-- Dữ liệu sẽ được thêm từ JavaScript -->
-          </tbody>
-        </table>
+      
+      <!-- Thông báo gần đây -->
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0"><i class="fas fa-history me-2"></i>Thông báo gần đây</h5>
+        </div>
+        <div class="card-body p-0">
+          <ul class="list-group list-group-flush" id="recentNotifications">
+            <li class="list-group-item">
+              <a href="#" class="text-decoration-none">
+                <div class="d-flex w-100 justify-content-between">
+                  <h6 class="mb-1">Lịch họp phòng ban</h6>
+                  <small class="text-muted">3 giờ trước</small>
+                </div>
+                <small class="text-muted">Cuộc họp phòng ban sẽ diễn ra vào 14:00 ngày 22/04</small>
+              </a>
+            </li>
+            <li class="list-group-item">
+              <a href="#" class="text-decoration-none">
+                <div class="d-flex w-100 justify-content-between">
+                  <h6 class="mb-1">Thông báo cập nhật hệ thống</h6>
+                  <small class="text-muted">1 ngày trước</small>
+                </div>
+                <small class="text-muted">Hệ thống sẽ bảo trì vào tối nay từ 22:00-23:00</small>
+              </a>
+            </li>
+            <li class="list-group-item">
+              <a href="#" class="text-decoration-none">
+                <div class="d-flex w-100 justify-content-between">
+                  <h6 class="mb-1">Thông báo lương tháng 3</h6>
+                  <small class="text-muted">3 ngày trước</small>
+                </div>
+                <small class="text-muted">Lương tháng 3 đã được chuyển khoản</small>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="card-footer text-center">
+          <a href="/notifications" class="text-primary text-decoration-none">Xem tất cả</a>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modal xem chi tiết thông báo -->
-<div class="modal fade" id="notificationDetailModal" tabindex="-1" aria-hidden="true">
+<!-- Modal phản hồi -->
+<div class="modal fade" id="replyModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalTitle">Chi tiết thông báo</h5>
+        <h5 class="modal-title">Phản hồi thông báo</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="mb-3">
-          <div class="d-flex align-items-center mb-3">
-            <div class="notification-icon me-3" id="modalIcon">
-              <i class="fas fa-bell"></i>
-            </div>
-            <h5 id="modalNotificationTitle" class="mb-0"></h5>
+        <form id="replyForm">
+          <div class="mb-3">
+            <label for="replyContent" class="form-label">Nội dung phản hồi</label>
+            <textarea class="form-control" id="replyContent" rows="4" placeholder="Nhập nội dung phản hồi..."></textarea>
           </div>
-          <div class="alert alert-light border p-3">
-            <p id="modalNotificationContent" class="mb-0"></p>
-          </div>
-        </div>
-        <div class="d-flex justify-content-between text-muted">
-          <small><i class="fas fa-user me-1"></i> Người gửi: <span id="modalSender"></span></small>
-          <small><i class="far fa-clock me-1"></i> <span id="modalTime"></span></small>
-        </div>
+        </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-        <button type="button" class="btn btn-primary" id="markReadBtn">Đánh dấu đã đọc</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-primary" id="sendReplyBtn">Gửi phản hồi</button>
       </div>
     </div>
   </div>
 </div>
-
-<!-- Notification sound -->
-<audio id="notificationSound" preload="auto">
-  <source src="https://assets.mixkit.co/sfx/preview/mixkit-software-interface-alert-217.mp3" type="audio/mpeg">
-</audio>
 
 <!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-<script src="/js/notification.js"></script>
+<script>
+  $(document).ready(function() {
+    // Lấy ID thông báo từ URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const notificationId = urlParams.get('id');
+    
+    if (notificationId) {
+      loadNotificationDetail(notificationId);
+    } else {
+      // Hiển thị thông báo lỗi hoặc chuyển hướng
+      alert('Không tìm thấy thông báo. Vui lòng thử lại.');
+      window.location.href = '/notifications';
+    }
+    
+    // Nút đánh dấu đã đọc
+    $('#markAsReadBtn').on('click', function() {
+      // Gọi API để đánh dấu thông báo đã đọc
+      $.ajax({
+        url: `/api/v1/notifications/${notificationId}/read`,
+        method: 'PUT',
+        success: function() {
+          $('#notificationStatus').removeClass('badge-unread').addClass('badge-read').text('Đã đọc');
+          $('#markAsReadBtn').prop('disabled', true);
+        },
+        error: function(xhr) {
+          alert('Lỗi khi đánh dấu thông báo đã đọc: ' + xhr.statusText);
+        }
+      });
+    });
+    
+    // Nút xóa thông báo
+    $('#deleteNotificationBtn').on('click', function() {
+      if (confirm('Bạn có chắc chắn muốn xóa thông báo này?')) {
+        $.ajax({
+          url: `/api/v1/notifications/${notificationId}`,
+          method: 'DELETE',
+          success: function() {
+            alert('Đã xóa thông báo thành công');
+            window.location.href = '/notifications';
+          },
+          error: function(xhr) {
+            alert('Lỗi khi xóa thông báo: ' + xhr.statusText);
+          }
+        });
+      }
+    });
+    
+    // Nút phản hồi
+    $('#replyBtn').on('click', function() {
+      $('#replyModal').modal('show');
+    });
+    
+    // Gửi phản hồi
+    $('#sendReplyBtn').on('click', function() {
+      const replyContent = $('#replyContent').val().trim();
+      
+      if (!replyContent) {
+        alert('Vui lòng nhập nội dung phản hồi');
+        return;
+      }
+      
+      // Ví dụ gửi phản hồi qua API
+      alert('Đã gửi phản hồi thành công');
+      $('#replyModal').modal('hide');
+    });
+    
+    // Hàm load chi tiết thông báo
+    function loadNotificationDetail(id) {
+      $.ajax({
+        url: `/api/v1/notifications/${id}`,
+        method: 'GET',
+        success: function(response) {
+          // Xử lý response
+          let notification;
+          
+          if (response && response.data) {
+            notification = response.data;
+          } else {
+            notification = response;
+          }
+          
+          if (!notification) {
+            alert('Không tìm thấy thông báo');
+            return;
+          }
+          
+          // Cập nhật UI với thông tin thông báo
+          $('#notificationTitle').text(notification.title);
+          $('#notificationContent').text(notification.content);
+          $('#notificationSender').text(notification.senderName || notification.sender);
+          $('#notificationTime').text(notification.timeAgo || formatTimeAgo(new Date(notification.createdAt)));
+          $('#notificationId').text(notification.id);
+          $('#createdDate').text(formatDate(notification.createdAt));
+          $('#recipientName').text(notification.receiver);
+          
+          // Cập nhật trạng thái đã đọc/chưa đọc
+          if (notification.read) {
+            $('#notificationStatus').removeClass('badge-unread').addClass('badge-read').text('Đã đọc');
+            $('#markAsReadBtn').prop('disabled', true);
+          } else {
+            $('#notificationStatus').removeClass('badge-read').addClass('badge-unread').text('Chưa đọc');
+            $('#markAsReadBtn').prop('disabled', false);
+          }
+          
+          // Tải các thông báo liên quan
+          loadRelatedNotifications(notification.sender);
+        },
+        error: function(xhr) {
+          alert('Lỗi khi tải thông báo: ' + xhr.statusText);
+        }
+      });
+    }
+    
+    // Hàm tải thông báo liên quan
+    function loadRelatedNotifications(sender) {
+      $.ajax({
+        url: `/api/v1/notifications/user/${sender}`,
+        method: 'GET',
+        success: function(response) {
+          let notifications = [];
+          
+          if (response && response.data) {
+            notifications = response.data;
+          } else if (Array.isArray(response)) {
+            notifications = response;
+          }
+          
+          renderRelatedNotifications(notifications);
+        }
+      });
+    }
+    
+    // Hiển thị thông báo liên quan
+    function renderRelatedNotifications(notifications) {
+      if (!notifications || notifications.length === 0) {
+        $('#relatedNotifications').hide();
+        return;
+      }
+      
+      const $container = $('#relatedNotifications');
+      const $content = $container.find('.notification-item').parent();
+      $content.empty();
+      
+      notifications.slice(0, 3).forEach(function(notification) {
+        const unreadClass = notification.read ? '' : 'unread';
+        
+        const item = `
+          <div class="notification-item ${unreadClass}">
+            <div class="item-title">${notification.title}</div>
+            <div class="item-content">
+              ${truncateText(notification.content, 100)}
+            </div>
+            <div class="item-meta">
+              <span><i class="fas fa-user me-1"></i> ${notification.senderName || notification.sender}</span>
+              <span><i class="far fa-clock me-1"></i> ${notification.timeAgo || formatTimeAgo(new Date(notification.createdAt))}</span>
+            </div>
+          </div>
+        `;
+        
+        $content.append(item);
+      });
+    }
+    
+    // Hàm định dạng thời gian
+    function formatTimeAgo(date) {
+      if (!date) return 'Không xác định';
+      
+      const now = new Date();
+      const diffMs = now - date;
+      const diffMinutes = Math.floor(diffMs / (60 * 1000));
+      
+      if (diffMinutes < 1) return 'Vừa xong';
+      if (diffMinutes < 60) return diffMinutes + ' phút trước';
+      
+      const diffHours = Math.floor(diffMinutes / 60);
+      if (diffHours < 24) return diffHours + ' giờ trước';
+      
+      const diffDays = Math.floor(diffHours / 24);
+      if (diffDays < 30) return diffDays + ' ngày trước';
+      
+      return formatDate(date);
+    }
+    
+    // Hàm định dạng ngày tháng
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      if (isNaN(date.getTime())) return 'Không xác định';
+      
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const year = date.getFullYear();
+      const hour = date.getHours().toString().padStart(2, '0');
+      const minute = date.getMinutes().toString().padStart(2, '0');
+      
+      return `${day}/${month}/${year} ${hour}:${minute}`;
+    }
+    
+    // Hàm cắt ngắn văn bản
+    function truncateText(text, maxLength) {
+      if (!text) return '';
+      if (text.length <= maxLength) return text;
+      return text.substring(0, maxLength) + '...';
+    }
+  });
+</script>
 </body>
 </html>

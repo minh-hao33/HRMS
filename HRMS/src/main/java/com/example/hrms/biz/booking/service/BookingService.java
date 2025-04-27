@@ -173,8 +173,7 @@ public class BookingService {
 
     public boolean isConflict(Booking booking) {
         List<Booking> conflictingBookings = bookingMapper.findConflictingBookings(
-                booking.getRoomId(), booking.getStartTime(), booking.getEndTime()
-        );
+                booking.getRoomId(), booking.getStartTime(), booking.getEndTime(), booking.getBookingId());
         return !conflictingBookings.isEmpty();
     }
 
@@ -204,10 +203,12 @@ public class BookingService {
 
         switch (booking.getBookingType()) {
             case ONLY:
-                // Gán lại ngày hiện tại nếu người dùng chỉ chọn giờ
-                LocalDate today = LocalDate.now();
-                booking.setStartTime(LocalDateTime.of(today, startTime));
-                booking.setEndTime(LocalDateTime.of(today, endTime));
+                LocalDate bookingDate = booking.getStartTime().toLocalDate();
+            
+                // Nếu muốn đảm bảo startTime và endTime trong cùng một ngày
+                booking.setStartTime(LocalDateTime.of(bookingDate, startTime));
+                booking.setEndTime(LocalDateTime.of(bookingDate, endTime));
+                
                 booking.setWeekdays(null);
                 generatedBookings.add(booking);
                 break;

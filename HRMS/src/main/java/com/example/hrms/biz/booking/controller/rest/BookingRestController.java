@@ -100,22 +100,20 @@ public class BookingRestController {
     @PutMapping("/{id}")
     public Result updateBooking(@PathVariable Long id, @RequestBody @Valid BookingDTO.Req bookingReq) {
         Booking booking = bookingReq.toBooking();
-        booking.setBookingId(id);
+        booking.setBookingId(id);  // Đảm bảo bookingId được đặt
 
-        // Generate the list of updated bookings based on the booking type
+        // Nếu là DAILY hoặc WEEKLY, cần xử lý đặc biệt
         List<Booking> updatedBookings = bookingService.handleBookingType(booking);
 
-        // Check for conflicts with existing bookings
+        // Kiểm tra xung đột, loại trừ chính booking hiện tại
         for (Booking updatedBooking : updatedBookings) {
             if (bookingService.isConflict(updatedBooking)) {
                 throw new InvalidArgumentException("Booking time conflicts with an existing booking.");
             }
         }
 
-        // Update each booking in the database
-        for (Booking updatedBooking : updatedBookings) {
-            bookingService.updateBooking(updatedBooking);
-        }
+        // Cập nhật
+        bookingService.updateBooking(booking);
         return new Result("Success", "Booking updated successfully.");
     }
 

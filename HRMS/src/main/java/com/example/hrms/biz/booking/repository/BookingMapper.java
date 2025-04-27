@@ -38,22 +38,12 @@ public interface BookingMapper {
 
     List<Booking> select(BookingCriteria criteria);
 
+    // Trong BookingMapper.java, sửa phương thức findConflictingBookings:
     @Select("SELECT booking_id, username, room_id, title, attendees, content, start_time, end_time, status, booking_type, weekdays " +
-            "FROM bookings WHERE room_id = #{roomId} AND ((start_time < #{endTime} AND end_time > #{startTime}))")
-    @Results({
-            @Result(property = "bookingId", column = "booking_id"),
-            @Result(property = "username", column = "username"),
-            @Result(property = "roomId", column = "room_id"),
-            @Result(property = "title", column = "title"),
-            @Result(property = "attendees", column = "attendees"),
-            @Result(property = "content", column = "content"),
-            @Result(property = "startTime", column = "start_time"),
-            @Result(property = "endTime", column = "end_time"),
-            @Result(property = "status", column = "status"),
-            @Result(property = "bookingType", column = "booking_type"),
-            @Result(property = "weekdays", column = "weekdays")
-    })
-    List<Booking> findConflictingBookings(@Param("roomId") Long roomId, @Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime);
+                "FROM bookings WHERE room_id = #{roomId} AND ((start_time < #{endTime} AND end_time > #{startTime})) " +
+                "AND booking_id != #{bookingId}")  // Thêm điều kiện này
+    List<Booking> findConflictingBookings(@Param("roomId") Long roomId, @Param("startTime") LocalDateTime startTime, 
+                                        @Param("endTime") LocalDateTime endTime, @Param("bookingId") Long bookingId);
 
     @Update("UPDATE bookings SET username = #{username}, room_id = #{roomId}, title = #{title}, attendees = #{attendees}, content = #{content}, start_time = #{startTime}, end_time = #{endTime}, status = #{status}, booking_type = #{bookingType}, weekdays = #{weekdays} WHERE booking_id = #{bookingId}")
     void updateBooking(Booking booking);
