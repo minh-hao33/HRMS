@@ -39,8 +39,6 @@ public class RequestService {
         log.info("Fetching request list with criteria: {}", criteria);
         try {
             List<Request> requests = requestMapper.select(
-                    page.getPageSize(),
-                    page.getOffset(),
                     criteria.getRequestId(),
                     criteria.getUsername(),
                     criteria.getDepartmentId(),

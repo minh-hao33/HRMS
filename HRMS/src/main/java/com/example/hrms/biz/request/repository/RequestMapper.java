@@ -51,10 +51,8 @@ public interface RequestMapper {
             "    AND (#{approverUsername} IS NULL OR r.approver_username = #{approverUsername}) " +
             "    AND (#{startTime} IS NULL OR r.start_time >= #{startTime}) " +
             "    AND (#{endTime} IS NULL OR r.end_time <= #{endTime}) " +
-            "ORDER BY r.request_id ASC " +
-            "LIMIT #{pageSize} OFFSET #{offset}")
-    List<Request> select(@Param("pageSize") int pageSize,
-                         @Param("offset") int offset,
+            "ORDER BY r.request_id ASC ")
+    List<Request> select(
                          @Param("requestId") Long requestId,
                          @Param("username") String username,
                          @Param("departmentId") Long departmentId,
