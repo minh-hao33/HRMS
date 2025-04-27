@@ -5,6 +5,7 @@ import com.example.hrms.biz.commoncode.notification.model.dto.NotificationDTO;
 import com.example.hrms.biz.commoncode.notification.service.NotificationService;
 import com.example.hrms.common.http.model.ResultData;
 import com.example.hrms.common.http.model.Status;
+import com.example.hrms.common.http.model.PageResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,11 +44,22 @@ public class NotificationRestController {
   }
 
   /**
-   * Lấy danh sách thông báo của người dùng
+   * Lấy danh sách thông báo của người dùng với phân trang
    */
   @GetMapping("/user/{username}")
-  public ResultData<List<NotificationDTO.Resp>> getNotifications(@PathVariable String username) {
-    List<NotificationDTO.Resp> notifications = notificationService.getNotificationsByReceiver(username);
+  public ResultData<Object> getNotifications(
+      @PathVariable String username,
+      @RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "20") int size) {
+      
+    // Nếu page và size là 0, gọi phương thức không phân trang
+    if (size == 0) {
+      List<NotificationDTO.Resp> notifications = notificationService.getNotificationsByReceiver(username);
+      return new ResultData<>(Status.SUCCESS.name(), notifications);
+    }
+    
+    // Sử dụng phân trang
+    PageResult<NotificationDTO.Resp> notifications = notificationService.getNotificationsByReceiverPaged(username, page, size);
     return new ResultData<>(Status.SUCCESS.name(), notifications);
   }
 
