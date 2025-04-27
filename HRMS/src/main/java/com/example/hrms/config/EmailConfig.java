@@ -58,7 +58,7 @@ public class EmailConfig {
   }
 
   @Bean
-  public String fromEmail() {
+  public String defaultFromEmail() {
     return fromEmail;
   }
 }

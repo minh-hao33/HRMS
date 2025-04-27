@@ -204,7 +204,7 @@ public class BookingService {
         switch (booking.getBookingType()) {
             case ONLY:
                 LocalDate bookingDate = booking.getStartTime().toLocalDate();
-            
+                
                 // Nếu muốn đảm bảo startTime và endTime trong cùng một ngày
                 booking.setStartTime(LocalDateTime.of(bookingDate, startTime));
                 booking.setEndTime(LocalDateTime.of(bookingDate, endTime));

@@ -6,6 +6,11 @@ spring:
     username: cmcuni
     password: Cmcuni@2025
     driver-class-name: com.mysql.cj.jdbc.Driver
+    cache:
+      type: caffeine
+      cache-names: notifications,users,departments
+      caffeine:
+        spec: maximumSize=1000,expireAfterAccess=600s
 #  jpa:
 #    properties:
 #      hibernate:
@@ -18,6 +23,7 @@ spring:
         queue-capacity: 25
       thread-name-prefix: email-async-
 mail:
+  enabled: true
   from: emailai.system@gmail.com
   host: smtp.gmail.com
   port: 587
@@ -30,7 +36,11 @@ mail:
     timeout: 5000
     connection-timeout: 5000
     write-timeout: 5000
-
+notification:
+  email:
+    retry:
+      max-attempts: 3
+    delay: 60000
 springdoc:
     show-actuator: true
     api-docs:
@@ -43,6 +53,7 @@ springdoc:
 # Logging configuration
 logging:
   level:
+    com.example.hrms: DEBUG
     com.example.hrms.biz.commoncode.email: DEBUG
     org.springframework.mail: DEBUG
 
