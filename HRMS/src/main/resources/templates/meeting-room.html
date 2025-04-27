@@ -2531,8 +2531,8 @@
         }
 
         // Cập nhật xử lý filter để phù hợp với backend
-// 3. Enhanced Filter Functionality
-// Replace the existing filter handler with this improved version
+        // 3. Enhanced Filter Functionality
+        // Replace the existing filter handler with this improved version
         $('.btn-filter').on('click', function() {
             // Get values from form
             const dateValue = $('#date-input').val();
@@ -4606,6 +4606,38 @@
         if (tinymce && tinymce.get('content')) {
             tinymce.get('content').setContent('');
         }
+    });
+</script>
+<!-- Thêm ngay trước thẻ </body> -->
+<script>
+    // Xử lý vấn đề modal-backdrop không biến mất
+    $(document).ready(function() {
+        // Xử lý khi modal bị đóng
+        $('.modal').on('hidden.bs.modal', function () {
+            // Xóa tất cả backdrop còn sót lại
+            $('.modal-backdrop').remove();
+            // Loại bỏ class 'modal-open' khỏi body
+            $('body').removeClass('modal-open');
+            // Loại bỏ style padding-right được thêm bởi Bootstrap
+            $('body').css('padding-right', '');
+        });
+
+        // Xử lý backdrop khi tải trang
+        if ($('.modal-backdrop').length > 0) {
+            $('.modal-backdrop').remove();
+            $('body').removeClass('modal-open');
+            $('body').css('padding-right', '');
+        }
+
+        // Thêm xử lý cho nút ESC
+        $(document).on('keydown', function(e) {
+            if (e.key === 'Escape') {
+                $('.modal').modal('hide');
+                $('.modal-backdrop').remove();
+                $('body').removeClass('modal-open');
+                $('body').css('padding-right', '');
+            }
+        });
     });
 </script>
 </body>

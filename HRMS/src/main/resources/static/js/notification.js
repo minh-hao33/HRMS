@@ -1,14 +1,28 @@
 $(document).ready(function() {
 // Thông tin người dùng hiện tại từ localStorage
   let currentUser = {
-    username: localStorage.getItem('Username') || 'ntdu',
+    username: localStorage.getItem('Username'),
     employeeName: localStorage.getItem('EmployeeName') || 'EMPLOYEE',
-    avatar: localStorage.getItem('Avatar') || localStorage.getItem('Username')?.charAt(0).toUpperCase() || 'A',
+    avatar: localStorage.getItem('Avatar') || (localStorage.getItem('Username') ? localStorage.getItem('Username').charAt(0).toUpperCase() : 'A'),
     role: localStorage.getItem('Role') || 'user'
   };
   
+  // Kiểm tra nếu username chưa được thiết lập
+  if (!currentUser.username) {
+    // Thử lấy từ cookie nếu có
+    currentUser.username = getCookie('Username') || 'anonymous';
+    console.warn('Username not found in localStorage, using:', currentUser.username);
+  }
+  
+  // Hàm để lấy giá trị cookie
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+  
   // Log thông tin người dùng hiện tại để debug
-  console.log('Current user loaded from session:', currentUser);
+  console.log('Current user loaded:', currentUser);
 
   // Cập nhật thông tin người dùng hiện tại trên UI
   $('#currentUser').text(currentUser.username);
@@ -20,6 +34,15 @@ $(document).ready(function() {
   // WebSocket connection
   let stompClient = null;
   let connected = false;
+
+  // Thêm biến cho phân trang
+  let paginationSettings = {
+    page: 0,
+    size: 20,
+    totalItems: 0,
+    totalPages: 0,
+    hasMoreItems: false
+  };
 
   // Hàm kết nối WebSocket
   function connectWebSocket() {
@@ -378,8 +401,7 @@ $(document).ready(function() {
   // Thêm biến để theo dõi request đang chạy
   let notificationRequestInProgress = false;
 
-
-  function loadNotifications() {
+  function loadNotifications(page = 0) {
     // Kiểm tra nếu đã có request đang chạy
     if (notificationRequestInProgress) {
       console.log('Notification request already in progress, skipping');
@@ -387,24 +409,72 @@ $(document).ready(function() {
     }
     
     notificationRequestInProgress = true;
+
+    // Kiểm tra username trước khi gọi API
+    if (!currentUser.username || currentUser.username === 'anonymous') {
+      console.error('Cannot load notifications: Invalid username');
+      loadSampleNotifications();
+      notificationRequestInProgress = false;
+      return;
+    }
+
+    console.log('Loading notifications for user:', currentUser.username, 'page:', page);
+    
+    // Lưu trang hiện tại vào settings
+    paginationSettings.page = page;
+    
+    // Thêm tham số phân trang vào URL
+    const apiUrl = `${API_BASE_URL}/user/${currentUser.username}?page=${page}&size=${paginationSettings.size}`;
+    
     $.ajax({
-      url: `${API_BASE_URL}/user/${currentUser.username}`,
+      url: apiUrl,
       method: 'GET',
       success: function(response) {
         console.log('API response:', response);
         
         let notifications = [];
-        // Chuẩn hóa cách trích xuất dữ liệu
-        if (response && response.data && Array.isArray(response.data)) {
-          notifications = response.data;
-        } else if (Array.isArray(response)) {
-          notifications = response;
-        } else if (response && response.retData && Array.isArray(response.retData)) {
-          notifications = response.retData;
-        } else {
-          console.warn('Unexpected response format:', response);
+        let isFirstLoad = page === 0;
+        
+        try {
+          // Xử lý dữ liệu phân trang nếu có
+          if (response && response.data) {
+            // Kiểm tra xem response có chứa thông tin phân trang không
+            if (response.data.content && Array.isArray(response.data.content)) {
+              // Đây là response có phân trang
+              notifications = response.data.content;
+              paginationSettings.totalItems = response.data.totalElements || 0;
+              paginationSettings.totalPages = response.data.totalPages || 1;
+              paginationSettings.hasMoreItems = page < (paginationSettings.totalPages - 1);
+            } 
+            // Format không phân trang
+            else if (Array.isArray(response.data)) {
+              notifications = response.data;
+            } else if (typeof response.data === 'object') {
+              notifications = [response.data]; // Nếu là object đơn
+            }
+          } 
+          // Trường hợp API trả về mảng trực tiếp
+          else if (Array.isArray(response)) {
+            notifications = response;
+          }
+          // Định dạng cũ hơn - nếu có
+          else if (response && response.retData) {
+            if (Array.isArray(response.retData)) {
+              notifications = response.retData;
+            } else if (typeof response.retData === 'object') {
+              notifications = [response.retData];
+            }
+          } else {
+            console.warn('Unexpected API response format:', response);
+            notifications = [];
+          }
+        } catch (error) {
+          console.error('Error parsing notification response:', error);
           notifications = [];
         }
+        
+        // Debug log số lượng thông báo
+        console.log(`Loaded ${notifications.length} notifications (page ${page}/${paginationSettings.totalPages})`);
         
         // Đảm bảo mỗi thông báo có timeAgo
         notifications.forEach(notification => {
@@ -413,18 +483,141 @@ $(document).ready(function() {
           }
         });
         
-        renderNotifications(notifications);
+        // Nếu là trang đầu tiên, thay thế toàn bộ dữ liệu
+        // Nếu không, thêm vào dữ liệu hiện có
+        if (isFirstLoad) {
+          renderNotifications(notifications);
+          renderNotificationsTable(notifications);
+        } else {
+          appendNotifications(notifications);
+          appendNotificationsTable(notifications);
+        }
+        
         updateNotificationCount();
-        renderNotificationsTable(notifications);
+        
+        // Hiển thị hoặc ẩn nút "Xem thêm" dựa trên có dữ liệu tiếp theo không
+        $('#loadMoreButton').toggle(paginationSettings.hasMoreItems);
       },
       error: function(error) {
         console.error('Error loading notifications:', error);
-        loadSampleNotifications();
+        if (page === 0) {
+          loadSampleNotifications();
+        }
       },
       complete: function() {
         // Đánh dấu là đã hoàn thành request
         notificationRequestInProgress = false;
       }
+    });
+  }
+
+  // Hàm mới để thêm thông báo vào danh sách hiện có
+  function appendNotifications(notifications) {
+    if (!notifications || notifications.length === 0) {
+      return;
+    }
+
+    const $notificationList = $('#notificationList');
+    
+    // Xóa thông báo "Không có thông báo nào" nếu có
+    $notificationList.find('.empty-notification').remove();
+
+    notifications.forEach(function(notification) {
+      const unreadClass = notification.read ? '' : 'unread';
+
+      // Xác định icon dựa trên loại thông báo
+      let iconClass = 'fas fa-bell';
+      let iconStyle = 'icon-info';
+
+      if (notification.type) {
+        switch(notification.type.toLowerCase()) {
+          case 'success':
+            iconClass = 'fas fa-check-circle';
+            iconStyle = 'icon-success';
+            break;
+          case 'warning':
+            iconClass = 'fas fa-exclamation-triangle';
+            iconStyle = 'icon-warning';
+            break;
+          case 'danger':
+            iconClass = 'fas fa-exclamation-circle';
+            iconStyle = 'icon-danger';
+            break;
+          default:
+            iconClass = 'fas fa-bell';
+            iconStyle = 'icon-info';
+        }
+      }
+
+      $notificationList.append(`
+        <div class="notification-item ${unreadClass}" data-id="${notification.id}">
+            <span class="notification-status"></span>
+            <div class="notification-icon ${iconStyle}">
+                <i class="${iconClass}"></i>
+            </div>
+            <div class="notification-content">
+                <div class="notification-item-title">${notification.title}</div>
+                <div class="notification-item-text">${notification.content}</div>
+                <div class="notification-meta">
+                    <div class="notification-sender">
+                        <i class="fas fa-user"></i> ${notification.senderName || notification.sender}
+                    </div>
+                    <div class="notification-time">
+                        <i class="far fa-clock"></i> ${notification.timeAgo || formatTimeAgo(new Date(notification.createdAt))}
+                    </div>
+                </div>
+            </div>
+        </div>
+      `);
+    });
+  }
+
+  // Hàm mới để thêm thông báo vào bảng hiện có
+  function appendNotificationsTable(notifications) {
+    if (!notifications || notifications.length === 0) {
+      return;
+    }
+
+    const $notificationsTable = $('#notificationsTable');
+    
+    // Xóa thông báo "Không có thông báo nào" nếu có
+    $notificationsTable.find('tr td[colspan]').parent().remove();
+
+    notifications.forEach(function(notification) {
+      const rowClass = notification.read ? '' : 'table-info';
+      const statusBadge = notification.read
+          ? '<span class="badge rounded-pill status-badge read">Đã đọc</span>'
+          : '<span class="badge rounded-pill status-badge unread">Chưa đọc</span>';
+
+      // Rút gọn nội dung nếu quá dài
+      const truncatedContent = notification.content.length > 50
+          ? notification.content.substring(0, 50) + '...'
+          : notification.content;
+
+      // Đảm bảo timeAgo luôn có giá trị
+      const timeAgo = notification.timeAgo ||
+          (notification.createdAt ? formatTimeAgo(new Date(notification.createdAt)) : 'N/A');
+
+      $notificationsTable.append(`
+        <tr data-id="${notification.id}" class="${rowClass}">
+            <td>${notification.id}</td>
+            <td>${notification.title}</td>
+            <td>${truncatedContent}</td>
+            <td>${notification.senderName || notification.sender}</td>
+            <td>${timeAgo}</td>
+            <td>${statusBadge}</td>
+            <td>
+                <div class="d-flex">
+                    <button class="btn btn-sm btn-info btn-action view-notification" data-id="${notification.id}" title="Xem chi tiết">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger btn-action delete-notification" data-id="${notification.id}" title="Xóa">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+      `);
     });
   }
 
@@ -518,13 +711,24 @@ $(document).ready(function() {
 
   // Cập nhật số lượng thông báo chưa đọc
   function updateNotificationCount() {
-        // Kiểm tra xem đã đủ thời gian để cập nhật chưa
-        const now = Date.now();
-        if (now - lastNotificationUpdate < UPDATE_INTERVAL) {
-          return; // Chưa đến thời gian cập nhật, bỏ qua
-        }
-        
-        lastNotificationUpdate = now;
+    // Kiểm tra xem đã đủ thời gian để cập nhật chưa
+    const now = Date.now();
+    if (now - lastNotificationUpdate < UPDATE_INTERVAL) {
+      return; // Chưa đến thời gian cập nhật, bỏ qua
+    }
+    
+    lastNotificationUpdate = now;
+
+    // Kiểm tra username trước khi gọi API
+    if (!currentUser.username || currentUser.username === 'anonymous') {
+      console.error('Cannot update notification count: Invalid username');
+      // Đếm từ UI
+      const unreadCount = $('.notification-item.unread').length;
+      $('#notificationCount').text(unreadCount);
+      $('#notificationCount').toggle(unreadCount > 0);
+      return;
+    }
+
     $.ajax({
       url: `${API_BASE_URL}/user/${currentUser.username}/count`,
       method: 'GET',
@@ -533,12 +737,26 @@ $(document).ready(function() {
         
         // Chuẩn hóa cách xử lý response
         let count = 0;
-        if (response && response.data && response.data.count !== undefined) {
-          count = parseInt(response.data.count);
-        } else if (response && response.count !== undefined) {
-          count = parseInt(response.count);
-        } else if (typeof response === 'number') {
-          count = response;
+        
+        try {
+          if (response && response.data && response.data.count !== undefined) {
+            count = parseInt(response.data.count);
+          } else if (response && response.count !== undefined) {
+            count = parseInt(response.count);
+          } else if (typeof response === 'number') {
+            count = response;
+          } else if (response && typeof response === 'object') {
+            // Thử tìm bất kỳ thuộc tính nào có thể là count
+            const possibleCountProps = ['count', 'unreadCount', 'notificationCount'];
+            for (const prop of possibleCountProps) {
+              if (response[prop] !== undefined) {
+                count = parseInt(response[prop]);
+                break;
+              }
+            }
+          }
+        } catch (error) {
+          console.error('Error parsing count response:', error);
         }
         
         // Cập nhật UI
@@ -550,8 +768,11 @@ $(document).ready(function() {
         console.log(`API count: ${count}, UI count: ${uiCount}`);
         if (count !== uiCount) {
           console.warn('Count mismatch between API and UI!');
-          // Làm mới danh sách thông báo để đồng bộ
-          loadNotifications();
+          // Làm mới danh sách thông báo nếu sự khác biệt quá lớn
+          if (Math.abs(count - uiCount) > 2) {
+            console.log('Significant count difference, reloading notifications');
+            loadNotifications();
+          }
         }
       },
       error: function(error) {
@@ -955,10 +1176,76 @@ $(document).ready(function() {
     }
   });
 
-  // Tải dữ liệu ban đầu và kết nối WebSocket khi trang được tải
-  loadNotifications();
-  connectWebSocket();
+  // Thêm nút "Xem thêm" vào HTML sau phần hiển thị thông báo
+  $(document).ready(function() {
+    // ... existing code ...
+    
+    // Thêm nút "Xem thêm" vào cuối dropdown và bảng thông báo
+    $('#notificationList').after('<div id="loadMoreDropdown" class="text-center mt-2 mb-2"><button id="loadMoreNotifications" class="btn btn-sm btn-outline-primary">Xem thêm</button></div>');
+    
+    $('#notificationsTable').after('<div id="loadMoreTable" class="text-center mt-3 mb-3"><button id="loadMoreButton" class="btn btn-primary">Tải thêm thông báo</button></div>');
+    
+    // Xử lý sự kiện khi click vào nút "Xem thêm" trong dropdown
+    $(document).on('click', '#loadMoreNotifications', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      // Tải trang tiếp theo
+      loadNotifications(paginationSettings.page + 1);
+    });
+    
+    // Xử lý sự kiện khi click vào nút "Tải thêm thông báo" trong bảng
+    $(document).on('click', '#loadMoreButton', function() {
+      // Tải trang tiếp theo
+      loadNotifications(paginationSettings.page + 1);
+    });
 
-  // Ngắt kết nối WebSocket khi rời trang
-  $(window).on('beforeunload', disconnectWebSocket);
+    // Khởi tạo với trang đầu tiên
+    loadNotifications(0);
+    connectWebSocket();
+
+    // Ngắt kết nối WebSocket khi rời trang
+    $(window).on('beforeunload', disconnectWebSocket);
+  });
+
+  // Cập nhật hàm khởi tạo cho file notification.html
+  function initNotificationPage() {
+    // Nếu đang ở trang thông báo, tải toàn bộ dữ liệu (trang đầu tiên)
+    loadNotifications(0);
+    
+    // Hiển thị/ẩn nút "Xem thêm" dựa vào dữ liệu
+    $('#loadMoreButton').toggle(paginationSettings.hasMoreItems);
+  }
+
+  // Xử lý vấn đề modal-backdrop không biến mất
+  $(document).ready(function() {
+    // Xử lý khi modal bị đóng
+    $('.modal').on('hidden.bs.modal', function () {
+      // Xóa tất cả backdrop còn sót lại
+      $('.modal-backdrop').remove();
+      // Loại bỏ class 'modal-open' khỏi body
+      $('body').removeClass('modal-open');
+      // Loại bỏ style padding-right được thêm bởi Bootstrap
+      $('body').css('padding-right', '');
+    });
+
+    // Xử lý khi có lỗi modal
+    $(document).on('click', '.modal-backdrop', function() {
+      // Đóng tất cả các modal đang mở
+      $('.modal').modal('hide');
+      // Xóa tất cả backdrop
+      $('.modal-backdrop').remove();
+      // Loại bỏ class 'modal-open'
+      $('body').removeClass('modal-open');
+      // Loại bỏ style padding-right
+      $('body').css('padding-right', '');
+    });
+
+    // Xóa backdrop nếu đã tồn tại khi tải trang
+    if ($('.modal-backdrop').length > 0) {
+      $('.modal-backdrop').remove();
+      $('body').removeClass('modal-open');
+      $('body').css('padding-right', '');
+    }
+  });
 });

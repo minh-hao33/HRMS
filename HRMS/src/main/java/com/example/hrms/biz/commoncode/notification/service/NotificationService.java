@@ -5,11 +5,13 @@ import com.example.hrms.biz.commoncode.notification.model.Notification;
 import com.example.hrms.biz.commoncode.notification.model.dto.NotificationDTO;
 import com.example.hrms.biz.commoncode.notification.repository.NotificationMapper;
 import com.example.hrms.biz.commoncode.notification.model.WebSocketNotification;
+import com.example.hrms.common.http.model.PageResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 @Slf4j
@@ -277,6 +279,38 @@ public class NotificationService {
       notification.setReceiver(username);
       notification.setCreatedAt(LocalDateTime.now());
       createNotification(notification);
+    }
+  }
+
+  /**
+   * Lấy danh sách thông báo của người dùng với phân trang
+   */
+  public PageResult<NotificationDTO.Resp> getNotificationsByReceiverPaged(String receiver, int page, int size) {
+    try {
+      // Lấy tổng số lượng thông báo
+      int totalCount = notificationMapper.countByReceiver(receiver);
+      
+      // Nếu không có thông báo, trả về trang trống
+      if (totalCount == 0) {
+        return new PageResult<>(Collections.emptyList(), page, size, 0);
+      }
+      
+      // Tính toán offset dựa trên page và size
+      int offset = page * size;
+      
+      // Lấy danh sách thông báo với offset và limit
+      List<NotificationDTO> notifications = notificationMapper.findByReceiverPaged(receiver, offset, size);
+      
+      // Chuyển đổi sang DTO response
+      List<NotificationDTO.Resp> respList = notifications.stream()
+          .map(this::convertToResp)
+          .collect(Collectors.toList());
+      
+      // Tạo và trả về đối tượng PageResult
+      return new PageResult<>(respList, page, size, totalCount);
+    } catch (Exception e) {
+      log.error("Error retrieving paged notifications for user: " + receiver, e);
+      return new PageResult<>(Collections.emptyList(), page, size, 0);
     }
   }
 }

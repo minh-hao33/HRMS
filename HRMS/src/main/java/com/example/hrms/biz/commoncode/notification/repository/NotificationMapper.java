@@ -29,6 +29,33 @@ public interface NotificationMapper {
   })
   List<NotificationDTO> findByReceiver(String receiver);
 
+  /**
+   * Lấy danh sách thông báo của người dùng với phân trang
+   */
+  @Select("SELECT n.*, u.employee_name as sender_name FROM Notifications n " +
+      "JOIN Users u ON n.sender = u.username " +
+      "WHERE n.receiver = #{receiver} " +
+      "ORDER BY n.created_at DESC " +
+      "LIMIT #{limit} OFFSET #{offset}")
+  @Results({
+      @Result(property = "id", column = "id"),
+      @Result(property = "title", column = "title"),
+      @Result(property = "content", column = "content"),
+      @Result(property = "sender", column = "sender"),
+      @Result(property = "senderName", column = "sender_name"),
+      @Result(property = "receiver", column = "receiver"),
+      @Result(property = "createdAt", column = "created_at"),
+      @Result(property = "isRead", column = "is_read"),
+      @Result(property = "type", column = "type")
+  })
+  List<NotificationDTO> findByReceiverPaged(String receiver, int offset, int limit);
+
+  /**
+   * Đếm tổng số thông báo của người dùng
+   */
+  @Select("SELECT COUNT(*) FROM Notifications WHERE receiver = #{receiver}")
+  int countByReceiver(String receiver);
+
   @Select("SELECT n.*, u.employee_name as sender_name FROM Notifications n " +
       "JOIN Users u ON n.sender = u.username " +
       "WHERE n.id = #{id}")
